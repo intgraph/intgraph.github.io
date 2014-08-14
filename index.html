@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="/static/bootstrap3/js/jquery.min.js"></script>
+        <script src="/static/bootstrap3/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="/static/bootstrap3/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="/static/bootstrap3/css/font-awesome.min.css"/>
+        <link rel="stylesheet" type="text/css" href="/static/pygments.css"/>
+        
+        <title></title>
+        
+<script src="/static/buckets-minified.js"></script>
+<script src="/static/angular.min.js"></script>
+<script>
+var IgApp = angular.module('IgApp', [], function($interpolateProvider) {
+  $interpolateProvider.startSymbol('{$');
+  $interpolateProvider.endSymbol('$}');
+});
+
+var uniqueItems = function (data, key) {
+    var result = new buckets.Set()
+    for (var i = 0; i < data.length; i++) {
+        var tags = data[i][key];
+        for (var idx in tags) {
+            result.add(tags[idx]);
+        }
+    }
+    return result.toArray();
+};
+
+function IgCtrl($scope, filterFilter) {
+    
+    $scope.usedifficulty = {};
+    
+    $scope.usecategories = {};
+    
+    $scope.usesource = {};
+        
+    
+    $scope.articles = [
+        
+        {"source": ["unknown"], "url": "Problems/only-once-in-the-array.html", "title": "All Twice Excpet One", "difficulty": ["2"], "date": "2014-08-13 23:14:00", "categories": ["bit manipulation"]},
+        
+        {"source": ["POJ"], "url": "Problems/bad-hair-day.html", "title": "Bad Hair Day", "difficulty": ["3"], "date": "2014-08-14 11:01:00", "categories": ["stack", "monotone", "thinking in reverse"]},
+        
+    ]; 
+    
+    $scope.$watch(function () {
+        return {
+            articles: $scope.articles,
+            
+            usedifficulty: $scope.usedifficulty,
+            
+            usecategories: $scope.usecategories,
+            
+            usesource: $scope.usesource,
+                
+        }
+    }, function (value) {
+        var selected;
+        
+        $scope.count = function (prop, value) {
+            return function (el) {
+                return el[prop] == value;
+            };
+        };
+        
+        var filterAfterAll = $scope.articles;
+        var filterAfterThis = [];
+        
+        console.log(filterAfterAll);
+        $scope.difficultyGroup = uniqueItems($scope.articles, 'difficulty');       
+        selected = false;
+        filterAfterThis = [];
+        for (var j in filterAfterAll) {
+            var p = filterAfterAll[j];
+            for (var i in $scope.usedifficulty) {
+                if ($scope.usedifficulty[i]) {
+                    selected = true;
+                    console.log(i, p.difficulty);
+                    console.log(p.difficulty.indexOf(i) != -1);
+                    if (p.difficulty.indexOf(i) != -1) {
+                        filterAfterThis.push(p);
+                        break;
+                    }
+                }
+            }        
+        }
+        console.log("difficulty", filterAfterThis, filterAfterAll, selected);
+        if (!selected) {
+            filterAfterThis = filterAfterAll;
+            $scope.filteredArticles = filterAfterThis;      
+        }
+        filterAfterAll = filterAfterThis;
+        
+        console.log(filterAfterAll);
+        $scope.categoriesGroup = uniqueItems($scope.articles, 'categories');       
+        selected = false;
+        filterAfterThis = [];
+        for (var j in filterAfterAll) {
+            var p = filterAfterAll[j];
+            for (var i in $scope.usecategories) {
+                if ($scope.usecategories[i]) {
+                    selected = true;
+                    console.log(i, p.categories);
+                    console.log(p.categories.indexOf(i) != -1);
+                    if (p.categories.indexOf(i) != -1) {
+                        filterAfterThis.push(p);
+                        break;
+                    }
+                }
+            }        
+        }
+        console.log("categories", filterAfterThis, filterAfterAll, selected);
+        if (!selected) {
+            filterAfterThis = filterAfterAll;
+            $scope.filteredArticles = filterAfterThis;      
+        }
+        filterAfterAll = filterAfterThis;
+        
+        console.log(filterAfterAll);
+        $scope.sourceGroup = uniqueItems($scope.articles, 'source');       
+        selected = false;
+        filterAfterThis = [];
+        for (var j in filterAfterAll) {
+            var p = filterAfterAll[j];
+            for (var i in $scope.usesource) {
+                if ($scope.usesource[i]) {
+                    selected = true;
+                    console.log(i, p.source);
+                    console.log(p.source.indexOf(i) != -1);
+                    if (p.source.indexOf(i) != -1) {
+                        filterAfterThis.push(p);
+                        break;
+                    }
+                }
+            }        
+        }
+        console.log("source", filterAfterThis, filterAfterAll, selected);
+        if (!selected) {
+            filterAfterThis = filterAfterAll;
+            $scope.filteredArticles = filterAfterThis;      
+        }
+        filterAfterAll = filterAfterThis;
+        
+        $scope.filteredArticles = filterAfterAll; 
+        console.log(filterAfterThis, filterAfterAll);
+    }, true);
+    
+    
+    $scope.$watch('filtered', function (newValue) {
+        if (angular.isArray(newValue)) {
+            console.log(newValue.length);
+        }
+    }, true);    
+}
+
+IgApp.filter('groupBy',
+            function () {
+                return function (collection, key) {
+                    if (collection === null) return;
+                    return uniqueItems(collection, key);
+        };
+    });
+
+</script>
+
+    </head>
+    <body ng-app="IgApp">
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/index.html">IntGraph</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    
+                    <li>
+                        <a href="/index.html">Problems</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Contribute.html">Contribute</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/About.html">About</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            
+<div ng-controller="IgCtrl">
+    <h1>Problems</h1>
+    <br/>
+    <div class="row">
+        <div class="col-md-10">
+            <table class="table">
+                <thead> <tr>
+                <th>#</th>
+                <th>Problem</th>
+                <th>Add time</th>
+                </tr> </thead>
+                <tbody>
+                <tr ng-repeat="article in filteredArticles | filter:query">
+                    <td> {$ $index + 1 $} </td>
+                    <td> <a href="{$ article.url $}"> {$ article.title $} </a></td>
+                    <td> {$ article.date $} </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    
+        <div class="col-md-2">
+            <h2> Filters </h2>
+            <br/>
+            <div class="form-group">
+                <label class="sr-only" for="igsearch">Search</label>
+                <input type="text" class="form-control" id="igsearch" placeholder="Search" ng-model="query.title">
+            </div>
+            
+            
+            <h3>
+            <span class="label label-info">difficulty</span>
+            </h3>
+                <p></p>
+                <div class="checkbox" ng-repeat="difficulty in difficultyGroup">
+                    <label>
+                        <input type="checkbox" ng-model="usedifficulty[difficulty]"/>
+                        {$ difficulty $}
+                    </label>
+                </div>
+            
+            <h3>
+            <span class="label label-info">categories</span>
+            </h3>
+                <p></p>
+                <div class="checkbox" ng-repeat="categories in categoriesGroup">
+                    <label>
+                        <input type="checkbox" ng-model="usecategories[categories]"/>
+                        {$ categories $}
+                    </label>
+                </div>
+            
+            <h3>
+            <span class="label label-info">source</span>
+            </h3>
+                <p></p>
+                <div class="checkbox" ng-repeat="source in sourceGroup">
+                    <label>
+                        <input type="checkbox" ng-model="usesource[source]"/>
+                        {$ source $}
+                    </label>
+                </div>
+            
+        </div>
+    </div>
+</div>
+
+
+        </div>
+        <hr/>
+        <footer class="bs-footer" role="contentinfo">
+            <div class="container">
+                <p>Powered by IntGraph</p>
+                <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>.</p>
+            </div>
+        </footer>
+
+         
+         
+    </body>
+</html>

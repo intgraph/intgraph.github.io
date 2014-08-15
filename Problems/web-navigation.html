@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="/static/bootstrap3/js/jquery.min.js"></script>
+        <script src="/static/bootstrap3/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="/static/bootstrap3/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="/static/bootstrap3/css/font-awesome.min.css"/>
+        <link rel="stylesheet" type="text/css" href="/static/pygments.css"/>
+        
+        <title></title>
+        
+        
+    </head>
+    <body ng-app="IgApp">
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/index.html">IntGraph</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    
+                    <li>
+                        <a href="/index.html">Problems</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Contribute.html">Contribute</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/About.html">About</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            
+
+<h1> Web Navigation </h1>
+
+<div class="panel">
+    <div class="panel-body">
+        <footer class="post-info">
+            <span class="label label-default">Date</span>
+            <span class="published">
+                <i class="icon-calendar"></i>2014-08-15 16:46:00
+            </span>
+            <p></p>
+            
+                <span class="label label-primary ">difficulty</span>
+                
+                <span> 2   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">categories</span>
+                
+                <span> simulation  / </span>
+                
+                <span> implementation  / </span>
+                
+                <span> no algorithm  / </span>
+                
+                <span> STL   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">source</span>
+                
+                <span> POJ  / </span>
+                
+                <span> qunar   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+        </footer>
+    </div>
+</div>
+
+
+
+
+<h2>Description</h2>
+
+
+
+<div>
+
+
+<p>Write a problem to simulate the web navigation, including &ldquo;FORWARD&rdquo;, &ldquo;BACK&rdquo; and &ldquo;VISIT&rdquo;. The behaviour is as same as a normal web browser.</p>
+
+<p>In addition, our navigation is start from &ldquo;http://www.acm.org/&rdquo; (a porn website, maybe). Please show the URL of the current page after every command, print &ldquo;Ignored&rdquo; if the command leads to a error.</p>
+
+<h3>Sample Input</h3>
+
+<p>Sample Input</p>
+
+<p>BACK
+VISIT http://www.baidu.com/
+BACK
+FORWARD
+QUIT</p>
+
+<h3>Sample Output</h3>
+
+<p>Ignored
+http://www.baidu.com
+http://www.acm.org/
+http://www.baidu.com/</p>
+
+
+</div>
+
+
+<h2>Solution</h2>
+
+
+
+<p>
+    <button type="button" class="btn btn-danger btn-lg showbtn" bind="class_Solution">Click to show</button>
+</p>
+
+<div class="hide" id="class_Solution">
+
+
+<p>We can use an array to simulate our navigation, but an array is a static data structure, and may not capable for this problem because you may have a LONG LONG navigation history.</p>
+
+<p>As a result, we have to use dynamic container to handle this problem. <em>Two stacks</em> is a good choice but it far from the best.</p>
+
+<p>In my opinion, std::list is the right container for our navigation, and the code will be simple enough that I will not explain.</p>
+<div class="highlight"><pre><span class="c1">// Result: wizmann  1028    Accepted    716K    32MS    G++ 1148B   2014-08-15 09:39:26</span>
+<span class="cp">#include &lt;cstdio&gt;</span>
+<span class="cp">#include &lt;cstdlib&gt;</span>
+<span class="cp">#include &lt;cstring&gt;</span>
+<span class="cp">#include &lt;iostream&gt;</span>
+<span class="cp">#include &lt;algorithm&gt;</span>
+<span class="cp">#include &lt;list&gt;</span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="cp">#define print(x) cout &lt;&lt; x &lt;&lt; endl</span>
+<span class="cp">#define input(x) cin &gt;&gt; x</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">string</span> <span class="n">op1</span><span class="p">,</span> <span class="n">op2</span><span class="p">;</span>
+    <span class="n">list</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">lst</span><span class="p">;</span>
+    <span class="n">lst</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="s">&quot;http://www.acm.org/&quot;</span><span class="p">);</span>
+    <span class="n">list</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;::</span><span class="n">iterator</span> <span class="n">iter</span> <span class="o">=</span> <span class="n">lst</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+
+    <span class="k">while</span><span class="p">(</span><span class="n">input</span><span class="p">(</span><span class="n">op1</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">op1</span> <span class="o">!=</span> <span class="s">&quot;QUIT&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">op1</span> <span class="o">==</span> <span class="s">&quot;VISIT&quot;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">input</span><span class="p">(</span><span class="n">op2</span><span class="p">);</span>
+            <span class="c1">// using auto in C++11 will be much more convenient</span>
+            <span class="c1">// and std::prev and std::next in C++11 will avoid the temp variables here</span>
+            <span class="n">list</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;::</span><span class="n">iterator</span> <span class="n">now</span> <span class="o">=</span> <span class="n">iter</span><span class="p">,</span> <span class="n">next</span> <span class="o">=</span> <span class="o">++</span><span class="n">iter</span><span class="p">;</span> 
+            <span class="n">lst</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">iter</span><span class="p">,</span> <span class="n">lst</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+            <span class="n">lst</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">op2</span><span class="p">);</span>
+            <span class="n">iter</span> <span class="o">=</span> <span class="o">--</span><span class="n">lst</span><span class="p">.</span><span class="n">end</span><span class="p">();</span>
+            <span class="n">print</span><span class="p">(</span><span class="n">op2</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">op1</span> <span class="o">==</span> <span class="s">&quot;BACK&quot;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">iter</span> <span class="o">==</span> <span class="n">lst</span><span class="p">.</span><span class="n">begin</span><span class="p">())</span> <span class="p">{</span>
+                <span class="n">print</span><span class="p">(</span><span class="s">&quot;Ignored&quot;</span><span class="p">);</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="o">--</span><span class="n">iter</span><span class="p">;</span>
+                <span class="n">print</span><span class="p">(</span><span class="o">*</span><span class="n">iter</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">op1</span> <span class="o">==</span> <span class="s">&quot;FORWARD&quot;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">iter</span> <span class="o">==</span> <span class="o">--</span><span class="n">lst</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="p">{</span>
+                <span class="n">print</span><span class="p">(</span><span class="s">&quot;Ignored&quot;</span><span class="p">);</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="o">++</span><span class="n">iter</span><span class="p">;</span>
+                <span class="n">print</span><span class="p">(</span><span class="o">*</span><span class="n">iter</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+</div>
+
+
+
+        </div>
+        <hr/>
+        <footer class="bs-footer" role="contentinfo">
+            <div class="container">
+                <p>Powered by IntGraph</p>
+                <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>.</p>
+            </div>
+        </footer>
+
+         
+        
+<script>
+$(document).ready(function(){
+    $(".showbtn").click(function(){
+        var divname = $(this).attr("bind");
+        console.log(divname);
+        $("#" + divname).removeClass("hide");
+    });
+});
+</script>
+
+    </body>
+</html>

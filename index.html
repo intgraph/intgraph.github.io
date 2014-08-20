@@ -239,7 +239,7 @@ IgApp.filter('groupBy',
             <span class="label label-info">difficulty</span>
             </h3>
                 <p></p>
-                <div class="checkbox" ng-repeat="difficulty in difficultyGroup">
+                <div class="checkbox" ng-repeat="difficulty in difficultyGroup | orderBy:'toString()'">
                     <label>
                         <input type="checkbox" ng-model="usedifficulty[difficulty]"/>
                         {$ difficulty $}
@@ -250,7 +250,7 @@ IgApp.filter('groupBy',
             <span class="label label-info">categories</span>
             </h3>
                 <p></p>
-                <div class="checkbox" ng-repeat="categories in categoriesGroup">
+                <div class="checkbox" ng-repeat="categories in categoriesGroup | orderBy:'toString()'">
                     <label>
                         <input type="checkbox" ng-model="usecategories[categories]"/>
                         {$ categories $}
@@ -261,7 +261,7 @@ IgApp.filter('groupBy',
             <span class="label label-info">source</span>
             </h3>
                 <p></p>
-                <div class="checkbox" ng-repeat="source in sourceGroup">
+                <div class="checkbox" ng-repeat="source in sourceGroup | orderBy:'toString()'">
                     <label>
                         <input type="checkbox" ng-model="usesource[source]"/>
                         {$ source $}

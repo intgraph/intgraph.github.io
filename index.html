@@ -31,6 +31,8 @@ var uniqueItems = function (data, key) {
 
 function IgCtrl($scope, filterFilter) {
     
+    $scope.usedifficutly = {};
+    
     $scope.usedifficulty = {};
     
     $scope.usecategories = {};
@@ -39,6 +41,8 @@ function IgCtrl($scope, filterFilter) {
     
 
     $scope.articles = [
+        
+        {"difficutly": ["2.5"], "title": "Connect n ropes with minimum cost", "url": "Problems/connect-n-ropes-with-minimum-cost.html", "source": ["geeksforgeeks", "POJ"], "date": "2014-08-19 11:03:00", "categories": ["priority-queue", "huffman coding", "heap"]},
         
         {"source": ["codeforces"], "url": "Problems/no-friends-on-the-bus.html", "title": "No friends on the bus", "difficulty": ["4"], "date": "2014-08-18 23:02:26", "categories": ["constructive algorithms", "combinatorics"]},
         
@@ -64,6 +68,8 @@ function IgCtrl($scope, filterFilter) {
         return {
             articles: $scope.articles,
             
+            usedifficutly: $scope.usedifficutly,
+            
             usedifficulty: $scope.usedifficulty,
             
             usecategories: $scope.usecategories,
@@ -80,6 +86,31 @@ function IgCtrl($scope, filterFilter) {
         };
         var filterAfterAll = $scope.articles;
         var filterAfterThis = [];
+        
+        console.log(filterAfterAll);
+        $scope.difficutlyGroup = uniqueItems($scope.articles, 'difficutly');
+        selected = false;
+        filterAfterThis = [];
+        for (var j in filterAfterAll) {
+            var p = filterAfterAll[j];
+            for (var i in $scope.usedifficutly) {
+                if ($scope.usedifficutly[i]) {
+                    selected = true;
+                    console.log(i, p.difficutly);
+                    console.log(p.difficutly.indexOf(i) != -1);
+                    if (p.difficutly.indexOf(i) != -1) {
+                        filterAfterThis.push(p);
+                        break;
+                    }
+                }
+            }
+        }
+        console.log("difficutly", filterAfterThis, filterAfterAll, selected);
+        if (!selected) {
+            filterAfterThis = filterAfterAll;
+            $scope.filteredArticles = filterAfterThis;
+        }
+        filterAfterAll = filterAfterThis;
         
         console.log(filterAfterAll);
         $scope.difficultyGroup = uniqueItems($scope.articles, 'difficulty');
@@ -232,6 +263,17 @@ IgApp.filter('groupBy',
                 <input type="text" class="form-control" id="igsearch" placeholder="Search" ng-model="query.title">
             </div>
             
+            
+            <h3>
+            <span class="label label-info">difficutly</span>
+            </h3>
+                <p></p>
+                <div class="checkbox" ng-repeat="difficutly in difficutlyGroup">
+                    <label>
+                        <input type="checkbox" ng-model="usedifficutly[difficutly]"/>
+                        {$ difficutly $}
+                    </label>
+                </div>
             
             <h3>
             <span class="label label-info">difficulty</span>

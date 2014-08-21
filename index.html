@@ -33,8 +33,6 @@ function IgCtrl($scope, filterFilter) {
     
     $scope.usedifficulty = {};
     
-    $scope.usetags = {};
-    
     $scope.usecategories = {};
     
     $scope.usesource = {};
@@ -42,7 +40,7 @@ function IgCtrl($scope, filterFilter) {
 
     $scope.articles = [
         
-        {"tags": ["implementation"], "url": "Problems/little-dima-and-equation.html", "title": "Little Dima and Equation", "difficulty": ["2.5"], "source": ["codeforces"], "date": "2014-08-21 14:57:00"},
+        {"source": ["codeforces"], "url": "Problems/little-dima-and-equation.html", "title": "Little Dima and Equation", "difficulty": ["2.5"], "date": "2014-08-21 14:57:00", "categories": ["implementation"]},
         
         {"source": ["geeksforgeeks", "POJ"], "url": "Problems/connect-n-ropes-with-minimum-cost.html", "title": "Connect n ropes with minimum cost", "difficulty": ["2.5"], "date": "2014-08-19 11:03:00", "categories": ["priority-queue", "huffman coding", "heap"]},
         
@@ -71,8 +69,6 @@ function IgCtrl($scope, filterFilter) {
             articles: $scope.articles,
             
             usedifficulty: $scope.usedifficulty,
-            
-            usetags: $scope.usetags,
             
             usecategories: $scope.usecategories,
             
@@ -108,31 +104,6 @@ function IgCtrl($scope, filterFilter) {
             }
         }
         console.log("difficulty", filterAfterThis, filterAfterAll, selected);
-        if (!selected) {
-            filterAfterThis = filterAfterAll;
-            $scope.filteredArticles = filterAfterThis;
-        }
-        filterAfterAll = filterAfterThis;
-        
-        console.log(filterAfterAll);
-        $scope.tagsGroup = uniqueItems($scope.articles, 'tags');
-        selected = false;
-        filterAfterThis = [];
-        for (var j in filterAfterAll) {
-            var p = filterAfterAll[j];
-            for (var i in $scope.usetags) {
-                if ($scope.usetags[i]) {
-                    selected = true;
-                    console.log(i, p.tags);
-                    console.log(p.tags.indexOf(i) != -1);
-                    if (p.tags.indexOf(i) != -1) {
-                        filterAfterThis.push(p);
-                        break;
-                    }
-                }
-            }
-        }
-        console.log("tags", filterAfterThis, filterAfterAll, selected);
         if (!selected) {
             filterAfterThis = filterAfterAll;
             $scope.filteredArticles = filterAfterThis;
@@ -274,17 +245,6 @@ IgApp.filter('groupBy',
                     <label>
                         <input type="checkbox" ng-model="usedifficulty[difficulty]"/>
                         {$ difficulty $}
-                    </label>
-                </div>
-            
-            <h3>
-            <span class="label label-info">tags</span>
-            </h3>
-                <p></p>
-                <div class="checkbox" ng-repeat="tags in tagsGroup | orderBy:'toString()'">
-                    <label>
-                        <input type="checkbox" ng-model="usetags[tags]"/>
-                        {$ tags $}
                     </label>
                 </div>
             

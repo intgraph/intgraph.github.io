@@ -33,12 +33,20 @@ function IgCtrl($scope, filterFilter) {
     
     $scope.usedifficulty = {};
     
-    $scope.usecategories = {};
+    $scope.useTags = {};
+    
+    $scope.useDifficulty = {};
+    
+    $scope.useSource = {};
     
     $scope.usesource = {};
     
+    $scope.usecategories = {};
+    
 
     $scope.articles = [
+        
+        {"Tags": ["implementation"], "url": "Problems/little-dima-and-equation.html", "title": "Little Dima and Equation", "Difficulty": ["2.5"], "Source": ["codeforces"], "date": "2014-08-21 14:57:00"},
         
         {"source": ["geeksforgeeks", "POJ"], "url": "Problems/connect-n-ropes-with-minimum-cost.html", "title": "Connect n ropes with minimum cost", "difficulty": ["2.5"], "date": "2014-08-19 11:03:00", "categories": ["priority-queue", "huffman coding", "heap"]},
         
@@ -68,9 +76,15 @@ function IgCtrl($scope, filterFilter) {
             
             usedifficulty: $scope.usedifficulty,
             
-            usecategories: $scope.usecategories,
+            useTags: $scope.useTags,
+            
+            useDifficulty: $scope.useDifficulty,
+            
+            useSource: $scope.useSource,
             
             usesource: $scope.usesource,
+            
+            usecategories: $scope.usecategories,
             
         }
     }, function (value) {
@@ -109,24 +123,74 @@ function IgCtrl($scope, filterFilter) {
         filterAfterAll = filterAfterThis;
         
         console.log(filterAfterAll);
-        $scope.categoriesGroup = uniqueItems($scope.articles, 'categories');
+        $scope.TagsGroup = uniqueItems($scope.articles, 'Tags');
         selected = false;
         filterAfterThis = [];
         for (var j in filterAfterAll) {
             var p = filterAfterAll[j];
-            for (var i in $scope.usecategories) {
-                if ($scope.usecategories[i]) {
+            for (var i in $scope.useTags) {
+                if ($scope.useTags[i]) {
                     selected = true;
-                    console.log(i, p.categories);
-                    console.log(p.categories.indexOf(i) != -1);
-                    if (p.categories.indexOf(i) != -1) {
+                    console.log(i, p.Tags);
+                    console.log(p.Tags.indexOf(i) != -1);
+                    if (p.Tags.indexOf(i) != -1) {
                         filterAfterThis.push(p);
                         break;
                     }
                 }
             }
         }
-        console.log("categories", filterAfterThis, filterAfterAll, selected);
+        console.log("Tags", filterAfterThis, filterAfterAll, selected);
+        if (!selected) {
+            filterAfterThis = filterAfterAll;
+            $scope.filteredArticles = filterAfterThis;
+        }
+        filterAfterAll = filterAfterThis;
+        
+        console.log(filterAfterAll);
+        $scope.DifficultyGroup = uniqueItems($scope.articles, 'Difficulty');
+        selected = false;
+        filterAfterThis = [];
+        for (var j in filterAfterAll) {
+            var p = filterAfterAll[j];
+            for (var i in $scope.useDifficulty) {
+                if ($scope.useDifficulty[i]) {
+                    selected = true;
+                    console.log(i, p.Difficulty);
+                    console.log(p.Difficulty.indexOf(i) != -1);
+                    if (p.Difficulty.indexOf(i) != -1) {
+                        filterAfterThis.push(p);
+                        break;
+                    }
+                }
+            }
+        }
+        console.log("Difficulty", filterAfterThis, filterAfterAll, selected);
+        if (!selected) {
+            filterAfterThis = filterAfterAll;
+            $scope.filteredArticles = filterAfterThis;
+        }
+        filterAfterAll = filterAfterThis;
+        
+        console.log(filterAfterAll);
+        $scope.SourceGroup = uniqueItems($scope.articles, 'Source');
+        selected = false;
+        filterAfterThis = [];
+        for (var j in filterAfterAll) {
+            var p = filterAfterAll[j];
+            for (var i in $scope.useSource) {
+                if ($scope.useSource[i]) {
+                    selected = true;
+                    console.log(i, p.Source);
+                    console.log(p.Source.indexOf(i) != -1);
+                    if (p.Source.indexOf(i) != -1) {
+                        filterAfterThis.push(p);
+                        break;
+                    }
+                }
+            }
+        }
+        console.log("Source", filterAfterThis, filterAfterAll, selected);
         if (!selected) {
             filterAfterThis = filterAfterAll;
             $scope.filteredArticles = filterAfterThis;
@@ -152,6 +216,31 @@ function IgCtrl($scope, filterFilter) {
             }
         }
         console.log("source", filterAfterThis, filterAfterAll, selected);
+        if (!selected) {
+            filterAfterThis = filterAfterAll;
+            $scope.filteredArticles = filterAfterThis;
+        }
+        filterAfterAll = filterAfterThis;
+        
+        console.log(filterAfterAll);
+        $scope.categoriesGroup = uniqueItems($scope.articles, 'categories');
+        selected = false;
+        filterAfterThis = [];
+        for (var j in filterAfterAll) {
+            var p = filterAfterAll[j];
+            for (var i in $scope.usecategories) {
+                if ($scope.usecategories[i]) {
+                    selected = true;
+                    console.log(i, p.categories);
+                    console.log(p.categories.indexOf(i) != -1);
+                    if (p.categories.indexOf(i) != -1) {
+                        filterAfterThis.push(p);
+                        break;
+                    }
+                }
+            }
+        }
+        console.log("categories", filterAfterThis, filterAfterAll, selected);
         if (!selected) {
             filterAfterThis = filterAfterAll;
             $scope.filteredArticles = filterAfterThis;
@@ -247,13 +336,35 @@ IgApp.filter('groupBy',
                 </div>
             
             <h3>
-            <span class="label label-info">categories</span>
+            <span class="label label-info">Tags</span>
             </h3>
                 <p></p>
-                <div class="checkbox" ng-repeat="categories in categoriesGroup | orderBy:'toString()'">
+                <div class="checkbox" ng-repeat="Tags in TagsGroup | orderBy:'toString()'">
                     <label>
-                        <input type="checkbox" ng-model="usecategories[categories]"/>
-                        {$ categories $}
+                        <input type="checkbox" ng-model="useTags[Tags]"/>
+                        {$ Tags $}
+                    </label>
+                </div>
+            
+            <h3>
+            <span class="label label-info">Difficulty</span>
+            </h3>
+                <p></p>
+                <div class="checkbox" ng-repeat="Difficulty in DifficultyGroup | orderBy:'toString()'">
+                    <label>
+                        <input type="checkbox" ng-model="useDifficulty[Difficulty]"/>
+                        {$ Difficulty $}
+                    </label>
+                </div>
+            
+            <h3>
+            <span class="label label-info">Source</span>
+            </h3>
+                <p></p>
+                <div class="checkbox" ng-repeat="Source in SourceGroup | orderBy:'toString()'">
+                    <label>
+                        <input type="checkbox" ng-model="useSource[Source]"/>
+                        {$ Source $}
                     </label>
                 </div>
             
@@ -265,6 +376,17 @@ IgApp.filter('groupBy',
                     <label>
                         <input type="checkbox" ng-model="usesource[source]"/>
                         {$ source $}
+                    </label>
+                </div>
+            
+            <h3>
+            <span class="label label-info">categories</span>
+            </h3>
+                <p></p>
+                <div class="checkbox" ng-repeat="categories in categoriesGroup | orderBy:'toString()'">
+                    <label>
+                        <input type="checkbox" ng-model="usecategories[categories]"/>
+                        {$ categories $}
                     </label>
                 </div>
             

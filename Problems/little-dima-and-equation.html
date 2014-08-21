@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="/static/bootstrap3/js/jquery.min.js"></script>
+        <script src="/static/bootstrap3/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="/static/bootstrap3/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="/static/bootstrap3/css/font-awesome.min.css"/>
+        <link rel="stylesheet" type="text/css" href="/static/pygments.css"/>
+        
+        <title></title>
+        
+        
+    </head>
+    <body ng-app="IgApp">
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/index.html">IntGraph</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    
+                    <li>
+                        <a href="/index.html">Problems</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Contribute.html">Contribute</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/About.html">About</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            
+
+<h1> Little Dima and Equation </h1>
+
+<div class="panel">
+    <div class="panel-body">
+        <footer class="post-info">
+            <span class="label label-default">Date</span>
+            <span class="published">
+                <i class="icon-calendar"></i>2014-08-21 14:57:00
+            </span>
+            <p></p>
+            
+                <span class="label label-primary ">Source</span>
+                
+                <span> codeforces   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">Difficulty</span>
+                
+                <span> 2.5   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">Tags</span>
+                
+                <span> implementation   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+        </footer>
+    </div>
+</div>
+
+
+
+
+<h2>Description</h2>
+
+
+
+<div>
+
+
+<p>Find all integer solutions x (0 &lt; x &lt; 10^9) of the equation:</p>
+
+<p>![formula][1]</p>
+
+<p>where a, b, c are some predetermined constant values and function s(x) determines the sum of all digits in the decimal representation of number x.</p>
+
+<h3>Input</h3>
+
+<p>a, b, c (1 ≤ a ≤ 5; 1 ≤ b ≤ 10000; -10000 ≤ c ≤ 10000).</p>
+
+<h3>Output</h3>
+
+<p>Print integer n — the number of the solutions that you&#39;ve found. </p>
+
+<p>Next print n integers in the increasing order — the solutions of the given equation.</p>
+
+<h2>Link</h2>
+
+<p>http://codeforces.com/contest/460/problem/B</p>
+
+
+</div>
+
+
+<h2>Solution</h2>
+
+
+
+<p>
+    <button type="button" class="btn btn-danger btn-lg showbtn" bind="class_Solution">Click to show</button>
+</p>
+
+<div class="hide" id="class_Solution">
+
+
+<p>We can&#39;t enumerate the value of x because it has a large scope. But the scope of s(x) is tiny that we can find out <code>0 &lt;= s(x) &lt;= 81</code>.</p>
+
+<p>So we enumerate the value of s(x), and trying to get the value of x&#39; by the formula above. Then, we check if s(x&#39;) is equal to s(x). If so, that is one feasible solution. </p>
+
+<p>Be aware that the solution MUST greater than 0 and less than 1e9. If you miss that point, you will lead to a <strong>Wrong Answer</strong>.</p>
+<div class="highlight"><pre><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">raw_input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+
+<span class="n">ans</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">81</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">b</span> <span class="o">*</span> <span class="p">(</span><span class="n">i</span> <span class="o">**</span> <span class="n">a</span><span class="p">)</span> <span class="o">+</span> <span class="n">c</span>
+    <span class="k">if</span> <span class="n">y</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">10</span> <span class="o">**</span> <span class="mi">9</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">y</span><span class="p">)))</span> <span class="o">==</span> <span class="n">i</span><span class="p">:</span>
+        <span class="n">ans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="nb">len</span><span class="p">(</span><span class="n">ans</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">ans</span><span class="p">))</span>
+</pre></div>
+
+
+</div>
+
+
+
+        </div>
+        <hr/>
+        <footer class="bs-footer" role="contentinfo">
+            <div class="container">
+                <p>Powered by IntGraph</p>
+                <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
+            </div>
+        </footer>
+
+         
+        
+<script>
+$(document).ready(function(){
+    $(".showbtn").click(function(){
+        var divname = $(this).attr("bind");
+        console.log(divname);
+        $("#" + divname).removeClass("hide");
+    });
+});
+</script>
+
+    </body>
+</html>

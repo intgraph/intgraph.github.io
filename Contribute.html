@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="/static/bootstrap3/js/jquery.min.js"></script>
+        <script src="/static/bootstrap3/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="/static/bootstrap3/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="/static/bootstrap3/css/font-awesome.min.css"/>
+        <link rel="stylesheet" type="text/css" href="/static/pygments.css"/>
+        
+        <title></title>
+        
+        
+    </head>
+    <body ng-app="IgApp">
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/index.html">IntGraph</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    
+                    <li>
+                        <a href="/index.html">Problems</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Contribute.html">Contribute</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/About.html">About</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            
+
+<h1>How to contribute</h1>
+
+<p>IntGraph is a cooperative project to share the interview problems. So if you have a good problem, no matter you read it from a book or you hear it on the street or get it at some other places, feel free to add it to the list. I&#39;ll be grateful.</p>
+
+<h2>How to add a problem</h2>
+
+<p>The content of the website is host on <a href="https://github.com/intgraph/intgraph-content">Github</a>. You can send a pull request to update the problem list or fix some typos or mistakes.</p>
+
+<h2>The format of the problem</h2>
+
+<p>I create a new type of markdown by pyparsing, and I consider that the &ldquo;new language&rdquo; is not bad. :)</p>
+
+<p>There are four sessions of this file.</p>
+
+<ul>
+<li>Metadata</li>
+</ul>
+
+<p>Indicate the title and the adding time of this problem.</p>
+
+<ul>
+<li>Tags</li>
+</ul>
+
+<p>The tags are used to filter the problem from the whole list. And there are three kind of tags. First one is &ldquo;difficulty&rdquo;. And the second is &ldquo;categories&rdquo;, which indicates the type of the problem. The last one is &ldquo;source&rdquo;, which tells the origin of the problem. (It&#39;s OK to have a &ldquo;unknown&rdquo; source if you don&#39;t quite clear where this problem is from.)</p>
+
+<ul>
+<li>Description</li>
+</ul>
+
+<p>The description of the problem, and I know it&#39;s easy to understand. :)</p>
+
+<ul>
+<li>Solution</li>
+</ul>
+
+<p>The solution of the problem, and it will be hide before the readers click the &ldquo;show&rdquo; button. It&#39;s the right place to put the answers.</p>
+
+<h2>The difficulty of the problem</h2>
+
+<ul>
+<li>Difficulty - 1</li>
+</ul>
+
+<p>This level is for the problems with <strong>no algorithm</strong>, and <strong>easy to write</strong>. Such as &ldquo;a + b problem&rdquo; / &ldquo;find the max number of an array&rdquo;. Usually, no interview problem is in this level.</p>
+
+<ul>
+<li>Difficulty - 2</li>
+</ul>
+
+<p>This level is for the problem with some simple algorithm or some problems which is a little bit hard to write.</p>
+
+<p>For example, the &ldquo;<a href="https://oj.leetcode.com/problems/add-two-numbers/">Add Two Numbers</a>&rdquo; form Leetcode, and the &ldquo;<a href="http://codeforces.com/contest/450/problem/A">Jzzhu and Children</a>&rdquo; from Codeforces.</p>
+
+<ul>
+<li>Difficulty - 3</li>
+</ul>
+
+<p>Some problem with common difficulty. You have to come up with a good algorithm or write the code carefully to deal with it. This is the level for the <strong>not too hard</strong> problem.</p>
+
+<p>For example, the &ldquo;<a href="http://codeforces.com/contest/450/problem/C">Jzzhu and Chocolate</a>&rdquo; from Codeforces.</p>
+
+<ul>
+<li>Difficulty - 4</li>
+</ul>
+
+<p>You have to come up with one of the best idea to tackle the problem and write some good code to satisfy the interviewer. If you can deal with the problem compeletely, you may get a good offer for some of the big companies.</p>
+
+<p>This level is for some hard algorithm problem and some of the system design problems which need your talent to deal with them.</p>
+
+<p>For example, the &ldquo;[Little Pony and Harmony Chest][5]&rdquo; from Codeforces or &ldquo;Design a search engine for Linkedin&rdquo;.</p>
+
+<ul>
+<li>Difficulty - 5</li>
+</ul>
+
+<p>You are the MASTER!</p>
+
+<h2>Example</h2>
+
+<pre><code>[Metadata]
+title: A + B problem
+date: 2014-08-10 23:13:31 
+
+[Tags]
+difficulty: 1
+categories: simulation, no algorithm
+source: unknown
+
+[Description]
+This is a example problem. Just calculate a + b.
+
+[Solution]
+The solution here is ready to play.
+```python
+import sys
+for line in sys.stdin:
+    (a, b) = map(int, line.split())
+    print a + b
+```</code></pre>
+
+
+
+        </div>
+        <hr/>
+        <footer class="bs-footer" role="contentinfo">
+            <div class="container">
+                <p>Powered by IntGraph</p>
+                <p>This page is generate at 2014-08-22 22:40:17 CST.</p>
+                <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
+            </div>
+        </footer>
+
+         
+         
+    </body>
+</html>

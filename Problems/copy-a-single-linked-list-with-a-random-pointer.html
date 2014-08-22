@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="/static/bootstrap3/js/jquery.min.js"></script>
+        <script src="/static/bootstrap3/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="/static/bootstrap3/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="/static/bootstrap3/css/font-awesome.min.css"/>
+        <link rel="stylesheet" type="text/css" href="/static/pygments.css"/>
+        
+        <title></title>
+        
+        
+    </head>
+    <body ng-app="IgApp">
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/index.html">IntGraph</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    
+                    <li>
+                        <a href="/index.html">Problems</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Contribute.html">Contribute</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/About.html">About</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            
+
+<h1> Copy a singly linked list with a random pointer </h1>
+
+<div class="panel">
+    <div class="panel-body">
+        <footer class="post-info">
+            <span class="label label-default">Date</span>
+            <span class="published">
+                <i class="icon-calendar"></i>2014-08-16 14:44:58
+            </span>
+            <p></p>
+            
+                <span class="label label-primary ">difficulty</span>
+                
+                <span> 4   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">categories</span>
+                
+                <span> linked-list  / </span>
+                
+                <span> implementation   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">source</span>
+                
+                <span> itint5  / </span>
+                
+                <span> baidu   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+        </footer>
+    </div>
+</div>
+
+
+
+
+<h2>Description</h2>
+
+
+
+<div>
+
+
+<p>Given you a singly linked list, and each node of the list contains a random pointer which points to arbitrary node of the list.</p>
+
+<p>Your mission is to copy the list.</p>
+
+<p>The defination of the node of the list is just like below.</p>
+<div class="highlight"><pre><span class="k">struct</span> <span class="n">ListNode</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">val</span><span class="p">;</span>
+    <span class="n">ListNode</span> <span class="o">*</span><span class="n">next</span><span class="p">;</span>
+    <span class="n">ListNode</span> <span class="o">*</span><span class="n">random</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+
+<p>Hint:</p>
+
+<ul>
+<li>A solution which uses O(n) (or more) extra memory space will only get a score of 60.</li>
+<li>A solution which will destory the origin list will get a scroe of 80.</li>
+<li>A solution which takes only O(1) extra memory will receive full credit.</li>
+</ul>
+
+
+</div>
+
+
+<h2>Solution</h2>
+
+
+
+<p>
+    <button type="button" class="btn btn-danger btn-lg showbtn" bind="class_Solution">Click to show</button>
+</p>
+
+<div class="hide" id="class_Solution">
+
+
+<p>This problem is in level 3 if you take O(n) extra memory. And you make use of a std::map (or unordered_map in C++11) to map the origin nodes with the new ones.</p>
+
+<p>The code below is easy to understand. And this solution is good enough for you to pass the interview of a company like Baidu. :)</p>
+<div class="highlight"><pre><span class="n">ListNode</span><span class="o">*</span> <span class="nf">copyListWithRandomPtr</span><span class="p">(</span><span class="n">ListNode</span> <span class="o">*</span><span class="n">head</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// &lt;= a solution of score 60</span>
+    <span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">ListNode</span><span class="o">*</span><span class="p">,</span> <span class="n">ListNode</span><span class="o">*&gt;</span> <span class="n">mp</span><span class="p">;</span>
+    <span class="n">ListNode</span> <span class="o">*</span><span class="n">ptr</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
+    <span class="n">ListNode</span> <span class="o">*</span><span class="n">dummyHead</span> <span class="o">=</span> <span class="n">nullptr</span><span class="p">,</span> <span class="o">*</span><span class="n">dummyPtr</span> <span class="o">=</span> <span class="n">nullptr</span><span class="p">;</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="n">ptr</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">dummyPtr</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">dummyPtr</span> <span class="o">-&gt;</span> <span class="n">next</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ListNode</span><span class="p">;</span>
+            <span class="n">dummyPtr</span> <span class="o">=</span> <span class="n">dummyPtr</span> <span class="o">-&gt;</span> <span class="n">next</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">dummyHead</span> <span class="o">=</span> <span class="n">dummyPtr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ListNode</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="o">*</span><span class="n">dummyPtr</span> <span class="o">=</span> <span class="o">*</span><span class="n">ptr</span><span class="p">;</span>
+        <span class="n">mp</span><span class="p">[</span><span class="n">ptr</span><span class="p">]</span> <span class="o">=</span> <span class="n">dummyPtr</span><span class="p">;</span>
+        <span class="n">ptr</span> <span class="o">=</span> <span class="n">ptr</span> <span class="o">-&gt;</span> <span class="n">next</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">dummyPtr</span> <span class="o">=</span> <span class="n">dummyHead</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">dummyPtr</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">dummyPtr</span> <span class="o">-&gt;</span> <span class="n">random</span> <span class="o">=</span> <span class="n">mp</span><span class="p">[</span><span class="n">dummyPtr</span> <span class="o">-&gt;</span> <span class="n">random</span><span class="p">];</span>
+        <span class="n">dummyPtr</span> <span class="o">=</span> <span class="n">dummyPtr</span> <span class="o">-&gt;</span> <span class="n">next</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">dummyHead</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>The solution of score 80 is almost the best answer. It uses the <code>next</code> pointer to build the mapping. As it&#39;s not the best answer, and may give your interviewer a reason to doubt your answer, so I won&#39;t give the code here. </p>
+
+<p>The best solution is quite skillful. It changes the structure of the origin list, and devide it into two same list at last. Great answer for an interviewee to past the code test.</p>
+<div class="highlight"><pre><span class="n">ListNode</span><span class="o">*</span> <span class="nf">copyListWithRandomPtr</span><span class="p">(</span><span class="n">ListNode</span> <span class="o">*</span><span class="n">head</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">ListNode</span> <span class="o">*</span><span class="n">ptr</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
+    <span class="n">ListNode</span> <span class="o">*</span><span class="n">dummyHead</span> <span class="o">=</span> <span class="n">nullptr</span><span class="p">,</span> <span class="o">*</span><span class="n">dummyPtr</span> <span class="o">=</span> <span class="n">nullptr</span><span class="p">;</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="n">ptr</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">auto</span> <span class="n">next</span> <span class="o">=</span> <span class="n">ptr</span> <span class="o">-&gt;</span> <span class="n">next</span><span class="p">;</span>
+        <span class="n">ptr</span> <span class="o">-&gt;</span> <span class="n">next</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ListNode</span><span class="p">;</span>
+        <span class="n">ptr</span> <span class="o">-&gt;</span> <span class="n">next</span> <span class="o">-&gt;</span> <span class="n">next</span> <span class="o">=</span> <span class="n">next</span><span class="p">;</span>
+        <span class="n">ptr</span> <span class="o">=</span> <span class="n">next</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">ptr</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">ptr</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">auto</span> <span class="n">next</span> <span class="o">=</span> <span class="n">ptr</span> <span class="o">-&gt;</span> <span class="n">next</span> <span class="o">-&gt;</span> <span class="n">next</span><span class="p">;</span>
+        <span class="k">auto</span> <span class="n">random</span> <span class="o">=</span> <span class="n">ptr</span> <span class="o">-&gt;</span> <span class="n">random</span> <span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+        <span class="n">ptr</span> <span class="o">-&gt;</span> <span class="n">next</span> <span class="o">-&gt;</span> <span class="n">random</span> <span class="o">=</span> <span class="n">random</span><span class="p">;</span>
+        <span class="n">ptr</span> <span class="o">=</span> <span class="n">next</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">ptr</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">ptr</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">auto</span> <span class="n">next</span> <span class="o">=</span> <span class="n">ptr</span> <span class="o">-&gt;</span> <span class="n">next</span> <span class="o">-&gt;</span> <span class="n">next</span><span class="p">;</span>
+        <span class="k">auto</span> <span class="n">dummy</span> <span class="o">=</span> <span class="n">ptr</span> <span class="o">-&gt;</span> <span class="n">next</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">dummyPtr</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">dummyHead</span> <span class="o">=</span> <span class="n">dummyPtr</span> <span class="o">=</span> <span class="n">dummy</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">dummyPtr</span> <span class="o">-&gt;</span> <span class="n">next</span> <span class="o">=</span> <span class="n">dummy</span><span class="p">;</span>
+            <span class="n">dummyPtr</span> <span class="o">=</span> <span class="n">dummyPtr</span> <span class="o">-&gt;</span> <span class="n">next</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">ptr</span> <span class="o">-&gt;</span> <span class="n">next</span> <span class="o">=</span> <span class="n">next</span><span class="p">;</span>
+        <span class="n">ptr</span> <span class="o">=</span> <span class="n">ptr</span> <span class="o">-&gt;</span> <span class="n">next</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">dummyHead</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+</div>
+
+
+
+        </div>
+        <hr/>
+        <footer class="bs-footer" role="contentinfo">
+            <div class="container">
+                <p>Powered by IntGraph</p>
+                <p>This page is generate at 2014-08-22 22:40:17 CST.</p>
+                <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
+            </div>
+        </footer>
+
+         
+        
+<script>
+$(document).ready(function(){
+    $(".showbtn").click(function(){
+        var divname = $(this).attr("bind");
+        console.log(divname);
+        $("#" + divname).removeClass("hide");
+    });
+});
+</script>
+
+    </body>
+</html>

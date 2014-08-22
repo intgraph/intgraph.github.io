@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="/static/bootstrap3/js/jquery.min.js"></script>
+        <script src="/static/bootstrap3/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="/static/bootstrap3/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="/static/bootstrap3/css/font-awesome.min.css"/>
+        <link rel="stylesheet" type="text/css" href="/static/pygments.css"/>
+        
+        <title></title>
+        
+        
+    </head>
+    <body ng-app="IgApp">
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/index.html">IntGraph</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    
+                    <li>
+                        <a href="/index.html">Problems</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Contribute.html">Contribute</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/About.html">About</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            
+
+<h1> All Twice Excpet One </h1>
+
+<div class="panel">
+    <div class="panel-body">
+        <footer class="post-info">
+            <span class="label label-default">Date</span>
+            <span class="published">
+                <i class="icon-calendar"></i>2014-08-13 23:14:00
+            </span>
+            <p></p>
+            
+                <span class="label label-primary ">difficulty</span>
+                
+                <span> 2   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">categories</span>
+                
+                <span> bit manipulation   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">source</span>
+                
+                <span> unknown   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+        </footer>
+    </div>
+</div>
+
+
+
+
+<h2>Description</h2>
+
+
+
+<div>
+
+
+<p>Given an array of integers, every element appears twice except for one. Find that single one.</p>
+
+
+</div>
+
+
+<h2>Solution</h2>
+
+
+
+<p>
+    <button type="button" class="btn btn-danger btn-lg showbtn" bind="class_Solution">Click to show</button>
+</p>
+
+<div class="hide" id="class_Solution">
+
+
+<p>This problem is the very basic one. So I just paste my code here. If you are confused with the xor operator， you might have to review the knowledge of <strong>bit manipulation</strong> carefully.</p>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="c"># @param A, a list of integer</span>
+    <span class="c"># @return an integer</span>
+    <span class="k">def</span> <span class="nf">singleNumber</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">^</span> <span class="n">y</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
+</pre></div>
+
+<p>Time complexity: O(n)</p>
+
+
+</div>
+
+
+
+        </div>
+        <hr/>
+        <footer class="bs-footer" role="contentinfo">
+            <div class="container">
+                <p>Powered by IntGraph</p>
+                <p>This page is generate at 2014-08-22 22:40:17 CST.</p>
+                <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
+            </div>
+        </footer>
+
+         
+        
+<script>
+$(document).ready(function(){
+    $(".showbtn").click(function(){
+        var divname = $(this).attr("bind");
+        console.log(divname);
+        $("#" + divname).removeClass("hide");
+    });
+});
+</script>
+
+    </body>
+</html>

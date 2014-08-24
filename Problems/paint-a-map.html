@@ -38,14 +38,14 @@
         <div class="container">
             
 
-<h1> Watering Flowers </h1>
+<h1> Paint a map </h1>
 
 <div class="panel">
     <div class="panel-body">
         <footer class="post-info">
             <span class="label label-default">Date</span>
             <span class="published">
-                <i class="icon-calendar"></i>2014-08-22 16:00:00
+                <i class="icon-calendar"></i>2014-08-24 16:46:01
             </span>
             <p></p>
             
@@ -57,17 +57,15 @@
             
                 <span class="label label-primary ">categories</span>
                 
-                <span> binary search  / </span>
+                <span> proof  / </span>
                 
-                <span> greedy  / </span>
-                
-                <span> binary indexed tree   </span>
+                <span> constructive   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
                 <span class="label label-primary ">source</span>
                 
-                <span> codeforces   </span>
+                <span> Algorithms: A Creative Approach   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
@@ -76,6 +74,60 @@
 </div>
 
 
+
+
+<h2>Description</h2>
+
+
+
+<div>
+
+
+<p>There&#39;s a wierd land, which divided by n distinct lines into different regions.</p>
+
+<p>Your mission is to draw a map that no two neighboring regions share the same color. And two regions are considered neighbors if and only if they have an edge in common.</p>
+
+<p>How many colors will you take to paint a map with n distinct lines.</p>
+
+<p>There are some examples.</p>
+
+<p><img src="http://wizmann-pic.qiniudn.com/37e4e79b47ec6aa00fb911d12d34588d" alt="map with 2 lines"></p>
+
+<p><img src="http://wizmann-pic.qiniudn.com/c3b50cea0c1bf1245ce1f4a92fd444ca" alt="map with 3 lines"></p>
+
+
+</div>
+
+
+<h2>Solution</h2>
+
+
+
+<p>
+    <button type="button" class="btn btn-danger btn-lg showbtn" bind="class_Solution">Click to show</button>
+</p>
+
+<div class="hide" id="class_Solution">
+
+
+<p>As the two examples above, we can make a hypothesis that it will take only two kind of colors to paint a map with arbitrary lines.</p>
+
+<p>Now, let&#39;s prove it is correct.</p>
+
+<p><code>Map(n) = True</code> stands for that a map with n lines could be well painted by only two colors. </p>
+
+<p>So, <code>Map(1) = Map(2) = Map(3) = True</code>.</p>
+
+<p>Next, assuming a &ldquo;well painted&rdquo; map, Map(n), which contains n lines. And we add one line to the map, and divide the map into two parts which are called X &amp; Y.</p>
+
+<p>It&#39;s easy to find out that the part X and part Y are &ldquo;well painted&rdquo; because the origin map is &ldquo;well painted&rdquo;. Further, if X (or Y) reverse the color of the regions of the part, they are &ldquo;well painted&rdquo;, either.</p>
+
+<p>And we considering two regions, R1 and R2, which are in the same region in the origin map, and they are neighbours now. And if we revert the color of X (or Y), as a result, all pairs like <R1, R2> are in different colors.</p>
+
+<p>So, we prove that if we have a <code>Map(n) = True</code>, we can get the new <code>Map(n + 1) = True</code>. As we already get <code>Map(1) = True</code>, so the hypothesis is proved.</p>
+
+
+</div>
 
 
 

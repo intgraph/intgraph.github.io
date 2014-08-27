@@ -38,32 +38,34 @@
         <div class="container">
             
 
-<h1> All Twice Excpet One </h1>
+<h1> IP to location </h1>
 
 <div class="panel">
     <div class="panel-body">
         <footer class="post-info">
             <span class="label label-default">Date</span>
             <span class="published">
-                <i class="icon-calendar"></i>2014-08-13 23:14:00
+                <i class="icon-calendar"></i>2014-08-27 23:14:09
             </span>
             <p></p>
             
                 <span class="label label-primary ">difficulty</span>
                 
-                <span> 2   </span>
+                <span> 2.5   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
                 <span class="label label-primary ">categories</span>
                 
-                <span> bit manipulation   </span>
+                <span> hash  / </span>
+                
+                <span> data sturctures   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
                 <span class="label label-primary ">source</span>
                 
-                <span> unknown   </span>
+                <span> baidu   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
@@ -81,7 +83,11 @@
 <div>
 
 
-<p>Given an array of integers, every element appears twice except for one. Find that single one.</p>
+<p>As a ads system, sometimes we have to get the location of users to tickle them with some better ads. (But who likes ads, right?)</p>
+
+<p>Now, we have a table of some <strong>IP segments</strong> and the corresponding locations (country, province, city or district).</p>
+
+<p>Your mission is to build a data structure or an algorithm to get the location by a given <strong>IP address</strong>.</p>
 
 
 </div>
@@ -98,15 +104,44 @@
 <div class="hide" id="class_Solution">
 
 
-<p>This problem is the very basic one. So I just paste my code here. If you are confused with the xor operator， you might have to review the knowledge of <strong>bit manipulation</strong> carefully.</p>
-<div class="highlight"><pre><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
-    <span class="c"># @param A, a list of integer</span>
-    <span class="c"># @return an integer</span>
-    <span class="k">def</span> <span class="nf">singleNumber</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">^</span> <span class="n">y</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
-</pre></div>
+<p>First of all, we have to convert the IP address (IPv4 in here) which is string into an integer. That will lead to a reduction of the memory usage.</p>
 
-<p>Time complexity: O(n)</p>
+<p>Secondly, we can&#39;t use a simple hash algorithm because one IP segment contains thousands (or more) IP addresses, and some IP segments are reserved. So the &ldquo;IP -&gt; Location&rdquo; table is quite sparse, and it waste a huge amount of memory space if we store the information of every IP in this scenario.</p>
+
+<p>And there are two solutions here. One is simple, and the other is a bit complex. (Easy enough after all.)</p>
+
+<h3>Solution No. 1</h3>
+
+<p>It&#39;s easy to find out that we can split the IP address into two <code>uint16_t</code> numbers, <code>ip_addr = &lt;L, R&gt;</code>. And the IP adresses which share the same location is usually continuous.</p>
+
+<p>Assuming we have a IP segment starts from <code>&lt;L, R1&gt;</code> and end with <code>&lt;L, R2&gt;</code>. We take the <code>&lt;L&gt;</code> part as key, and take the <code>&lt;R1, R2&gt;</code> part as value to make a hash table. And if we get a IP address, we can seek which segment it is in from the hash table with a <strong>not-bad</strong> performance.</p>
+
+<p>If a continuous IP segment starts from <code>&lt;L1, R1&gt;</code> and end with <code>&lt;L2, R2&gt;</code>, we can split it to two or more segments which share the same <code>&lt;L&gt;</code> part.</p>
+
+<blockquote>
+<p>I won&#39;t show my code here because I&#39;m sleepy. (-.-)zzz</p>
+</blockquote>
+
+<h3>Solution No. 2</h3>
+
+<p>As the IP address can be represented as a <code>uint32_t</code> number, we can make the IP segments as &ldquo;<uint32_t, uint32_t>&rdquo; pairs. And we sort these pairs by the first element.</p>
+
+<p>When we&#39;re seeking a specific IP address, we just use the binary search to find which segment is the IP address is in.</p>
+
+<blockquote>
+<p>Sleepy. (-.-)zzz</p>
+</blockquote>
+
+<h3>Some other solutions</h3>
+
+<ul>
+<li><p>Segment Tree
+Not bad choice, but it&#39;s too heavy in this scenario.</p></li>
+<li><p>Binary Indexed Tree
+Is that actually necessary?</p></li>
+<li><p>Linear Scan
+Rough, Fast, Fierce. (糙快猛 in Chinese)</p></li>
+</ul>
 
 
 </div>
@@ -118,7 +153,7 @@
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2014-08-27 23:51:04 CST.</p>
+                <p>This page is generated at 2014-08-27 23:51:05 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

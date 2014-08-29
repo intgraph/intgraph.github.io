@@ -124,9 +124,9 @@
 
 <h3>Solution No. 2</h3>
 
-<p>As the IP address can be represented as a <code>uint32_t</code> number, we can make the IP segments as <code>&lt;uint32_t, uint32_t&gt;</code> pairs. And we sort these pairs by the first element.</p>
+<p>As the IP address can be represented as a <code>uint32_t</code> number, we can make the IP segments as <code>&lt;uint32_t, uint32_t&gt;</code> pairs. And we sort these pairs by the second element.</p>
 
-<p>When we&#39;re seeking a specific IP address, we just use the binary search to find which segment the IP address is in.</p>
+<p>When we&#39;re seeking a specific IP address, we just use the binary search (lower_bound) to find which segment the IP address is in.</p>
 
 <blockquote>
 <p>Sleepy. (-.-)zzz</p>
@@ -135,13 +135,22 @@
 <h3>Some other solutions</h3>
 
 <ul>
-<li><p>Segment Tree
-Not bad choice, but it&#39;s too heavy in this scenario.</p></li>
-<li><p>Binary Indexed Tree
-Is that actually necessary?</p></li>
-<li><p>Linear Scan
-Rough, Fast, Fierce. (糙快猛 in Chinese)</p></li>
+<li>Segment Tree</li>
 </ul>
+
+<p>Not a bad choice, but it&#39;s too heavy in this scenario.</p>
+
+<ul>
+<li>Binary Indexed Tree</li>
+</ul>
+
+<p>Is that actually necessary?</p>
+
+<ul>
+<li>Linear Scan</li>
+</ul>
+
+<p>Rough, Fast, Fierce. (糙快猛 in Chinese)</p>
 
 
 </div>
@@ -153,7 +162,7 @@ Rough, Fast, Fierce. (糙快猛 in Chinese)</p></li>
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2014-08-27 23:52:42 CST.</p>
+                <p>This page is generated at 2014-08-29 09:06:05 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

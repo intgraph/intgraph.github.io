@@ -38,34 +38,32 @@
         <div class="container">
             
 
-<h1> Multiple to be all ones </h1>
+<h1> A sticky gum problem </h1>
 
 <div class="panel">
     <div class="panel-body">
         <footer class="post-info">
             <span class="label label-default">Date</span>
             <span class="published">
-                <i class="icon-calendar"></i>2014-08-16 15:58:00
+                <i class="icon-calendar"></i>2014-08-31 15:52:53
             </span>
             <p></p>
             
                 <span class="label label-primary ">difficulty</span>
                 
-                <span> 3   </span>
+                <span> 2   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
                 <span class="label label-primary ">categories</span>
                 
-                <span> math   </span>
+                <span> thinking in reverse   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
                 <span class="label label-primary ">source</span>
                 
-                <span> itint5  / </span>
-                
-                <span> google   </span>
+                <span> Aha Insight   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
@@ -83,17 +81,41 @@
 <div>
 
 
-<p>Given a number <strong>a</strong> (1 &lt;= a &lt;= 10^6), the mission to find the a number <strong>b</strong> that <code>a * b</code> equals to a number is consists of only ones.</p>
+<p>Poor Mrs. Jones tried to gey past the bubble gum machine before her twins notices. But she failed.</p>
 
-<p>If <strong>b</strong> exists, return the length of a * b. Otherwise, return -1.</p>
+<p>The both twins wanted one gum, and they wanted the gums with same color.</p>
 
-<p>For example,</p>
+<p>As there&#39;s no way of knowing the color of next ball of that machine, how many pennies must Mrs. Jones be prepared to spend in the <strong>worst case</strong>? </p>
 
-<pre><code>a = 3
-b = 37
-a * b = 111</code></pre>
+<p>And, what if Mrs. Jones have more children?</p>
 
-<p>The answer is 3 as len(111) is equal to 3.</p>
+<p>p.s. One piece of bubble gum values one penny.</p>
+
+<h3>Input / Output</h3>
+
+<p><code>n</code> stands for the number of colors in the machine. <code>k</code> stands for the number of child.</p>
+
+<p>And the n numbers in the next line indicate how many gums are with the particular color.</p>
+
+<p>One example:</p>
+
+<blockquote>
+<p>Input:
+2 2
+4 6
+Output:
+3</p>
+</blockquote>
+
+<p>One other example:</p>
+
+<blockquote>
+<p>Input:
+3 3
+6 4 1
+Output:
+6</p>
+</blockquote>
 
 
 </div>
@@ -110,33 +132,21 @@ a * b = 111</code></pre>
 <div class="hide" id="class_Solution">
 
 
-<p>Assuming f(n) = 111&hellip;1 (n ones).</p>
+<p>Let&#39;s start with the case of twins.</p>
 
-<pre><code>f(n) % a == ((f(n - 1) % a) * 10 + 1) % a</code></pre>
+<p>In the worst case, the first two gums come out of that machine are different, so a third gum (no matter what color it is) is needed.</p>
 
-<p>So we can enumerate the number of ones to get the final answer.</p>
+<p>It&#39;s easy for us the generalize the case of gums with <code>n</code> colors and two children. If there are <code>n</code> sets of gums, one must be prepared to buy <code>n + 1</code> balls.</p>
 
-<p>Further, it&#39;s easy to find out that for two numbers, x and y (x != y). For <code>f(x) % a == f(y) % a</code>, we can find that <code>f(x + 1) % a == f(y + 1) % a</code>.</p>
+<p>If we have more children, and there are plenty of gums in the machine, the pennies we have to prepared is up to <code>k * (n - 1) + 1</code>. Because the bad luck, before we get <code>k</code> balls in a same color, we have to buy the gums as much as possible to spend the money.</p>
 
-<p>As a result, if we find that pair of numbers (x, y) before we find a number <strong>z</strong> that f(z) % a == 0. It&#39;s easy to indicate there is no answer.</p>
-<div class="highlight"><pre><span class="k">class</span> <span class="nc">MinAllOne</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">findMinAllOne</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
-        <span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="n">st</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([])</span>
-        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">v</span> <span class="o">%</span> <span class="n">a</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">l</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">v</span> <span class="o">%=</span> <span class="n">a</span>
-                <span class="k">if</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">st</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">st</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
-                <span class="n">v</span> <span class="o">=</span> <span class="n">v</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="mi">1</span>
-            <span class="n">l</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+<p>And the scenario that the gums are less than plenty is easy enough, you can get it easily.</p>
+<div class="highlight"><pre><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">raw_input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+<span class="n">ns</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">raw_input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+<span class="k">if</span> <span class="nb">max</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">k</span><span class="p">:</span>
+    <span class="k">print</span> <span class="o">-</span><span class="mi">1</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">k</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="n">k</span> <span class="k">else</span> <span class="n">x</span><span class="p">,</span> <span class="n">ns</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span>
 </pre></div>
 
 

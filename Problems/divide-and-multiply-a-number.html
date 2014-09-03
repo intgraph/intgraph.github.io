@@ -38,34 +38,32 @@
         <div class="container">
             
 
-<h1> Command Within The Same Shell </h1>
+<h1> Divide and multiply a number </h1>
 
 <div class="panel">
     <div class="panel-body">
         <footer class="post-info">
             <span class="label label-default">Date</span>
             <span class="published">
-                <i class="icon-calendar"></i>2014-08-16 18:46:00
+                <i class="icon-calendar"></i>2014-09-03 08:48:00
             </span>
             <p></p>
             
                 <span class="label label-primary ">difficulty</span>
                 
-                <span> 1   </span>
+                <span> 3.5   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
                 <span class="label label-primary ">categories</span>
                 
-                <span> pipeline  / </span>
-                
-                <span> shell   </span>
+                <span> math   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
                 <span class="label label-primary ">source</span>
                 
-                <span> unknown   </span>
+                <span> 待字闺中   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
@@ -83,23 +81,7 @@
 <div>
 
 
-<p>Suppose that you have to write a script to receive argument from command line, which is another command.
-The command which passed as argument will run in the current shell and return some results.</p>
-
-<p>For example, you have to list all the process when you start a shell, of course including the shell process.
-And do some other things with the results.</p>
-
-<p>Run by</p>
-
-<pre><code>$./example.sh 'ps aux'</code></pre>
-
-<p>In shell script</p>
-<div class="highlight"><pre><span class="c">#!/bin/bash</span>
-
-<span class="c">#How to run the command</span>
-</pre></div>
-
-<p>contribute by: violet</p>
+<p>Given a positive integer <code>k</code>. Your misssion is to divide that number into several positive intgers <code>[a0, a1 ... an]</code> that <code>a0 + a1 + ... + an == k</code> to make <code>a0 * a1 * ... * an</code> as large as possible.</p>
 
 
 </div>
@@ -116,13 +98,27 @@ And do some other things with the results.</p>
 <div class="hide" id="class_Solution">
 
 
-<p>Use pipeline with echo</p>
-<div class="highlight"><pre><span class="c">#!/bin/bash</span>
-
-<span class="nb">echo</span> <span class="nv">$*</span> | bash
-
-<span class="c">#do something else</span>
+<p>Assuming we have already get the solutions of <code>a0, a1... am</code>, it&#39;s easy to know that if <code>an == ax + ay</code>, the result of <code>an</code> is equal to <code>max(solution(ax) * solution(ay))</code>. This method will take O(n^2) time and O(n) memory space.</p>
+<div class="highlight"><pre><span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">raw_input</span><span class="p">())</span>
+<span class="n">s</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">i</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">j</span><span class="p">]</span> <span class="o">*</span> <span class="n">s</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+<span class="k">print</span> <span class="n">s</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
 </pre></div>
+
+<p>And there&#39;s a simple formula for this problem.</p>
+
+<pre><code>maxi = 2 ** x + 3 ** y</code></pre>
+
+<p>with <code>2 * x + 3 * y == n</code> and <code>y</code> should be as large as possible.</p>
+
+<p>Here I give a simple (maybe not right) proof.</p>
+
+<p>The inequality <code>(n - x) * x &gt; x</code> is true when <code>x &gt;= 2</code> and <code>x &lt;= n - 2</code>. And it shows that if a number can be divided, then do divide it.</p>
+
+<p>Finally, we get a number of <code>2s</code> and <code>3s</code>. And it&#39;s easy for us that <code>2 * 2 * 2 = 8 &lt; 9 = 3 * 3</code>, so we must turn <code>2s</code> into <code>3s</code> as much as possible to make the maximum final result.</p>
 
 
 </div>

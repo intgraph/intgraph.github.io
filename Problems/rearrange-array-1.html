@@ -38,14 +38,14 @@
         <div class="container">
             
 
-<h1> IP to location </h1>
+<h1> Rearrange array in alternating positive &amp; negative items - 1 </h1>
 
 <div class="panel">
     <div class="panel-body">
         <footer class="post-info">
             <span class="label label-default">Date</span>
             <span class="published">
-                <i class="icon-calendar"></i>2014-08-27 23:14:09
+                <i class="icon-calendar"></i>2014-09-10 08:01:26
             </span>
             <p></p>
             
@@ -57,15 +57,15 @@
             
                 <span class="label label-primary ">categories</span>
                 
-                <span> hash  / </span>
+                <span> partition  / </span>
                 
-                <span> data sturctures   </span>
+                <span> implementation   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
                 <span class="label label-primary ">source</span>
                 
-                <span> baidu   </span>
+                <span> geeksforgeeks   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
@@ -83,11 +83,13 @@
 <div>
 
 
-<p>As a ads system, sometimes we have to get the location of users to tickle them with some better ads. (But who likes ads, right?)</p>
+<p>Given an array of positive and negative numbers, arrange them such that the all negative numbers are on the left side of the positive numbers.</p>
 
-<p>Now, we have a table of some <strong>IP segments</strong> and the corresponding locations (country, province, city or district).</p>
+<pre><code>Example Input:
+arr[] = {1, 2, 3, -4, -1, 4}
 
-<p>Your mission is to build a data structure or an algorithm to get the location by a given <strong>IP address</strong>.</p>
+One Possible Output: 
+arr[] = {-4, -1, 1, 2, 3, 4}</code></pre>
 
 
 </div>
@@ -104,53 +106,25 @@
 <div class="hide" id="class_Solution">
 
 
-<p>First of all, we have to convert the IP address (IPv4 in here) which is string into an integer. That will lead to a reduction of the memory usage.</p>
-
-<p>Secondly, we can&#39;t use a simple hash algorithm because one IP segment contains thousands (or more) IP addresses, and some IP segments are reserved. So the &ldquo;IP -&gt; Location&rdquo; table is quite sparse, and it waste a huge amount of memory space if we store the information of every IP in this scenario.</p>
-
-<p>And there are two solutions here. One is simple, and the other is a bit complex. (Easy enough after all.)</p>
-
-<h3>Solution No. 1</h3>
-
-<p>It&#39;s easy to find out that we can split the IP address into two <code>uint16_t</code> numbers, <code>ip_addr = &lt;L, R&gt;</code>. And the IP adresses which share the same location is usually continuous.</p>
-
-<p>Assuming we have a IP segment starts from <code>&lt;L, R1&gt;</code> and end with <code>&lt;L, R2&gt;</code>. We take the <code>&lt;L&gt;</code> part as key, and take the <code>&lt;R1, R2&gt;</code> part as value to make a hash table. And if we get a IP address, we can seek which segment it is in from the hash table with a <strong>not-bad</strong> performance.</p>
-
-<p>If a continuous IP segment starts from <code>&lt;L1, R1&gt;</code> and end with <code>&lt;L2, R2&gt;</code>, we can split it to two or more segments which share the same <code>&lt;L&gt;</code> part.</p>
-
-<blockquote>
-<p>I won&#39;t show my code here because I&#39;m sleepy. (-.-)zzz</p>
-</blockquote>
-
-<h3>Solution No. 2</h3>
-
-<p>As the IP address can be represented as a <code>uint32_t</code> number, we can make the IP segments as <code>&lt;uint32_t, uint32_t&gt;</code> pairs. And we sort these pairs by the second element.</p>
-
-<p>When we&#39;re seeking a specific IP address, we just use the binary search (lower_bound) to find which segment the IP address is in.</p>
-
-<blockquote>
-<p>Sleepy. (-.-)zzz</p>
-</blockquote>
-
-<h3>Some other solutions</h3>
-
-<ul>
-<li>Segment Tree</li>
-</ul>
-
-<p>Not a bad choice, but it&#39;s too heavy in this scenario.</p>
-
-<ul>
-<li>Binary Indexed Tree</li>
-</ul>
-
-<p>Is that actually necessary?</p>
-
-<ul>
-<li>Linear Scan</li>
-</ul>
-
-<p>Rough, Fast, Fierce. (糙快猛 in Chinese)</p>
+<p>Simple partition manipulation.</p>
+<div class="highlight"><pre><span class="kt">void</span> <span class="nf">partition</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">vec</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">l</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">vec</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">l</span> <span class="o">&lt;</span> <span class="n">r</span> <span class="o">&amp;&amp;</span> <span class="n">vec</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">l</span><span class="o">++</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">l</span> <span class="o">&lt;</span> <span class="n">r</span> <span class="o">&amp;&amp;</span> <span class="n">vec</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">r</span><span class="o">--</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">l</span> <span class="o">&lt;</span> <span class="n">r</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">swap</span><span class="p">(</span><span class="n">vec</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">vec</span><span class="p">[</span><span class="n">r</span><span class="p">]);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 
 
 </div>

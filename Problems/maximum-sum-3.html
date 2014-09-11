@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/jquery.min.js"></script>
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/font-awesome.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/pygments.css"/>
+        
+        <title></title>
+        
+        
+    </head>
+    <body ng-app="IgApp">
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/index.html">IntGraph</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    
+                    <li>
+                        <a href="/index.html">Problems</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Contribute.html">Contribute</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/About.html">About</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            
+
+<h1> maximum sum - 3 </h1>
+
+<div class="panel">
+    <div class="panel-body">
+        <footer class="post-info">
+            <span class="label label-default">Date</span>
+            <span class="published">
+                <i class="icon-calendar"></i>2014-09-11 00:20:32
+            </span>
+            <p></p>
+            
+                <span class="label label-primary ">difficulty</span>
+                
+                <span> 3.5   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">categories</span>
+                
+                <span> dp   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">source</span>
+                
+                <span> hduoj  / </span>
+                
+                <span> baidu   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+        </footer>
+    </div>
+</div>
+
+
+
+
+<h2>Description</h2>
+
+
+
+<div>
+
+
+<p>Given a two-dimensional array of positive and negative integers, a sub-rectangle is any contiguous sub-array of size 1 x 1 or greater located within the whole array. The sum of a rectangle is the sum of all the elements in that rectangle. In this problem the sub-rectangle with the largest sum is referred to as the maximal sub-rectangle.</p>
+
+<p>As an example, the maximal sub-rectangle of the array:</p>
+
+<pre><code>0 -2 -7 0
+9 2 -6 2
+-4 1 -4 1
+-1 8 0 -2</code></pre>
+
+<p>is in the lower left corner:</p>
+
+<pre><code>9 2
+-4 1
+-1 8</code></pre>
+
+<p>and has a sum of 15.</p>
+
+<p>link: http://acm.hdu.edu.cn/showproblem.php?pid=1081</p>
+
+
+</div>
+
+
+<h2>Solution</h2>
+
+
+
+<p>
+    <button type="button" class="btn btn-danger btn-lg showbtn" bind="class_Solution">Click to show</button>
+</p>
+
+<div class="hide" id="class_Solution">
+
+
+<p>A vintage problem, too. We sum up to column i to column, and then to find the max interval, so that we can find out the max sub-matrix.</p>
+<div class="highlight"><pre><span class="c1">// Result: 2014-09-11 00:35:46  Accepted        1081    0MS     412K    1101 B  G++     Wizmann</span>
+<span class="cp">#include &lt;cstdio&gt;</span>
+<span class="cp">#include &lt;cstdlib&gt;</span>
+<span class="cp">#include &lt;cstring&gt;</span>
+<span class="cp">#include &lt;iostream&gt;</span>
+<span class="cp">#include &lt;algorithm&gt;</span>
+<span class="cp">#include &lt;vector&gt;</span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="cp">#define print(x) cout &lt;&lt; x &lt;&lt; endl</span>
+<span class="cp">#define input(x) cin &gt;&gt; x</span>
+
+<span class="k">const</span> <span class="kt">int</span> <span class="n">INF</span> <span class="o">=</span> <span class="mh">0x3f3f3f3f</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">SIZE</span> <span class="o">=</span> <span class="mi">128</span> <span class="o">+</span> <span class="mi">5</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="n">g</span><span class="p">[</span><span class="n">SIZE</span><span class="p">][</span><span class="n">SIZE</span><span class="p">];</span>
+<span class="kt">int</span> <span class="n">array</span><span class="p">[</span><span class="n">SIZE</span><span class="p">];</span>
+<span class="kt">int</span> <span class="n">n</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">max_interval</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span> <span class="n">dp</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">ans</span> <span class="o">=</span> <span class="o">-</span><span class="n">INF</span><span class="p">,</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">sum</span> <span class="o">+=</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">sum</span><span class="p">);</span>
+        <span class="n">sum</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">sum</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">ans</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">input</span><span class="p">(</span><span class="n">n</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">g</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="kt">int</span> <span class="n">ans</span> <span class="o">=</span> <span class="o">-</span><span class="n">INF</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">memset</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">array</span><span class="p">));</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">k</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">array</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+=</span> <span class="n">g</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
+                <span class="p">}</span>
+                <span class="n">ans</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">max_interval</span><span class="p">(</span><span class="n">array</span><span class="p">));</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">print</span><span class="p">(</span><span class="n">ans</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+</div>
+
+
+
+        </div>
+        <hr/>
+        <footer class="bs-footer" role="contentinfo">
+            <div class="container">
+                <p>Powered by IntGraph</p>
+                <p>This page is generated at 2014-09-11 09:28:03 CST.</p>
+                <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
+            </div>
+        </footer>
+
+         
+        
+<script>
+$(document).ready(function(){
+    $(".showbtn").click(function(){
+        var divname = $(this).attr("bind");
+        console.log(divname);
+        $("#" + divname).removeClass("hide");
+    });
+});
+</script>
+
+    </body>
+</html>

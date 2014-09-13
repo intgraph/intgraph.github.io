@@ -31,6 +31,8 @@ var uniqueItems = function (data, key) {
 
 function IgCtrl($scope, filterFilter) {
     
+    $scope.usedifficutly = {};
+    
     $scope.usedifficulty = {};
     
     $scope.usecategories = {};
@@ -41,6 +43,8 @@ function IgCtrl($scope, filterFilter) {
     $scope.articles = [
         
         {"source": ["hduoj"], "url": "Problems/maximum-sum-4.html", "title": "maximum sum - 4", "difficulty": ["4"], "date": "2014-9-11 13:43:00", "categories": ["dp"]},
+        
+        {"difficutly": ["3"], "title": "mediation of a data flow", "url": "Problems/mediation-of-a-data-flow.html", "source": ["unknown"], "date": "2014-09-13 10:21:31", "categories": ["priority-queue"]},
         
         {"source": ["hduoj", "baidu"], "url": "Problems/maximum-sum-3.html", "title": "maximum sum - 3", "difficulty": ["3.5"], "date": "2014-09-11 00:20:32", "categories": ["dp"]},
         
@@ -98,6 +102,8 @@ function IgCtrl($scope, filterFilter) {
         return {
             articles: $scope.articles,
             
+            usedifficutly: $scope.usedifficutly,
+            
             usedifficulty: $scope.usedifficulty,
             
             usecategories: $scope.usecategories,
@@ -114,6 +120,31 @@ function IgCtrl($scope, filterFilter) {
         };
         var filterAfterAll = $scope.articles;
         var filterAfterThis = [];
+        
+        console.log(filterAfterAll);
+        $scope.difficutlyGroup = uniqueItems($scope.articles, 'difficutly');
+        selected = false;
+        filterAfterThis = [];
+        for (var j in filterAfterAll) {
+            var p = filterAfterAll[j];
+            for (var i in $scope.usedifficutly) {
+                if ($scope.usedifficutly[i]) {
+                    selected = true;
+                    console.log(i, p.difficutly);
+                    console.log(p.difficutly.indexOf(i) != -1);
+                    if (p.difficutly.indexOf(i) != -1) {
+                        filterAfterThis.push(p);
+                        break;
+                    }
+                }
+            }
+        }
+        console.log("difficutly", filterAfterThis, filterAfterAll, selected);
+        if (!selected) {
+            filterAfterThis = filterAfterAll;
+            $scope.filteredArticles = filterAfterThis;
+        }
+        filterAfterAll = filterAfterThis;
         
         console.log(filterAfterAll);
         $scope.difficultyGroup = uniqueItems($scope.articles, 'difficulty');
@@ -268,6 +299,17 @@ IgApp.filter('groupBy',
             
             
             <h3>
+            <span class="label label-info">difficutly</span>
+            </h3>
+                <p></p>
+                <div class="checkbox" ng-repeat="difficutly in difficutlyGroup | orderBy:'toString()'">
+                    <label>
+                        <input type="checkbox" ng-model="usedifficutly[difficutly]"/>
+                        {$ difficutly $}
+                    </label>
+                </div>
+            
+            <h3>
             <span class="label label-info">difficulty</span>
             </h3>
                 <p></p>
@@ -310,7 +352,7 @@ IgApp.filter('groupBy',
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2014-09-11 21:53:00 CST.</p>
+                <p>This page is generated at 2014-09-13 11:57:24 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

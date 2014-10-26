@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/jquery.min.js"></script>
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/font-awesome.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/pygments.css"/>
+        
+        <title></title>
+        
+        
+    </head>
+    <body ng-app="IgApp">
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/index.html">IntGraph</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    
+                    <li>
+                        <a href="/index.html">Problems</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Contribute.html">Contribute</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/About.html">About</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            
+
+<h1> The Sum of Negative Binary Number </h1>
+
+<div class="panel">
+    <div class="panel-body">
+        <footer class="post-info">
+            <span class="label label-default">Date</span>
+            <span class="published">
+                <i class="icon-calendar"></i>2014-10-27 00:26:01
+            </span>
+            <p></p>
+            
+                <span class="label label-primary ">difficulty</span>
+                
+                <span> 3.5   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">categories</span>
+                
+                <span> simulation  / </span>
+                
+                <span> math   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">source</span>
+                
+                <span> Algorithms: A Creative Approach   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+        </footer>
+    </div>
+</div>
+
+
+
+
+<h2>Description</h2>
+
+
+
+<div>
+
+
+<p>A negative binary number is a binary number which based on -2. For example, [10] stands for -2 in decimal, [100] stands for 4 in decimal.</p>
+
+<p>The formula of the negative binary number is like this:</p>
+
+<p>You are given two decimal numbers (can be positive, zero or negative), your mission is to (1) convert these two numbers into negative binary numbers, and then (2) calculate and print the sum of the neg-binaries.</p>
+
+<h3>Input &amp; Output</h3>
+
+<p>The input will contain many cases, each case has two numbers in a line.</p>
+
+<p>The output will contain a negative binary number per line, which is the sum of the two numbers.</p>
+
+<pre><code>&gt; Sample Input
+-2 -2
+-10 12
+
+&gt; Sample Output    
+1100        
+110</code></pre>
+
+
+</div>
+
+
+<h2>Solution</h2>
+
+
+
+<p>
+    <button type="button" class="btn btn-danger btn-lg showbtn" bind="class_Solution">Click to show</button>
+</p>
+
+<div class="hide" id="class_Solution">
+
+
+<p>First of all, we have to find a way to convert a decimal number to a negtive binary number.</p>
+
+<p>As decribed above, the decimal value of a negtive binary number is a sum of powers of -2. And it is known to us that the decimal value of a oridnary binary number is a sum of powers of 2. Maybe we can make them in the same way.</p>
+
+<p>But here is a problem, the remainder b of <code>a % -2 == b</code> might be negative as divisor is negative(-2). It&#39;s not allowed to put negative digits in the number of course.</p>
+
+<p>Assuming the ith digit of the negative binary number is x, the (i + 1)th digit is y, and <code>x &lt; 0</code>. So, the ith digit stands for <code>(-2) ^ i * x</code>, the (i+1)th digit stands for <code>(-2) ^ (i + 1) * y</code>. And we can make an equaltion here.</p>
+
+<p>By the equation below, we find a way to deal with the negative reminder. It is essential both when we convert a decimal to negative binary number and sum two negative binary numbers.</p>
+
+<p>The second problem is to sum the two neg-numbers. It&#39;s not difficult to get the result following the ordinary steps of calculating the sum of two binary numbers.</p>
+
+<p>However, it&#39;s not quite same with the oridary one, as the sum of a some digits could be -1, 2 or 3, we have deal with them properly.</p>
+
+<p>The code is right here.</p>
+<div class="highlight"><pre><span class="cp">#include &lt;cstdio&gt;</span>
+<span class="cp">#include &lt;cstdlib&gt;</span>
+<span class="cp">#include &lt;cstring&gt;</span>
+<span class="cp">#include &lt;iostream&gt;</span>
+<span class="cp">#include &lt;algorithm&gt;</span>
+<span class="cp">#include &lt;vector&gt;</span>
+<span class="cp">#include &lt;cassert&gt;</span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="cp">#define print(x) cout &lt;&lt; x &lt;&lt; endl</span>
+<span class="cp">#define input(x) cin &gt;&gt; x</span>
+<span class="cp">#define error(x) cerr &lt;&lt; x &lt;&lt; endl</span>
+
+<span class="n">string</span> <span class="nf">toNeg2</span><span class="p">(</span><span class="kt">int</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">string</span> <span class="n">s</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">v</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">m</span> <span class="o">=</span> <span class="n">v</span> <span class="o">%</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">v</span> <span class="o">/</span> <span class="o">-</span><span class="mi">2</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">m</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">m</span> <span class="o">+=</span> <span class="mi">2</span><span class="p">;</span>
+            <span class="n">v</span><span class="o">++</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="kt">char</span><span class="p">(</span><span class="n">m</span> <span class="o">+</span> <span class="sc">&#39;0&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">s</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">s</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">string</span> <span class="nf">neg2Sum</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">string</span> <span class="n">c</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">pa</span><span class="p">,</span> <span class="n">pb</span><span class="p">,</span> <span class="n">g</span><span class="p">;</span>
+    <span class="n">pa</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="n">length</span><span class="p">()</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="n">pb</span> <span class="o">=</span> <span class="n">b</span><span class="p">.</span><span class="n">length</span><span class="p">()</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">pa</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">pb</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">g</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">va</span> <span class="o">=</span> <span class="n">pa</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">?</span> <span class="n">a</span><span class="p">[</span><span class="n">pa</span><span class="p">]</span> <span class="o">-</span> <span class="sc">&#39;0&#39;</span><span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">vb</span> <span class="o">=</span> <span class="n">pb</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">?</span> <span class="n">b</span><span class="p">[</span><span class="n">pb</span><span class="p">]</span> <span class="o">-</span> <span class="sc">&#39;0&#39;</span><span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">vc</span> <span class="o">=</span> <span class="n">va</span> <span class="o">+</span> <span class="n">vb</span> <span class="o">+</span> <span class="n">g</span><span class="p">;</span>
+        <span class="k">switch</span> <span class="p">(</span><span class="n">vc</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">case</span> <span class="o">-</span><span class="mi">1</span>: <span class="p">{</span>
+                <span class="n">g</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+                <span class="n">c</span> <span class="o">=</span> <span class="s">&quot;1&quot;</span> <span class="o">+</span> <span class="n">c</span><span class="p">;</span>
+            <span class="p">};</span> <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="mi">0</span>: <span class="k">case</span> <span class="mi">1</span>: <span class="p">{</span>
+                <span class="n">g</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                <span class="n">c</span> <span class="o">=</span> <span class="kt">char</span><span class="p">(</span><span class="n">vc</span> <span class="o">+</span> <span class="sc">&#39;0&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">c</span><span class="p">;</span>
+            <span class="p">};</span> <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="mi">2</span>: <span class="k">case</span> <span class="mi">3</span>: <span class="p">{</span>
+                <span class="n">g</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+                <span class="n">c</span> <span class="o">=</span> <span class="kt">char</span><span class="p">(</span><span class="n">vc</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">+</span> <span class="sc">&#39;0&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">c</span><span class="p">;</span>
+            <span class="p">};</span> <span class="k">break</span><span class="p">;</span>
+            <span class="nl">default:</span> <span class="p">{</span>
+                <span class="n">error</span><span class="p">(</span><span class="s">&quot;Error!&quot;</span><span class="p">);</span>
+                <span class="n">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+            <span class="p">};</span> <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">pa</span><span class="o">--</span><span class="p">;</span> <span class="n">pb</span><span class="o">--</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">c</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">c</span><span class="p">.</span><span class="n">find_first_not_of</span><span class="p">(</span><span class="sc">&#39;0&#39;</span><span class="p">));</span>
+    <span class="k">return</span> <span class="n">c</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">input</span><span class="p">(</span><span class="n">a</span> <span class="o">&gt;&gt;</span> <span class="n">b</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">string</span> <span class="n">neg_a</span> <span class="o">=</span> <span class="n">toNeg2</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+        <span class="n">string</span> <span class="n">neg_b</span> <span class="o">=</span> <span class="n">toNeg2</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+
+        <span class="n">string</span> <span class="n">neg_c</span> <span class="o">=</span> <span class="n">neg2Sum</span><span class="p">(</span><span class="n">neg_a</span><span class="p">,</span> <span class="n">neg_b</span><span class="p">);</span>
+        <span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">neg_c</span> <span class="o">!=</span> <span class="n">toNeg2</span><span class="p">(</span><span class="n">c</span><span class="p">))</span> <span class="p">{</span>
+            <span class="n">print</span><span class="p">(</span><span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39; &#39;</span> <span class="o">&lt;&lt;</span> <span class="n">b</span><span class="p">);</span>
+            <span class="n">print</span><span class="p">(</span><span class="n">neg_a</span><span class="p">);</span>
+            <span class="n">print</span><span class="p">(</span><span class="n">neg_b</span><span class="p">);</span>
+            <span class="n">print</span><span class="p">(</span><span class="n">neg_c</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39; &#39;</span> <span class="o">&lt;&lt;</span> <span class="n">toNeg2</span><span class="p">(</span><span class="n">c</span><span class="p">));</span>
+            <span class="n">assert</span><span class="p">(</span><span class="n">neg_c</span> <span class="o">==</span> <span class="n">toNeg2</span><span class="p">(</span><span class="n">c</span><span class="p">));</span>
+        <span class="p">}</span>
+        <span class="n">print</span><span class="p">(</span><span class="n">neg_c</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">error</span><span class="p">(</span><span class="s">&quot;done!&quot;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+</div>
+
+
+<hr/>
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1957813"></script>
+<!-- UY END -->
+
+
+        </div>
+        <hr/>
+        <footer class="bs-footer" role="contentinfo">
+            <div class="container">
+                <p>Powered by IntGraph</p>
+                <p>This page is generated at 2014-10-27 00:27:40 CST.</p>
+                <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
+            </div>
+        </footer>
+
+         
+        
+<script>
+$(document).ready(function(){
+    $(".showbtn").click(function(){
+        var divname = $(this).attr("bind");
+        console.log(divname);
+        $("#" + divname).removeClass("hide");
+    });
+});
+</script>
+
+    </body>
+</html>

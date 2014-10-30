@@ -87,6 +87,8 @@
 
 <p>The formula of the negative binary number is like this:</p>
 
+<p><img src="http://wizmann-pic.qiniudn.com/7af3059d59dd03f76577e363cff39e16" alt="formula-1"></p>
+
 <p>You are given two decimal numbers (can be positive, zero or negative), your mission is to (1) convert these two numbers into negative binary numbers, and then (2) calculate and print the sum of the neg-binaries.</p>
 
 <h3>Input &amp; Output</h3>
@@ -126,11 +128,13 @@
 
 <p>Assuming the ith digit of the negative binary number is x, the (i + 1)th digit is y, and <code>x &lt; 0</code>. So, the ith digit stands for <code>(-2) ^ i * x</code>, the (i+1)th digit stands for <code>(-2) ^ (i + 1) * y</code>. And we can make an equaltion here.</p>
 
+<p><img src="http://wizmann-pic.qiniudn.com/6dd9dee6b58f6566fd9e78b5c98a5d56" alt="formula-2"></p>
+
 <p>By the equation below, we find a way to deal with the negative reminder. It is essential both when we convert a decimal to negative binary number and sum two negative binary numbers.</p>
 
 <p>The second problem is to sum the two neg-numbers. It&#39;s not difficult to get the result following the ordinary steps of calculating the sum of two binary numbers.</p>
 
-<p>However, it&#39;s not quite same with the oridary one, as the sum of a some digits could be -1, 2 or 3, we have deal with them properly.</p>
+<p>However, it&#39;s not quite same with the ordiary one, as the sum of a some digits could be -1, 2 or 3, we have deal with them properly.</p>
 
 <p>The code is right here.</p>
 <div class="highlight"><pre><span class="cp">#include &lt;cstdio&gt;</span>
@@ -234,7 +238,7 @@
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2014-10-27 00:29:05 CST.</p>
+                <p>This page is generated at 2014-10-30 09:43:15 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

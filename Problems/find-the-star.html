@@ -38,34 +38,34 @@
         <div class="container">
             
 
-<h1> Command Within The Same Shell </h1>
+<h1> Find the Star </h1>
 
 <div class="panel">
     <div class="panel-body">
         <footer class="post-info">
             <span class="label label-default">Date</span>
             <span class="published">
-                <i class="icon-calendar"></i>2014-08-16 18:46:00
+                <i class="icon-calendar"></i>2014-10-30 09:34:15
             </span>
             <p></p>
             
                 <span class="label label-primary ">difficulty</span>
                 
-                <span> 1   </span>
+                <span> 3.5   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
                 <span class="label label-primary ">categories</span>
                 
-                <span> pipeline  / </span>
+                <span> mathmatical induction  / </span>
                 
-                <span> shell   </span>
+                <span> graph   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
                 <span class="label label-primary ">source</span>
                 
-                <span> unknown   </span>
+                <span> Algorithms: A Creative Approach   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
@@ -83,23 +83,11 @@
 <div>
 
 
-<p>Suppose that you have to write a script to receive argument from command line, which is another command.
-The command which passed as argument will run in the current shell and return some results.</p>
+<p>A party is being held in a backyard. And among the crowd, there is a star which is well-known that everyone who participates this party knows him. But, as a star, he must keep &ldquo;高冷&rdquo;, that is, he doesn&#39;t know anyone in this party.</p>
 
-<p>For example, you have to list all the process when you start a shell, of course including the shell process.
-And do some other things with the results.</p>
+<p>Your mission is to find the star from the crowd. Since you don&#39;t have any idea about the relationiship among the crowd, you have to make a query like this: &ldquo;Do you know that crazy person?&rdquo;</p>
 
-<p>Run by</p>
-
-<pre><code>$./example.sh 'ps aux'</code></pre>
-
-<p>In shell script</p>
-<div class="highlight"><pre><span class="c">#!/bin/bash</span>
-
-<span class="c">#How to run the command</span>
-</pre></div>
-
-<p>contribute by: violet</p>
+<p>What is the fast way to find out the star? Or determine that there is not a real star among the crowd.</p>
 
 
 </div>
@@ -116,12 +104,21 @@ And do some other things with the results.</p>
 <div class="hide" id="class_Solution">
 
 
-<p>Use pipeline with echo</p>
-<div class="highlight"><pre><span class="c">#!/bin/bash</span>
+<p>As described above, everyone in the party knows the star, and the star doesn&#39;t know anyone. As a result, if A knows B, A can&#39;t be the star. And if A doesn&#39;t know B, B can&#39;t be the star.</p>
 
-<span class="nb">echo</span> <span class="nv">$*</span> | bash
-
-<span class="c">#do something else</span>
+<p>So, we can exclude one person from the &ldquo;star list&rdquo; by a single query. The time complexity is no doubt O(n).</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">find_the_star</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">star</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">do_know</span><span class="p">(</span><span class="n">star</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+            <span class="n">star</span> <span class="o">=</span> <span class="n">i</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">star</span> <span class="o">!=</span> <span class="n">i</span> <span class="ow">and</span> \
+                <span class="n">do_know</span><span class="p">(</span><span class="n">star</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="ow">or</span> \
+                <span class="ow">not</span> <span class="n">do_know</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">star</span><span class="p">):</span>
+            <span class="n">star</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="k">break</span>
+    <span class="k">return</span> <span class="n">star</span>
 </pre></div>
 
 
@@ -141,7 +138,7 @@ And do some other things with the results.</p>
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2014-10-30 09:43:16 CST.</p>
+                <p>This page is generated at 2014-10-30 09:43:15 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

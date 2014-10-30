@@ -38,34 +38,34 @@
         <div class="container">
             
 
-<h1> Command Within The Same Shell </h1>
+<h1> Find the Brightest Star </h1>
 
 <div class="panel">
     <div class="panel-body">
         <footer class="post-info">
             <span class="label label-default">Date</span>
             <span class="published">
-                <i class="icon-calendar"></i>2014-08-16 18:46:00
+                <i class="icon-calendar"></i>2014-10-30 09:42:39
             </span>
             <p></p>
             
                 <span class="label label-primary ">difficulty</span>
                 
-                <span> 1   </span>
+                <span> 3.5   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
                 <span class="label label-primary ">categories</span>
                 
-                <span> pipeline  / </span>
+                <span> mathmatical induction  / </span>
                 
-                <span> shell   </span>
+                <span> graph   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
                 <span class="label label-primary ">source</span>
                 
-                <span> unknown   </span>
+                <span> mitbbs   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
@@ -74,58 +74,6 @@
 </div>
 
 
-
-
-<h2>Description</h2>
-
-
-
-<div>
-
-
-<p>Suppose that you have to write a script to receive argument from command line, which is another command.
-The command which passed as argument will run in the current shell and return some results.</p>
-
-<p>For example, you have to list all the process when you start a shell, of course including the shell process.
-And do some other things with the results.</p>
-
-<p>Run by</p>
-
-<pre><code>$./example.sh 'ps aux'</code></pre>
-
-<p>In shell script</p>
-<div class="highlight"><pre><span class="c">#!/bin/bash</span>
-
-<span class="c">#How to run the command</span>
-</pre></div>
-
-<p>contribute by: violet</p>
-
-
-</div>
-
-
-<h2>Solution</h2>
-
-
-
-<p>
-    <button type="button" class="btn btn-danger btn-lg showbtn" bind="class_Solution">Click to show</button>
-</p>
-
-<div class="hide" id="class_Solution">
-
-
-<p>Use pipeline with echo</p>
-<div class="highlight"><pre><span class="c">#!/bin/bash</span>
-
-<span class="nb">echo</span> <span class="nv">$*</span> | bash
-
-<span class="c">#do something else</span>
-</pre></div>
-
-
-</div>
 
 
 <hr/>

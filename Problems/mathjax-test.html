@@ -38,34 +38,32 @@
         <div class="container">
             
 
-<h1> Find the Star </h1>
+<h1> Mathjax Test </h1>
 
 <div class="panel">
     <div class="panel-body">
         <footer class="post-info">
             <span class="label label-default">Date</span>
             <span class="published">
-                <i class="icon-calendar"></i>2014-10-30 09:34:15
+                <i class="icon-calendar"></i>2014-11-01 20:26:00
             </span>
             <p></p>
             
                 <span class="label label-primary ">difficulty</span>
                 
-                <span> 3.5   </span>
+                <span> 1   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
                 <span class="label label-primary ">categories</span>
                 
-                <span> mathmatical induction  / </span>
-                
-                <span> graph   </span>
+                <span> test   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
                 <span class="label label-primary ">source</span>
                 
-                <span> Algorithms: A Creative Approach   </span>
+                <span> mathjax   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
@@ -83,11 +81,11 @@
 <div>
 
 
-<p>A party is being held in a backyard. And among the crowd, there is a star which is well-known that everyone who participates this party knows him. But, as a star, he must keep &ldquo;高冷&rdquo;, that is, he doesn&#39;t know anyone in this party.</p>
+<p>When <code>$a \ne 0$</code>, there are two solutions to <code>\(ax^2 + bx + c = 0\)</code> and they are</p>
 
-<p>Your mission is to find the star from the crowd. Since you don&#39;t have any idea about the relationiship among the crowd, you have to make a query like this: &ldquo;Do you know that crazy person?&rdquo;</p>
-
-<p>What is the fast way to find out the star? Or determine that there is not a real star among the crowd.</p>
+$$
+%s
+$$
 
 
 </div>
@@ -104,22 +102,11 @@
 <div class="hide" id="class_Solution">
 
 
-<p>As described above, everyone in the party knows the star, and the star doesn&#39;t know anyone. As a result, if A knows B, A can&#39;t be the star. And if A doesn&#39;t know B, B can&#39;t be the star.</p>
+<p>When <code>$a \ne 0$</code>, there are two solutions to <code>\(ax^2 + bx + c = 0\)</code> and they are</p>
 
-<p>So, we can exclude one person from the &ldquo;star list&rdquo; by a single query. The time complexity is no doubt O(n).</p>
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">find_the_star</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-    <span class="n">star</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">do_know</span><span class="p">(</span><span class="n">star</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
-            <span class="n">star</span> <span class="o">=</span> <span class="n">i</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">star</span> <span class="o">!=</span> <span class="n">i</span> <span class="ow">and</span> \
-                <span class="n">do_know</span><span class="p">(</span><span class="n">star</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="ow">or</span> \
-                <span class="ow">not</span> <span class="n">do_know</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">star</span><span class="p">):</span>
-            <span class="n">star</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-            <span class="k">break</span>
-    <span class="k">return</span> <span class="n">star</span>
-</pre></div>
+$$
+%s
+$$
 
 
 </div>

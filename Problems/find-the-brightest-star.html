@@ -76,6 +76,53 @@
 
 
 
+<h2>Description</h2>
+
+
+
+<div>
+
+
+<p>There is another party held on another backyard. All the participants are stars. During the party, they want to find out who is the most popular star, that is, everyone considers that the brightest star is more famous than himself/herself.</p>
+
+<p>There&#39;s a function <code>cmp(a, b)</code> helps us to compare who is more famous. However, the comparison is not transitive. For example, <code>cmp(a, b) == 1</code> and <code>cmp(b, c) == 1</code>, there is no guarantee that <code>cmp(a, c) == 1</code>.</p>
+
+<p>Please find a way to solve this problem as fast as possible.</p>
+
+
+</div>
+
+
+<h2>Solution</h2>
+
+
+
+<p>
+    <button type="button" class="btn btn-danger btn-lg showbtn" bind="class_Solution">Click to show</button>
+</p>
+
+<div class="hide" id="class_Solution">
+
+
+<p>This problem is quite same as &ldquo;Find the Star&rdquo;. It is because if <code>cmp(a, b) &lt; 0</code> which means that the star <code>a</code> considers <code>b</code> is more popular. As a result, star <code>a</code> can&#39;t be the brightest star in the party.</p>
+
+<p>So, we can exclude one star from the &ldquo;brightest star candidate list&rdquo; by one comparison. So the time complexity here is O(N). And we have to check if the the one we choose is the &ldquo;real brightest star&rdquo;, it also take O(N) time here.</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">find_the_brightest_star</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="nb">cmp</span><span class="p">):</span>
+    <span class="n">star</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">cmp</span><span class="p">(</span><span class="n">star</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">star</span> <span class="o">=</span> <span class="n">i</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">star</span> <span class="ow">and</span> <span class="nb">cmp</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">star</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">star</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="k">break</span>
+    <span class="k">return</span> <span class="n">star</span>
+</pre></div>
+
+
+</div>
+
+
 <hr/>
 
 <!-- UY BEGIN -->
@@ -89,7 +136,7 @@
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2014-11-01 20:15:37 CST.</p>
+                <p>This page is generated at 2014-11-01 20:16:19 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

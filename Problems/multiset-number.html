@@ -38,32 +38,32 @@
         <div class="container">
             
 
-<h1> All Twice Excpet One </h1>
+<h1> Multiset Number </h1>
 
 <div class="panel">
     <div class="panel-body">
         <footer class="post-info">
             <span class="label label-default">Date</span>
             <span class="published">
-                <i class="icon-calendar"></i>2014-08-13 23:14:00
+                <i class="icon-calendar"></i>2014-11-21 09:28:32
             </span>
             <p></p>
             
                 <span class="label label-primary ">difficulty</span>
                 
-                <span> 2   </span>
+                <span> 4.5   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
                 <span class="label label-primary ">categories</span>
                 
-                <span> bit manipulation   </span>
+                <span> combination   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
                 <span class="label label-primary ">source</span>
                 
-                <span> unknown   </span>
+                <span> zhihu   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
@@ -81,7 +81,14 @@
 <div>
 
 
-<p>Given an array of integers, every element appears twice except for one. Find that single one.</p>
+<p>In mathematics, the notion of multiset (or bag) is a generalization of the notion of a set in which members are allowed to appear multiple times or zero times.</p>
+
+<p>Now give you N kinds of elements, and how many distinct multiset can be formed? <strong>The order of the element is irrelevant.</strong></p>
+
+<pre><code>&gt;&gt; INPUT
+10 3
+&lt;&lt; OUTPUT
+27</code></pre>
 
 
 </div>
@@ -98,15 +105,15 @@
 <div class="hide" id="class_Solution">
 
 
-<p>This problem is the very basic one. So I just paste my code here. If you are confused with the xor operator， you might have to review the knowledge of <strong>bit manipulation</strong> carefully.</p>
-<div class="highlight"><pre><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
-    <span class="c"># @param A, a list of integer</span>
-    <span class="c"># @return an integer</span>
-    <span class="k">def</span> <span class="nf">singleNumber</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">^</span> <span class="n">y</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
-</pre></div>
+<p>Try no to treat this problem as an ordinary combination problem. But it may lead you a deadend.</p>
 
-<p>Time complexity: O(n)</p>
+<p>Consider this. The multiset can be present in this way $S = \{x1 \cdot a1 + x2 \cdot a2 + \cdots\}$. And it&#39;s easy for us to know that $m = \sum(a_1&hellip;a_n)$. As a result, the problem can be solve by partition the m numbers into n parts. Since n might greater than m, so there may be some part which is empty.</p>
+
+<p>Seperating m number in to n parts need (n - 1) delimiters. So the final result is like this.</p>
+
+$$
+ans =  \mathrm C_m^{n + m - 1}
+$$
 
 
 </div>
@@ -125,7 +132,7 @@
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2014-11-21 09:59:12 CST.</p>
+                <p>This page is generated at 2014-11-21 09:59:11 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

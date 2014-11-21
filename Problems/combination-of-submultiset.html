@@ -38,34 +38,32 @@
         <div class="container">
             
 
-<h1> Rearrange array in alternating positive &amp; negative items - 1 </h1>
+<h1> Multiset Number </h1>
 
 <div class="panel">
     <div class="panel-body">
         <footer class="post-info">
             <span class="label label-default">Date</span>
             <span class="published">
-                <i class="icon-calendar"></i>2014-09-10 08:01:26
+                <i class="icon-calendar"></i>2014-11-21 09:28:32
             </span>
             <p></p>
             
                 <span class="label label-primary ">difficulty</span>
                 
-                <span> 2.5   </span>
+                <span> 4.5   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
                 <span class="label label-primary ">categories</span>
                 
-                <span> partition  / </span>
-                
-                <span> implementation   </span>
+                <span> combination   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
                 <span class="label label-primary ">source</span>
                 
-                <span> geeksforgeeks   </span>
+                <span> zhihu   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
@@ -83,13 +81,14 @@
 <div>
 
 
-<p>Given an array of positive and negative numbers, arrange them such that the all negative numbers are on the left side of the positive numbers.</p>
+<p>In mathematics, the notion of multiset (or bag) is a generalization of the notion of a set in which members are allowed to appear multiple times or zero times.</p>
 
-<pre><code>Example Input:
-arr[] = {1, 2, 3, -4, -1, 4}
+<p>Now give you N kinds of elements, and how many distinct multiset can be formed? <strong>The order of the element is irrelevant.</strong></p>
 
-One Possible Output: 
-arr[] = {-4, -1, 1, 2, 3, 4}</code></pre>
+<pre><code>&gt;&gt; INPUT
+10 3
+&lt;&lt; OUTPUT
+27</code></pre>
 
 
 </div>
@@ -106,25 +105,15 @@ arr[] = {-4, -1, 1, 2, 3, 4}</code></pre>
 <div class="hide" id="class_Solution">
 
 
-<p>Simple partition manipulation.</p>
-<div class="highlight"><pre><span class="kt">void</span> <span class="nf">partition</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">vec</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="kt">int</span> <span class="n">l</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">vec</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="k">while</span> <span class="p">(</span><span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">while</span> <span class="p">(</span><span class="n">l</span> <span class="o">&lt;</span> <span class="n">r</span> <span class="o">&amp;&amp;</span> <span class="n">vec</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">l</span><span class="o">++</span><span class="p">;</span>
-        <span class="p">}</span>
-        <span class="k">while</span> <span class="p">(</span><span class="n">l</span> <span class="o">&lt;</span> <span class="n">r</span> <span class="o">&amp;&amp;</span> <span class="n">vec</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">r</span><span class="o">--</span><span class="p">;</span>
-        <span class="p">}</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">l</span> <span class="o">&lt;</span> <span class="n">r</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">swap</span><span class="p">(</span><span class="n">vec</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">vec</span><span class="p">[</span><span class="n">r</span><span class="p">]);</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="k">break</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
+<p>Try no to treat this problem as an ordinary combination problem. But it may lead you a deadend.</p>
+
+<p>Consider this. The multiset can be present in this way $S = {x1 \cdot a1 + x2 \cdot a2 + \ &hellip;}$. And it&#39;s easy for us to know that $m = \sum(a_1&hellip;a_n)$. As a result, the problem can be solve by partition the m numbers into n parts. Since n might greater than m, so there may be some part which is empty.</p>
+
+<p>Seperating m number in to n parts need (n - 1) delimiters. So the final result is like this.</p>
+
+$$
+ans =  \mathrm C_m^{n + m - 1}
+$$
 
 
 </div>

@@ -81,12 +81,17 @@
 <div>
 
 
-<p>In mathematics, the notion of multiset (or bag) is a generalization of the notion of a set in which members are allowed to appear multiple times or zero times.</p>
+<p>In mathematics, the notion of multiset (or bag) is a generalization of the notion of a set in which members are allowed to appear multiple times or zero times. The number of each item is infinity.</p>
 
-<p>Now give you N kinds of elements, and how many distinct multiset can be formed? <strong>The order of the element is irrelevant.</strong></p>
+<p>Now give you N kinds of elements, and how many distinct multiset of set M can be formed?</p>
+
+<p><strong>The order of the element is irrelevant.</strong></p>
+
+<p>The input will give the N and M, your mission is to calculate the number of distinct multiset.</p>
 
 <pre><code>&gt;&gt; INPUT
 10 3
+
 &lt;&lt; OUTPUT
 27</code></pre>
 
@@ -105,15 +110,23 @@
 <div class="hide" id="class_Solution">
 
 
-<p>Try no to treat this problem as an ordinary combination problem. But it may lead you a deadend.</p>
+<p>Try not to treat this problem as an ordinary combination problem. But it may lead you a deadend.</p>
 
-<p>Consider this. The multiset can be present in this way $S = \{x1 \cdot a1 + x2 \cdot a2 + \cdots\}$. And it&#39;s easy for us to know that $m = \sum(a_1&hellip;a_n)$. As a result, the problem can be solve by partition the m numbers into n parts. Since n might greater than m, so there may be some part which is empty.</p>
+<p>Consider this. The multiset can be present in this way $S = \{x1 \cdot a1 + x2 \cdot a2 + \cdots\}$. And it&#39;s easy for us to know that $M = \sum(a_1&hellip;a_n)$. As a result, the problem can be solve by partition the m numbers into n parts. Since n might greater than m, so there may be some part which is empty.</p>
 
 <p>Seperating m number in to n parts need (n - 1) delimiters. So the final result is like this.</p>
 
 $$
 ans =  \mathrm C_m^{n + m - 1}
 $$
+
+<p>For example, we want to fill a bag(multiset) of size 12 with 8 types of items.</p>
+
+<p>That is, the bag can be represented as, <code>1 1 1 1 1 1  1 1 1 1 1 1</code>, each <code>1</code> is a empty space for the items.</p>
+
+<p>And then, we put 7 delimiters (why 7?) to the bag.</p>
+
+<p>One of the conditions is like this: <code>1 1 * * 1 1 * 1 1 1 * 1 * 1 * * 1 1 1</code>. The <code>1</code>s before the first star <code>*</code> indicates the number of the first item. As there is no <code>1</code>s between the first <code>*</code> and the second <code>*</code>, so there is no item belongs to the second type. </p>
 
 
 </div>
@@ -132,7 +145,7 @@ $$
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2014-11-24 00:20:51 CST.</p>
+                <p>This page is generated at 2014-12-07 21:39:46 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/jquery.min.js"></script>
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/font-awesome.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/pygments.css"/>
+        
+        <title></title>
+        
+        
+    </head>
+    <body ng-app="IgApp">
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/index.html">IntGraph</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    
+                    <li>
+                        <a href="/index.html">Problems</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Contribute.html">Contribute</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/About.html">About</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            
+
+<h1> Max Tree </h1>
+
+<div class="panel">
+    <div class="panel-body">
+        <footer class="post-info">
+            <span class="label label-default">Date</span>
+            <span class="published">
+                <i class="icon-calendar"></i>2014-12-13 20:57:41
+            </span>
+            <p></p>
+            
+                <span class="label label-primary ">difficulty</span>
+                
+                <span> 4   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">categories</span>
+                
+                <span> tree  / </span>
+                
+                <span> stack   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">source</span>
+                
+                <span> Lintcode   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+        </footer>
+    </div>
+</div>
+
+
+
+
+<h2>Description</h2>
+
+
+
+<div>
+
+
+<p>Given an integer array with no duplicates. A max tree building on this array is defined as follow:</p>
+
+<ul>
+<li>The root is the maximum number in the array</li>
+<li>The left subtree and right subtree are the max trees of the subarray divided by the root number.</li>
+<li>The sequence of the in-order traversal of this max tree will be equal to the given array</li>
+</ul>
+
+<p>Please construct the max tree by the given array.</p>
+
+<p>For example, the max tree for [2, 5, 6, 0, 3, 1] is:</p>
+
+<pre><code>6
+
+            /    \
+
+          5       3
+
+        /       /   \
+
+      2       0       1</code></pre>
+
+
+</div>
+
+
+<h2>Solution</h2>
+
+
+
+<p>
+    <button type="button" class="btn btn-danger btn-lg showbtn" bind="class_Solution">Click to show</button>
+</p>
+
+<div class="hide" id="class_Solution">
+
+
+<p>To build a max tree is similar to build a heap (a.k.a priority queue). But usually, building a heap takes O(n * logn) time. We need a faster method to handle a max tree.</p>
+
+<p>Suppose we have already got a max tree with size k. We will call it MaxTree(k). When adding a new node, Node(k + 1), into the tree, we may face these conditions:</p>
+
+<ul>
+<li><p>the value of Node(k + 1) is less than Node(k)<br>
+In this scenario, the new node will be the leftmost node of the right sub-tree of Node(k). As we one by one insert the node to the max tree, so the right sub-tree of Node(k) must be empty.</p></li>
+<li><p>the value of Node(k + 1) is greater (or equal) to Node(k)<br>
+In this scenario, we have to find a parent node of Node(k) which is greater than Node(k + 1), and make it as the left sub-tree of Node(k + 1). If that node is not exist, Node(k) will be the root node.</p></li>
+</ul>
+
+<p>So we use a stack to storage the parent nodes of Node(k). We insert one node at one time. And all of the nodes will be pushed to the stack for only once. So the time complexity of the method is O(N).</p>
+<div class="highlight"><pre><span class="cm">/**</span>
+<span class="cm"> * Definition of TreeNode:</span>
+<span class="cm"> * public class TreeNode {</span>
+<span class="cm"> *     public int val;</span>
+<span class="cm"> *     public TreeNode left, right;</span>
+<span class="cm"> *     public TreeNode(int val) {</span>
+<span class="cm"> *         this.val = val;</span>
+<span class="cm"> *         this.left = this.right = null;</span>
+<span class="cm"> *     }</span>
+<span class="cm"> * }</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
+    <span class="cm">/**</span>
+<span class="cm">     * @param A: Given an integer array with no duplicates.</span>
+<span class="cm">     * @return: The root of max tree.</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="n">TreeNode</span> <span class="nf">maxTree</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
+        <span class="n">TreeNode</span> <span class="n">root</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">root</span> <span class="o">=</span> <span class="n">insert</span><span class="o">(</span><span class="n">root</span><span class="o">,</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">root</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="n">TreeNode</span> <span class="nf">insert</span><span class="o">(</span><span class="n">TreeNode</span> <span class="n">root</span><span class="o">,</span> <span class="kt">int</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">TreeNode</span> <span class="n">ptr</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="n">TreeNode</span> <span class="n">now</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TreeNode</span><span class="o">(</span><span class="n">v</span><span class="o">);</span>
+
+        <span class="k">while</span> <span class="o">(!</span><span class="n">stack</span><span class="o">.</span><span class="na">empty</span><span class="o">())</span> <span class="o">{</span>
+            <span class="n">ptr</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="na">peek</span><span class="o">();</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">ptr</span><span class="o">.</span><span class="na">val</span> <span class="o">&gt;</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">now</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">ptr</span><span class="o">.</span><span class="na">right</span><span class="o">;</span>
+                <span class="n">ptr</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">now</span><span class="o">;</span>
+                <span class="n">stack</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="n">now</span><span class="o">);</span>
+                <span class="k">return</span> <span class="n">root</span><span class="o">;</span>
+            <span class="o">}</span>
+            <span class="n">stack</span><span class="o">.</span><span class="na">pop</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="n">now</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">ptr</span><span class="o">;</span>
+        <span class="n">stack</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="n">now</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">now</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="n">Stack</span><span class="o">&lt;</span><span class="n">TreeNode</span><span class="o">&gt;</span> <span class="n">stack</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+
+
+</div>
+
+
+<hr/>
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1957813"></script>
+<!-- UY END -->
+
+
+        </div>
+        <hr/>
+        <footer class="bs-footer" role="contentinfo">
+            <div class="container">
+                <p>Powered by IntGraph</p>
+                <p>This page is generated at 2014-12-13 21:56:16 CST.</p>
+                <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
+            </div>
+        </footer>
+
+         
+        
+<script>
+$(document).ready(function(){
+    $(".showbtn").click(function(){
+        var divname = $(this).attr("bind");
+        console.log(divname);
+        $("#" + divname).removeClass("hide");
+    });
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script>
+
+
+
+    </body>
+</html>

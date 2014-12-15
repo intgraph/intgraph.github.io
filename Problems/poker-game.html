@@ -38,34 +38,38 @@
         <div class="container">
             
 
-<h1> Rearrange array in alternating positive &amp; negative items - 1 </h1>
+<h1> Poker Game </h1>
 
 <div class="panel">
     <div class="panel-body">
         <footer class="post-info">
             <span class="label label-default">Date</span>
             <span class="published">
-                <i class="icon-calendar"></i>2014-09-10 08:01:26
+                <i class="icon-calendar"></i>2014-12-16 01:34:17
             </span>
             <p></p>
             
                 <span class="label label-primary ">difficulty</span>
                 
-                <span> 2.5   </span>
+                <span> 3   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
                 <span class="label label-primary ">categories</span>
                 
-                <span> partition  / </span>
+                <span> possibility  / </span>
                 
-                <span> implementation   </span>
+                <span> expectation  / </span>
+                
+                <span> dp  / </span>
+                
+                <span> induction   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
                 <span class="label label-primary ">source</span>
                 
-                <span> geeksforgeeks   </span>
+                <span> unknown   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
@@ -83,13 +87,11 @@
 <div>
 
 
-<p>Given an array of positive and negative numbers, arrange them such that the all negative numbers are on the left side of the positive numbers.</p>
+<p>There are n types of poker card, and the account of each type is infinity. The rule to pick up the card is simple enough, that is, pick one card in one time.</p>
 
-<pre><code>Example Input:
-arr[] = {1, 2, 3, -4, -1, 4}
+<p>Your misssion is to find out the expectation of the number of cards, which you can get a collection of all n types of cards.</p>
 
-One Possible Output: 
-arr[] = {-4, -1, 1, 2, 3, 4}</code></pre>
+<p><img src="http://wizmann-pic.qiniudn.com/f8be57eed67c01bab3cc61a632e53429" alt="Card Game"></p>
 
 
 </div>
@@ -106,25 +108,22 @@ arr[] = {-4, -1, 1, 2, 3, 4}</code></pre>
 <div class="hide" id="class_Solution">
 
 
-<p>Simple partition manipulation.</p>
-<div class="highlight"><pre><span class="kt">void</span> <span class="nf">partition</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">vec</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="kt">int</span> <span class="n">l</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">vec</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="k">while</span> <span class="p">(</span><span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">while</span> <span class="p">(</span><span class="n">l</span> <span class="o">&lt;</span> <span class="n">r</span> <span class="o">&amp;&amp;</span> <span class="n">vec</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">l</span><span class="o">++</span><span class="p">;</span>
-        <span class="p">}</span>
-        <span class="k">while</span> <span class="p">(</span><span class="n">l</span> <span class="o">&lt;</span> <span class="n">r</span> <span class="o">&amp;&amp;</span> <span class="n">vec</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">r</span><span class="o">--</span><span class="p">;</span>
-        <span class="p">}</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">l</span> <span class="o">&lt;</span> <span class="n">r</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">swap</span><span class="p">(</span><span class="n">vec</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">vec</span><span class="p">[</span><span class="n">r</span><span class="p">]);</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="k">break</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<p>We use <code>F(n, k)</code> to represent the expectation of get a collection of k types of all n types cards. And it&#39;s easy for us to find out that <code>F(n, 1)</code> is always equal to 1. It is because you will get one type when you picking up any cards in the pile.</p>
+
+<p>Assuming we have already get the answer of <code>F(n, k)</code>. If we need a new type, the possibility to get it is <code>(n - k) / n</code>. As a result, the expectation to get a new type when we already have got k types is <code>n / (n - k)</code>.</p>
+
+$$
+f(n, k + 1) = f(n, k) + \frac{n}{n - k}
+$$
+
+<p>The code is right here.</p>
+<div class="highlight"><pre><span class="n">p</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">p</span> <span class="o">+</span> <span class="mf">1.0</span> <span class="o">*</span> <span class="n">n</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">p</span>
 </pre></div>
+
+<p>The problem seems difficult, but actually it&#39;s quite a easy one. So, please don&#39;t be scared by the apparence of the problem, just keep calm, and trying hard to find something <strong>inside</strong>.</p>
 
 
 </div>

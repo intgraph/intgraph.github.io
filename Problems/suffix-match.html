@@ -115,7 +115,7 @@ banana</code></pre>
 
 <p>Accroding to &ldquo;suffix match&rdquo;, it&#39;s not hard to associate the &ldquo;prefix match&rdquo;. And &ldquo;prefix match&rdquo; is the basic concept of the <strong>KMP algorithm</strong>. If we can get the &ldquo;prefix match&rdquo; of a string, the &ldquo;suffix match&rdquo; is the &ldquo;prefix match&rdquo; of the reversed string.</p>
 
-<p>The algorith for KMP is like here below. The prefix match of the position <code>i</code> is <code>str[next[i]:i]</code>.</p>
+<p>The algorith for KMP is like here below. The prefix match of the position <code>i</code> is <code>str[i - next[i]:i]</code>.</p>
 <div class="highlight"><pre><span class="kt">void</span> <span class="nf">get_next</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">needle</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">next</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
     <span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="n">needle</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
@@ -205,7 +205,7 @@ ananab
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2015-02-20 22:34:14 CST.</p>
+                <p>This page is generated at 2015-02-20 22:40:52 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

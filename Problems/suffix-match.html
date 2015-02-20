@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/jquery.min.js"></script>
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/font-awesome.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/pygments.css"/>
+        
+        <title></title>
+        
+        
+    </head>
+    <body ng-app="IgApp">
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/index.html">IntGraph</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    
+                    <li>
+                        <a href="/index.html">Problems</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Contribute.html">Contribute</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/About.html">About</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            
+
+<h1> Max Suffix Match </h1>
+
+<div class="panel">
+    <div class="panel-body">
+        <footer class="post-info">
+            <span class="label label-default">Date</span>
+            <span class="published">
+                <i class="icon-calendar"></i>2015-02-20 22:30:36
+            </span>
+            <p></p>
+            
+                <span class="label label-primary ">difficulty</span>
+                
+                <span> 4   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">categories</span>
+                
+                <span> kmp  / </span>
+                
+                <span> string   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">source</span>
+                
+                <span> google   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+        </footer>
+    </div>
+</div>
+
+
+
+
+<h2>Description</h2>
+
+
+
+<div>
+
+
+<p>A suffix (also sometimes called a postfix or ending) is an affix which is placed after the stem of a word.</p>
+
+<p>For example, the suffixes of the world <code>banana</code> are: &ldquo;a, na, ana, &hellip;&rdquo;.</p>
+
+<p>We define <strong>suffix match</strong> as the substring of a string which is not a suffix, but equals to one of the suffixes.</p>
+
+<p>For example, one of the <strong>suffix match</strong> of the string <code>banana</code> is: <code>ana</code>.</p>
+
+<pre><code>banana
+   ^
+   suffix -&gt; ana
+substring -&gt; ana
+ v  
+banana</code></pre>
+
+
+</div>
+
+
+<h2>Solution</h2>
+
+
+
+<p>
+    <button type="button" class="btn btn-danger btn-lg showbtn" bind="class_Solution">Click to show</button>
+</p>
+
+<div class="hide" id="class_Solution">
+
+
+<p>Accroding to &ldquo;suffix match&rdquo;, it&#39;s not hard to associate the &ldquo;prefix match&rdquo;. And &ldquo;prefix match&rdquo; is the basic concept of the <strong>KMP algorithm</strong>. If we can get the &ldquo;prefix match&rdquo; of a string, the &ldquo;suffix match&rdquo; is the &ldquo;prefix match&rdquo; of the reversed string.</p>
+
+<p>The algorith for KMP is like here below. The prefix match of the position <code>i</code> is <code>str[next[i]:i]</code>.</p>
+<div class="highlight"><pre><span class="kt">void</span> <span class="nf">get_next</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">needle</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">next</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="n">needle</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">j</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">needle</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">needle</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="p">{</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="n">next</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+        <span class="p">}</span>
+        <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+        <span class="n">j</span><span class="o">++</span><span class="p">;</span>
+        <span class="n">next</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>For example, the <code>next</code> array of the word <code>banana</code> is: <code>[-1, 0, 0, 0, 0, 0, 0]</code>, because there is no prefix match. And for the word <code>ananab</code>, the reversed of <code>banana</code>, the <code>next</code> array is <code>[-1, 0, 0, 1, 2, 3, 0]</code>.</p>
+
+<p>And we can get all the prefix match like this:</p>
+
+<pre><code>def get_prefix_match(S):
+    nexts = get_next(S)
+    print S
+    print nexts
+    for i, u in enumerate(nexts):
+        if u &lt;= 0:
+            continue
+        v = u
+        print '&gt;&gt;', S[:u], "\t[0...%d]" % u, S[i - u: i], "\t[%d...%d]" % (i - u, i)</code></pre>
+
+<p>And the suffix match is the prefix match of the reversed string.</p>
+
+<pre><code>def get_next(needle):
+    l = len(needle)
+    nexts = [0 for i in xrange(l + 1)]
+    nexts[0] = -1
+    i, j = 0, -1
+
+    while i &lt; l:
+        while j &gt;= 0 and needle[i] != needle[j]:
+            j = nexts[j]
+        i += 1
+        j += 1
+        nexts[i] = j
+    return nexts
+
+def get_prefix_match(S):
+    nexts = get_next(S)
+    print S
+    print nexts
+    for i, u in enumerate(nexts):
+        if u &lt;= 0:
+            continue
+        v = u
+        print '&gt;&gt;', S[:u], "\t[0...%d]" % u, S[i - u: i], "\t[%d...%d]" % (i - u, i)
+
+def get_suffix_match(S):
+    return get_prefix_match(S[::-1])
+
+if __name__ == '__main__':
+    get_suffix_match('banana')</code></pre>
+
+<p>And the result is like this:</p>
+
+<pre><code>&gt; python kmp.py
+ananab
+[-1, 0, 0, 1, 2, 3, 0]
+&gt;&gt; a    [0...1] a       [2...3]
+&gt;&gt; an   [0...2] an      [2...4]
+&gt;&gt; ana  [0...3] ana     [2...5]</code></pre>
+
+
+</div>
+
+
+<hr/>
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1957813"></script>
+<!-- UY END -->
+
+
+        </div>
+        <hr/>
+        <footer class="bs-footer" role="contentinfo">
+            <div class="container">
+                <p>Powered by IntGraph</p>
+                <p>This page is generated at 2015-02-20 22:34:14 CST.</p>
+                <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
+            </div>
+        </footer>
+
+         
+        
+<script>
+$(document).ready(function(){
+    $(".showbtn").click(function(){
+        var divname = $(this).attr("bind");
+        console.log(divname);
+        $("#" + divname).removeClass("hide");
+    });
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script>
+
+
+
+    </body>
+</html>

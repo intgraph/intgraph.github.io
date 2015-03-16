@@ -42,32 +42,34 @@
         <div class="container">
             
 
-<h1> Nested List Reversed Weighted Sum </h1>
+<h1> Detect the differences between two large files at different servers </h1>
 
 <div class="panel">
     <div class="panel-body">
         <footer class="post-info">
             <span class="label label-default">Date</span>
             <span class="published">
-                <i class="icon-calendar"></i>2015-03-07 23:04:36
+                <i class="icon-calendar"></i>2015-03-16 21:47:08
             </span>
             <p></p>
             
                 <span class="label label-primary ">difficulty</span>
                 
-                <span> 1.5   </span>
+                <span> 2   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
                 <span class="label label-primary ">categories</span>
                 
-                <span> dfs   </span>
+                <span> hash  / </span>
+                
+                <span> merkle tree   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
                 <span class="label label-primary ">source</span>
                 
-                <span> linkedin   </span>
+                <span> hulu   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
@@ -85,13 +87,7 @@
 <div>
 
 
-<p>Compute the reverse depth sum of a nested list meaning the reverse depth of
-each node (ie, 1 for leafs, 2 for parents of leafs, 3 for parents of parents
-of leafs, etc.) times the value of that node.</p>
-
-<p>For example, the sum of the nested list: <code>[[1,2], 1, [2, [2,1]]]</code> is 13.</p>
-
-<p><img src="http://wizmann-pic.qiniudn.com/9302b7a5f83bfcc27be8e33310950399" alt="Alt text"></p>
+<p>This is a test description.</p>
 
 
 </div>
@@ -108,29 +104,7 @@ of leafs, etc.) times the value of that node.</p>
 <div class="hide" id="class_Solution">
 
 
-<p>For the nested list, DFS is always the instant way to solve the problem.</p>
-<div class="highlight"><pre><span class="n">nested_list</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]]]</span>
-
-<span class="k">def</span> <span class="nf">revSum</span><span class="p">(</span><span class="n">nlist</span><span class="p">):</span>
-    <span class="p">(</span><span class="n">depth</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span> <span class="o">=</span> <span class="n">dfs</span><span class="p">(</span><span class="n">nlist</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">res</span>
-
-<span class="k">def</span> <span class="nf">dfs</span><span class="p">(</span><span class="n">nlist</span><span class="p">):</span>
-    <span class="n">nlist_sum</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">max_lv</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">nlist</span><span class="p">:</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-            <span class="p">(</span><span class="n">depth</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span> <span class="o">=</span> <span class="n">dfs</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-            <span class="n">nlist_sum</span> <span class="o">+=</span> <span class="n">res</span>
-            <span class="n">max_lv</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_lv</span><span class="p">,</span> <span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">s</span> <span class="o">+=</span> <span class="n">item</span>
-    <span class="n">nlist_sum</span> <span class="o">+=</span> <span class="n">s</span> <span class="o">*</span> <span class="n">max_lv</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">max_lv</span><span class="p">,</span> <span class="n">nlist_sum</span><span class="p">)</span>
-
-<span class="k">print</span> <span class="n">revSum</span><span class="p">(</span><span class="n">nested_list</span><span class="p">)</span>
-</pre></div>
+<p>This is a test solution.</p>
 
 
 </div>
@@ -149,7 +123,7 @@ of leafs, etc.) times the value of that node.</p>
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2015-03-16 21:50:30 CST.</p>
+                <p>This page is generated at 2015-03-16 21:49:27 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

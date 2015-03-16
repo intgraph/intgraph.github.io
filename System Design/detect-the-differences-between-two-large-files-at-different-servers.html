@@ -42,32 +42,32 @@
         <div class="container">
             
 
-<h1> Nested List Reversed Weighted Sum </h1>
+<h1> Detect the differences between two large files at different servers </h1>
 
 <div class="panel">
     <div class="panel-body">
         <footer class="post-info">
             <span class="label label-default">Date</span>
             <span class="published">
-                <i class="icon-calendar"></i>2015-03-07 23:04:36
+                <i class="icon-calendar"></i>2015-03-16 21:47:08
             </span>
             <p></p>
             
                 <span class="label label-primary ">difficulty</span>
                 
-                <span> 1.5   </span>
+                <span> 2   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
                 <span class="label label-primary ">categories</span>
                 
-                <span> dfs   </span>
+                <span> thinking in reverse   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
                 <span class="label label-primary ">source</span>
                 
-                <span> linkedin   </span>
+                <span> Aha Insight   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
@@ -85,13 +85,37 @@
 <div>
 
 
-<p>Compute the reverse depth sum of a nested list meaning the reverse depth of
-each node (ie, 1 for leafs, 2 for parents of leafs, 3 for parents of parents
-of leafs, etc.) times the value of that node.</p>
+<p>Poor Mrs. Jones tried to gey past the bubble gum machine before her twins notices. But she failed.</p>
 
-<p>For example, the sum of the nested list: <code>[[1,2], 1, [2, [2,1]]]</code> is 13.</p>
+<p>The both twins wanted one gum, and they wanted the gums with same color.</p>
 
-<p><img src="http://wizmann-pic.qiniudn.com/9302b7a5f83bfcc27be8e33310950399" alt="Alt text"></p>
+<p>As there&#39;s no way of knowing the color of next ball of that machine, how many pennies must Mrs. Jones be prepared to spend in the <strong>worst case</strong>? </p>
+
+<p>And, what if Mrs. Jones have more children?</p>
+
+<p>p.s. One piece of bubble gum values one penny.</p>
+
+<h3>Input / Output</h3>
+
+<p><code>n</code> stands for the number of colors in the machine. <code>k</code> stands for the number of child.</p>
+
+<p>And the n numbers in the next line indicate how many gums are with the particular color.</p>
+
+<p>One example:</p>
+
+<pre><code>Input:
+2 2
+4 6
+Output:
+3</code></pre>
+
+<p>One other example:</p>
+
+<pre><code>Input:
+3 3
+6 4 1
+Output:
+6</code></pre>
 
 
 </div>
@@ -108,28 +132,21 @@ of leafs, etc.) times the value of that node.</p>
 <div class="hide" id="class_Solution">
 
 
-<p>For the nested list, DFS is always the instant way to solve the problem.</p>
-<div class="highlight"><pre><span class="n">nested_list</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]]]</span>
+<p>Let&#39;s start with the case of twins.</p>
 
-<span class="k">def</span> <span class="nf">revSum</span><span class="p">(</span><span class="n">nlist</span><span class="p">):</span>
-    <span class="p">(</span><span class="n">depth</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span> <span class="o">=</span> <span class="n">dfs</span><span class="p">(</span><span class="n">nlist</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">res</span>
+<p>In the worst case, the first two gums come out of that machine are different, so a third gum (no matter what color it is) is needed.</p>
 
-<span class="k">def</span> <span class="nf">dfs</span><span class="p">(</span><span class="n">nlist</span><span class="p">):</span>
-    <span class="n">nlist_sum</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">max_lv</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">nlist</span><span class="p">:</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-            <span class="p">(</span><span class="n">depth</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span> <span class="o">=</span> <span class="n">dfs</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-            <span class="n">nlist_sum</span> <span class="o">+=</span> <span class="n">res</span>
-            <span class="n">max_lv</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_lv</span><span class="p">,</span> <span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">s</span> <span class="o">+=</span> <span class="n">item</span>
-    <span class="n">nlist_sum</span> <span class="o">+=</span> <span class="n">s</span> <span class="o">*</span> <span class="n">max_lv</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">max_lv</span><span class="p">,</span> <span class="n">nlist_sum</span><span class="p">)</span>
+<p>It&#39;s easy for us the generalize the case of gums with <code>n</code> colors and two children. If there are <code>n</code> sets of gums, one must be prepared to buy <code>n + 1</code> balls.</p>
 
-<span class="k">print</span> <span class="n">revSum</span><span class="p">(</span><span class="n">nested_list</span><span class="p">)</span>
+<p>If we have more children, and there are plenty of gums in the machine, the pennies we have to prepared is up to <code>k * (n - 1) + 1</code>. Because the bad luck, before we get <code>k</code> balls in a same color, we have to buy the gums as much as possible to spend the money.</p>
+
+<p>And the scenario that the gums are less than plenty is easy enough, you can get it easily.</p>
+<div class="highlight"><pre><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">raw_input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+<span class="n">ns</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">raw_input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+<span class="k">if</span> <span class="nb">max</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">k</span><span class="p">:</span>
+    <span class="k">print</span> <span class="o">-</span><span class="mi">1</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">k</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="n">k</span> <span class="k">else</span> <span class="n">x</span><span class="p">,</span> <span class="n">ns</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span>
 </pre></div>
 
 
@@ -149,7 +166,7 @@ of leafs, etc.) times the value of that node.</p>
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2015-03-16 21:50:30 CST.</p>
+                <p>This page is generated at 2015-03-16 21:50:29 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

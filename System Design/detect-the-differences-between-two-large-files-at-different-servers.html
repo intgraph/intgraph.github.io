@@ -87,7 +87,7 @@
 <div>
 
 
-<p>This is a test description.</p>
+<p>Now you have two large file at two different servers. This two files are differ in some data blocks. Please find out a way to detect the different blocks in this two large files.</p>
 
 
 </div>
@@ -104,7 +104,33 @@
 <div class="hide" id="class_Solution">
 
 
-<p>This is a test solution.</p>
+<p>First of all, let&#39;s simplify the problem.</p>
+
+<p>The problem might be easy that how to find out if two files are same of not. MD5 checksum (or other checksum algorithms) will really do the tricks.</p>
+
+<p>However, out problem is a little bit harder because we have to find out the exact different part. And the checksum can only give you the answer of &ldquo;same or not&rdquo;.</p>
+
+<p>Okay, let&#39;s simplify it again. What if the files are differ in one single block?</p>
+
+<p>Think about the binary search, each time you deal with one single piece from two, and detect whether the element you want if in this piece or not. It&#39;s quite similar to this scenario. We can calculate the checksums of the same half of the two files. If the checksums is equal, we assume that this part of the file are the same. If not, we turn to detect the next part.</p>
+
+<p>It&#39;s the answer for multiple different blocks, either. And it&#39;s an effective one because we can usually reuse the checksum of some large data blocks if they are not modified. But this method need network communication every time when we want to check the equality of a single file block. Sometimes the network communication is expensive or even not acceptable if the it is hot and busy.</p>
+
+<p>The Merkle Tree (a.k.a Hash Tree) is a datastructure which designed for this kind of problems. </p>
+
+<p>We divide the large file into several parts as the leaf of the Merkle Tree and calculate the checksum of them. MD5, SHA-1 are both OK, and if the hash only needs to protest against unintensional damage, CRCs and be used either.</p>
+
+<p>The hash value of parent node in Merkle Tree is the concatenation of the leaf nodes. </p>
+
+<p><img src="http://wizmann-pic.qiniudn.com/2b69974b21750e158c6fbceeb4206383" alt="Merkle Tree Example"></p>
+
+<p>There are multiple advantages for using the Merkle Tree:</p>
+
+<ol>
+<li>Few network communication is needed. Less time is wasted on the IO wait of the network. And could reduce strain on the network.</li>
+<li>The hash value of the nodes could be reused if the block is not changed.</li>
+<li>It&#39;s easy to find out the very block which is different from each other. The time complexity is O(logN).</li>
+</ol>
 
 
 </div>
@@ -123,7 +149,7 @@
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2015-03-16 22:16:31 CST.</p>
+                <p>This page is generated at 2015-03-24 00:08:39 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

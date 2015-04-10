@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/jquery.min.js"></script>
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/font-awesome.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/pygments.css"/>
+        
+        <title></title>
+        
+        
+    </head>
+    <body ng-app="IgApp">
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/index.html">IntGraph</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    
+                    <li>
+                        <a href="/index.html">Problems</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/System Design.html">System Design</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Contribute.html">Contribute</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/About.html">About</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            
+
+<h1> Milking Cows - 2 </h1>
+
+<div class="panel">
+    <div class="panel-body">
+        <footer class="post-info">
+            <span class="label label-default">Date</span>
+            <span class="published">
+                <i class="icon-calendar"></i>2015-04-10 22:48:01
+            </span>
+            <p></p>
+            
+                <span class="label label-primary ">difficulty</span>
+                
+                <span> 3   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">categories</span>
+                
+                <span> greedy   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">source</span>
+                
+                <span> Codeforces   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+        </footer>
+    </div>
+</div>
+
+
+
+
+<h2>Description</h2>
+
+
+
+<div>
+
+
+<p>There are n cows sitting in a row, numbered from 1 to n from left to right. Each cow is either facing to the left or facing to the right. When Iahub milks a cow, all the cows that see the current cow get scared and lose one unit of the quantity of milk that they can give. A cow facing left sees all the cows with lower indices than her index, and a cow facing right sees all the cows with higher indices than her index. A cow that got scared once can get scared again (and lose one more unit of milk). A cow that has been milked once cannot get scared and lose any more milk. You can assume that a cow never loses all the milk she can give (a cow gives an infinitely amount of milk).</p>
+
+<p>The farmer wants to lose as little milk as possible. Print the minimum amount of milk that is lost.</p>
+
+<p>The number of cows is n (1 ≤ n ≤ 200000) will show in the first line. The second line contains n integers a1, a2, &hellip;, an, where ai is 0 if the cow number i is facing left, and 1 if it is facing right.</p>
+
+<h3>Sample test(s)</h3>
+
+<pre><code>&gt;&gt; input
+4
+0 0 1 0
+&lt;&lt; output
+1
+&gt;&gt; input
+5
+1 0 1 0 1
+&lt;&lt; output
+3</code></pre>
+
+
+</div>
+
+
+<h2>Solution</h2>
+
+
+
+<p>
+    <button type="button" class="btn btn-danger btn-lg showbtn" bind="class_Solution">Click to show</button>
+</p>
+
+<div class="hide" id="class_Solution">
+
+
+<p>I know you guys have got multiple ideas about this problem, and of course, some of these solutions are &ldquo;seems correct&rdquo; as you guys can&#39;t <strong>prove the correctness</strong> of your idea.</p>
+
+<pre><code>&lt; &lt; &gt; &lt;</code></pre>
+
+<p>The example case 1, for example. It seems that it&#39;s hard to decide to milk which cow at the very beginning. Maybe we can start from the rightmost cow which looking left, or the leftmost one which looking right. However, it may lead you to some kinds of pitfalls. And makes you spend several hours more to find the final answer.</p>
+
+<p>This problem looks quite easy. It&#39;s not. (Maybe you can get the &ldquo;Accepted&rdquo; quite easily without your proof. But it can&#39;t really do the trick when you are having an interview.)</p>
+
+<blockquote>
+<p>There&#39;s a certain category of questions that fall into that sweet spot of &ldquo;takes a tiny bit of thinking but not too much.&rdquo; </p>
+</blockquote>
+
+<p>So, before you make your final design, please make sure that your solution is reasonable, and make your best to prove its correctness.</p>
+
+<p>I find an excellent <a href="http://codeforces.com/blog/entry/10476">tutorial</a> for this problem.</p>
+
+<p>For every two cows in that line. We get four scenarios.</p>
+
+<ol>
+<li><p><left, left><br>
+We can start from the rightmost one. And no milk will be losed.</p></li>
+<li><p><left, right><br>
+<code>&lt;, &gt;</code>. This two cows can&#39;t see each other. Arbitrary order will do.</p></li>
+<li><p><right, right><br>
+Similar to scenario 1, start from the leftmost one.</p></li>
+<li><p><right, left><br>
+<code>&gt;, &lt;</code>. This one is special, becase we can&#39;t make any strategy to avoid losing any milk. So, when we come across this kind of pair of cows. Add 1 to the final results.</p></li>
+</ol>
+
+<p>And with some optimization tricks. We can find the final solution with O(n) time complexity and O(1) extra memory space.</p>
+<div class="highlight"><pre><span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">raw_input</span><span class="p">())</span>
+<span class="n">cows</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">raw_input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+<span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">cow</span> <span class="ow">in</span> <span class="n">cows</span><span class="p">:</span>
+    <span class="n">cnt</span> <span class="o">+=</span> <span class="n">cow</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">cow</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">+=</span> <span class="n">cnt</span>
+<span class="k">print</span> <span class="n">res</span>
+</pre></div>
+
+
+</div>
+
+
+<hr/>
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1957813"></script>
+<!-- UY END -->
+
+
+        </div>
+        <hr/>
+        <footer class="bs-footer" role="contentinfo">
+            <div class="container">
+                <p>Powered by IntGraph</p>
+                <p>This page is generated at 2015-04-10 22:52:16 CST.</p>
+                <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
+            </div>
+        </footer>
+
+         
+        
+<script>
+$(document).ready(function(){
+    $(".showbtn").click(function(){
+        var divname = $(this).attr("bind");
+        console.log(divname);
+        $("#" + divname).removeClass("hide");
+    });
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script>
+
+
+
+    </body>
+</html>

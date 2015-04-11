@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/jquery.min.js"></script>
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/font-awesome.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/pygments.css"/>
+        
+        <title></title>
+        
+        
+    </head>
+    <body ng-app="IgApp">
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/index.html">IntGraph</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    
+                    <li>
+                        <a href="/index.html">Problems</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/System Design.html">System Design</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Contribute.html">Contribute</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/About.html">About</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            
+
+<h1> Binary Tree Verticality Traversal </h1>
+
+<div class="panel">
+    <div class="panel-body">
+        <footer class="post-info">
+            <span class="label label-default">Date</span>
+            <span class="published">
+                <i class="icon-calendar"></i>2015-04-11 18:44:08
+            </span>
+            <p></p>
+            
+                <span class="label label-primary ">difficulty</span>
+                
+                <span> 3   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">categories</span>
+                
+                <span> tree   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">source</span>
+                
+                <span> facebook  / </span>
+                
+                <span> geeksforgeeks   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+        </footer>
+    </div>
+</div>
+
+
+
+
+<h2>Description</h2>
+
+
+
+<div>
+
+
+<p>To understand what&#39;s same vertical line, we need to define horizontal distances first. If two nodes have the same Horizontal Distance (HD), then they are on same vertical line.</p>
+
+<p>The idea of HD is simple. HD for root is 0, a right edge (edge connecting to right subtree) is considered as +1 horizontal distance and a left edge is considered as -1 horizontal distance. </p>
+
+<p><img src="http://wizmann-pic.qiniudn.com/fe9005fb7f3383b78679a06c590d3c5e" alt="Alt text"></p>
+
+<p>Now given a binary tree, please print the path of verticality traversal of the tree.</p>
+
+<p><img src="http://wizmann-pic.qiniudn.com/f42894ec3263b013c017f8f519648bb4" alt="Alt text"></p>
+
+<p>The output of print this tree vertically will be:
+<code>
+4
+2
+1 5 6
+3 8
+7
+9 
+</code></p>
+
+
+</div>
+
+
+<h2>Solution</h2>
+
+
+
+<p>
+    <button type="button" class="btn btn-danger btn-lg showbtn" bind="class_Solution">Click to show</button>
+</p>
+
+<div class="hide" id="class_Solution">
+
+
+<p>The most difficult part of this problem is &ndash; the meaning of it.</p>
+
+<p>After you understand what it really wants. It not hard at all, indeed.</p>
+
+<p>As you don&#39;t know the &ldquo;width&rdquo; of the tree. You have to use a dynamic data structure to store the nodes on each line. In my code, I use <code>list&lt;vector&lt;int&gt; &gt;</code>, but I think <code>unordered_map&lt;int, vector&lt;int&gt; &gt;</code> or <code>map&lt;int, vector&lt;int&gt; &gt;</code> will be more concise.</p>
+
+<p>(I copy the skeleton of the code from <a href="http://www.geeksforgeeks.org/print-binary-tree-vertical-order/">here</a>, because I&#39;m too lazy to build a tree manually.)</p>
+<div class="highlight"><pre><span class="cp">#include &lt;iostream&gt;</span>
+<span class="cp">#include &lt;list&gt;</span>
+<span class="cp">#include &lt;vector&gt;</span>
+<span class="cp">#include &lt;algorithm&gt;</span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="k">struct</span> <span class="n">TreeNode</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">value</span><span class="p">;</span>
+    <span class="n">TreeNode</span> <span class="o">*</span><span class="n">left</span><span class="p">,</span> <span class="o">*</span><span class="n">right</span><span class="p">;</span>
+
+    <span class="n">TreeNode</span><span class="p">(</span><span class="kt">int</span> <span class="n">v</span><span class="p">)</span><span class="o">:</span> <span class="n">value</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="n">left</span><span class="p">(</span><span class="nb">NULL</span><span class="p">),</span> <span class="n">right</span><span class="p">(</span><span class="nb">NULL</span><span class="p">)</span> <span class="p">{}</span>
+<span class="p">};</span>
+
+<span class="n">list</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">ll</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">do_traversal</span><span class="p">(</span>
+        <span class="k">const</span> <span class="n">TreeNode</span><span class="o">*</span> <span class="n">root</span><span class="p">,</span>
+        <span class="kt">int</span> <span class="n">hd</span><span class="p">,</span>
+        <span class="n">list</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&gt;::</span><span class="n">iterator</span> <span class="n">iter</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">root</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">iter</span><span class="o">-&gt;</span><span class="n">push_back</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">auto</span> <span class="n">left_iter</span> <span class="o">=</span> <span class="n">iter</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">left_iter</span> <span class="o">==</span> <span class="n">ll</span><span class="p">.</span><span class="n">begin</span><span class="p">())</span> <span class="p">{</span>
+            <span class="n">ll</span><span class="p">.</span><span class="n">emplace_front</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="o">--</span><span class="n">left_iter</span><span class="p">;</span>
+
+        <span class="n">do_traversal</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">,</span> <span class="n">hd</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">left_iter</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">auto</span> <span class="n">right_iter</span> <span class="o">=</span> <span class="n">iter</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">++</span><span class="n">right_iter</span> <span class="o">==</span> <span class="n">ll</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="p">{</span>
+            <span class="n">ll</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="n">right_iter</span> <span class="o">=</span> <span class="n">iter</span><span class="p">;</span>
+        <span class="o">++</span><span class="n">right_iter</span><span class="p">;</span>
+        <span class="n">do_traversal</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">,</span> <span class="n">hd</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">right_iter</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">get_res</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span><span class="o">&amp;</span> <span class="n">vec</span><span class="o">:</span> <span class="n">ll</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span><span class="o">&amp;</span> <span class="n">i</span><span class="o">:</span> <span class="n">vec</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d &quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">puts</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">verticalOrder</span><span class="p">(</span><span class="k">const</span> <span class="n">TreeNode</span><span class="o">*</span> <span class="n">root</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">ll</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
+    <span class="n">ll</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">();</span>
+    <span class="n">do_traversal</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">ll</span><span class="p">.</span><span class="n">begin</span><span class="p">());</span>
+    <span class="n">get_res</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">TreeNode</span> <span class="o">*</span><span class="n">root</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TreeNode</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+    <span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span>  <span class="o">=</span> <span class="k">new</span> <span class="n">TreeNode</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+    <span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TreeNode</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+
+    <span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="o">-&gt;</span><span class="n">left</span>  <span class="o">=</span> <span class="k">new</span> <span class="n">TreeNode</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+    <span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="o">-&gt;</span><span class="n">right</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TreeNode</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+
+    <span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="o">-&gt;</span><span class="n">left</span>  <span class="o">=</span> <span class="k">new</span> <span class="n">TreeNode</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span>
+    <span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="o">-&gt;</span><span class="n">right</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TreeNode</span><span class="p">(</span><span class="mi">7</span><span class="p">);</span>
+
+    <span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="o">-&gt;</span><span class="n">left</span><span class="o">-&gt;</span><span class="n">right</span>  <span class="o">=</span> <span class="k">new</span> <span class="n">TreeNode</span><span class="p">(</span><span class="mi">8</span><span class="p">);</span>
+    <span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="o">-&gt;</span><span class="n">right</span><span class="o">-&gt;</span><span class="n">right</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TreeNode</span><span class="p">(</span><span class="mi">9</span><span class="p">);</span>
+
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Vertical order traversal is </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">verticalOrder</span><span class="p">(</span><span class="n">root</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+</div>
+
+
+<hr/>
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1957813"></script>
+<!-- UY END -->
+
+
+        </div>
+        <hr/>
+        <footer class="bs-footer" role="contentinfo">
+            <div class="container">
+                <p>Powered by IntGraph</p>
+                <p>This page is generated at 2015-04-11 18:46:06 CST.</p>
+                <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
+            </div>
+        </footer>
+
+         
+        
+<script>
+$(document).ready(function(){
+    $(".showbtn").click(function(){
+        var divname = $(this).attr("bind");
+        console.log(divname);
+        $("#" + divname).removeClass("hide");
+    });
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script>
+
+
+
+    </body>
+</html>

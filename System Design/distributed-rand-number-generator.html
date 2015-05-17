@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/jquery.min.js"></script>
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/font-awesome.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/pygments.css"/>
+        
+        <title></title>
+        
+        
+    </head>
+    <body ng-app="IgApp">
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/index.html">IntGraph</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    
+                    <li>
+                        <a href="/index.html">Problems</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/System Design.html">System Design</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Contribute.html">Contribute</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/About.html">About</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            
+
+<h1> Design a Distributed Random Number Generator </h1>
+
+<div class="panel">
+    <div class="panel-body">
+        <footer class="post-info">
+            <span class="label label-default">Date</span>
+            <span class="published">
+                <i class="icon-calendar"></i>2015-05-17 17:36:40
+            </span>
+            <p></p>
+            
+                <span class="label label-primary ">difficulty</span>
+                
+                <span> 3.5   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">categories</span>
+                
+                <span> distributed system   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">source</span>
+                
+                <span> google   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+        </footer>
+    </div>
+</div>
+
+
+
+
+<h2>Description</h2>
+
+
+
+<div>
+
+
+<p>Please design a distrubuted random number generator. The clients can get a random number from server by a single <code>call()</code> function.</p>
+
+
+</div>
+
+
+<h2>Solution</h2>
+
+
+
+<p>
+    <button type="button" class="btn btn-danger btn-lg showbtn" bind="class_Solution">Click to show</button>
+</p>
+
+<div class="hide" id="class_Solution">
+
+
+<p><img src="http://wizmann-pic.qiniudn.com/d05dbd3183291e460f83434fdd36c851" alt="Alt text"></p>
+
+<p>It&#39;s quite easy to build the skeleton of the system. Clients ask random number from the servers. And of course, it seems that everything goes well. But in a distributed system, everything MIGHT NOT goes well because a distributed system is prone to fail, or in the other word, is more possible to fail because the scale of the system is large.</p>
+
+<p>There are several key points for the problem.</p>
+
+<h3>Batching</h3>
+
+<p>It&#39;s known to us all that the network communication is much slower than fetching data from the memory. And this maybe the bottleneck for a high-performance application. It&#39;s wise to avoid network communication as possible.</p>
+
+<p>Then, batching is a good choice. That is, the clients should ask a batch of random numbers from the server at one single time. And after the numbers are consumed, the clients ask for another batch again. The advantage of this method is, the time cost of one network communication is distributed over serverl random numbers, that will result for a high throughput of the system.</p>
+
+<p>However, this design has one problem that the latency will be much higher than average for the request that cause a network communication. </p>
+
+<p><img src="http://wizmann-pic.qiniudn.com/e43601d07ccea0325dede8cf72f82213" alt="Alt text"></p>
+
+<p>That is unacceptable. The average response time is low, and it&#39;s find. But the 99 percentile of the response time is much higher. And be ware, the system is serving all the customers rather than half of them or less.</p>
+
+<p>There is another design. The client set a threshold of the remaining random numbers. If there are less numbers than the threshold, it will ask the server for another batch. This will do the trick to reduce the response time caused by network communication.</p>
+
+<p><img src="http://wizmann-pic.qiniudn.com/64cf2538460ae1ce320a7cd7d58e2901" alt="Alt text"></p>
+
+<h3>Use a library rather than a proxy app</h3>
+
+<p>There is another design for the whole system. We use the proxy level to gain a better compability (maybe). But the disadvantage for an additional level, that is, if there is a proxy server in the middle, each message will pass the network twice. And you know, it&#39;s quite slow. And for a large scale system, additional proxy servers will increase the difficulty of deployments.</p>
+
+<p>As a result, we just take a proxy-lib for the communications. It&#39;s light-weight, and more flexible. What is more important, it&#39;s more efficient (lower latency, high throughput).</p>
+
+<p><img src="http://wizmann-pic.qiniudn.com/c16ba0e9b1bc9bd13202020ff0eed8ed" alt="Alt text"></p>
+
+<h3>Failure handling &amp; Load balancing</h3>
+
+<p>As we discussed above, a distributed system is prone to fail. So a failure handling strategy is of vital importance.</p>
+
+<h4>Failure handling - Retry</h4>
+
+<p>Retry is one of the simplest failure handling strategy. All we have to do is to avoid attempts to communicate with unreachable peers. So the strategy is like this:</p>
+
+<ul>
+<li>Client consider a server is failed if the server doesn&#39;t respond to a request</li>
+<li>Client quickly discover that the server is unreachable, and then try to communicate with another replica</li>
+<li>Client periodically retires the failed server to detect if the server recovers or not</li>
+</ul>
+
+<p>Advantages:</p>
+
+<ul>
+<li>simple and efficient, easy to implement</li>
+</ul>
+
+<p>Disadvantages:</p>
+
+<ul>
+<li>prone to lost some requests when server fails</li>
+</ul>
+
+<h4>Failure handling - Sloppy Quorum</h4>
+
+<p>Slopppy Quorum is a method that could provide high availability when some of the replicas are not available. The clients ask for random number from serveral different servers rather than one single server in case of single node failure.</p>
+
+<p>Advantages:</p>
+
+<ul>
+<li>high availability</li>
+</ul>
+
+<p>Disadvantages:</p>
+
+<ul>
+<li>a little more complicated</li>
+<li>high network loads</li>
+</ul>
+
+<h3>Lock free algorithm</h3>
+
+<p>Lock-free algorithm are simple mechanisms for inter-thread communication that don&#39;t relay on the kernel-provided synchronisation primitives, such as mutexes or semaphores; rather, they do the synchronisation using atomic CPU operations. This would provides higher performance for the server. And the lock-free queue is a nice practice to hand out the random numbers to the consumers.</p>
+
+
+</div>
+
+
+<hr/>
+
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1957813"></script>
+<!-- UY END -->
+
+
+        </div>
+        <hr/>
+        <footer class="bs-footer" role="contentinfo">
+            <div class="container">
+                <p>Powered by IntGraph</p>
+                <p>This page is generated at 2015-05-17 17:37:37 CST.</p>
+                <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
+            </div>
+        </footer>
+
+         
+        
+<script>
+$(document).ready(function(){
+    $(".showbtn").click(function(){
+        var divname = $(this).attr("bind");
+        console.log(divname);
+        $("#" + divname).removeClass("hide");
+    });
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script>
+
+
+
+    </body>
+</html>

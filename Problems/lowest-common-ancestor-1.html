@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/jquery.min.js"></script>
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/font-awesome.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/pygments.css"/>
+        
+        <title></title>
+        
+        
+    </head>
+    <body ng-app="IgApp">
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/index.html">IntGraph</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    
+                    <li>
+                        <a href="/index.html">Problems</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/System Design.html">System Design</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Object Orinted Design.html">Object Orinted Design</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Contribute.html">Contribute</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/About.html">About</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            
+
+<h1> Lowest Common Ancestor - 1 </h1>
+
+<div class="panel">
+    <div class="panel-body">
+        <footer class="post-info">
+            <span class="label label-default">Date</span>
+            <span class="published">
+                <i class="icon-calendar"></i>2015-06-25 00:14:46
+            </span>
+            <p></p>
+            
+                <span class="label label-primary ">difficulty</span>
+                
+                <span> 3   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">categories</span>
+                
+                <span> binary tree  / </span>
+                
+                <span> lca  / </span>
+                
+                <span> tree   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">source</span>
+                
+                <span> lintcode   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+        </footer>
+    </div>
+</div>
+
+
+
+
+<h2>Description</h2>
+
+
+
+<div>
+
+
+<p>Given the root and two nodes in a Binary Tree. Find the lowest common ancestor(LCA) of the two nodes.</p>
+
+<p>The lowest common ancestor is the node with largest depth which is the ancestor of both nodes.</p>
+
+<p>The node of the binary search tree is represent in this way:</p>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">TreeNode</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="kt">int</span> <span class="n">val</span><span class="p">;</span>
+    <span class="n">TreeNode</span> <span class="o">*</span><span class="n">left</span><span class="p">,</span> <span class="o">*</span><span class="n">right</span><span class="p">;</span>
+    <span class="n">TreeNode</span><span class="p">(</span><span class="kt">int</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="o">-&gt;</span><span class="n">val</span> <span class="o">=</span> <span class="n">val</span><span class="p">;</span>
+        <span class="k">this</span><span class="o">-&gt;</span><span class="n">left</span> <span class="o">=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">right</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+
+
+</div>
+
+
+<h2>Solution</h2>
+
+
+
+<p>
+    <button type="button" class="btn btn-danger btn-lg showbtn" bind="class_Solution">Click to show</button>
+</p>
+
+<div class="hide" id="class_Solution">
+
+
+<p>There are multiple scenarios for one single node in the binary tree during we trying to find the LCA of the two nodes.</p>
+
+<ul>
+<li>Scenario 1: node N is equal to A and B<br>
+This is the simplest one, because node A (or node B, they are the same) is the LCA itself.</li>
+<li>Scenario 2: node N is equal to A, as well as the ancestor of B<br>
+Then, node N is the LCA of node A and node B</li>
+<li>Scenario 3: node N is equal to A, but is not the ancestor of B<br>
+The LCA of A and B must be one of the ancestor of N </li>
+<li>Scenario 4: there is no node A and node B among node N and its children<br>
+The LCA of A and B should be one of the ancestor of N<br></li>
+</ul>
+
+<p>Now, we can write our code like this:</p>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="n">TreeNode</span> <span class="o">*</span><span class="n">lowestCommonAncestor</span><span class="p">(</span><span class="n">TreeNode</span> <span class="o">*</span><span class="n">root</span><span class="p">,</span> <span class="n">TreeNode</span> <span class="o">*</span><span class="n">A</span><span class="p">,</span> <span class="n">TreeNode</span> <span class="o">*</span><span class="n">B</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">nullptr</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">A</span> <span class="o">==</span> <span class="n">B</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">A</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">do_lowestCommonAncestor</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">ans</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="nl">private:</span>
+    <span class="n">TreeNode</span> <span class="o">*</span><span class="n">do_lowestCommonAncestor</span><span class="p">(</span><span class="n">TreeNode</span><span class="o">*</span> <span class="n">root</span><span class="p">,</span> <span class="n">TreeNode</span> <span class="o">*</span><span class="n">A</span><span class="p">,</span> <span class="n">TreeNode</span> <span class="o">*</span><span class="n">B</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">root</span> <span class="o">==</span> <span class="n">nullptr</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">nullptr</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">auto</span><span class="o">*</span> <span class="n">pl</span> <span class="o">=</span> <span class="n">do_lowestCommonAncestor</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">);</span>
+        <span class="k">auto</span><span class="o">*</span> <span class="n">pr</span> <span class="o">=</span> <span class="n">do_lowestCommonAncestor</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">);</span>
+
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">root</span> <span class="o">==</span> <span class="n">A</span> <span class="o">||</span> <span class="n">root</span> <span class="o">==</span> <span class="n">B</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">pl</span> <span class="o">||</span> <span class="n">pr</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">ans</span> <span class="o">=</span> <span class="n">root</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="n">root</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">pl</span> <span class="o">==</span> <span class="n">A</span> <span class="o">&amp;&amp;</span> <span class="n">pr</span> <span class="o">==</span> <span class="n">B</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">ans</span> <span class="o">=</span> <span class="n">root</span><span class="p">;</span>
+            <span class="k">return</span> <span class="n">nullptr</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">pl</span> <span class="o">==</span> <span class="n">B</span> <span class="o">&amp;&amp;</span> <span class="n">pr</span> <span class="o">==</span> <span class="n">A</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">ans</span> <span class="o">=</span> <span class="n">root</span><span class="p">;</span>
+            <span class="k">return</span> <span class="n">nullptr</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">pl</span><span class="p">)</span> <span class="k">return</span> <span class="n">pl</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">pr</span><span class="p">)</span> <span class="k">return</span> <span class="n">pr</span><span class="p">;</span>
+
+        <span class="k">return</span> <span class="n">nullptr</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="nl">private:</span>
+    <span class="n">TreeNode</span><span class="o">*</span> <span class="n">ans</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+
+<p>And there is a cooler version, but they are actually the same.</p>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="n">TreeNode</span> <span class="o">*</span><span class="n">lowestCommonAncestor</span><span class="p">(</span><span class="n">TreeNode</span> <span class="o">*</span><span class="n">root</span><span class="p">,</span> <span class="n">TreeNode</span> <span class="o">*</span><span class="n">A</span><span class="p">,</span> <span class="n">TreeNode</span> <span class="o">*</span><span class="n">B</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">root</span> <span class="o">==</span> <span class="n">nullptr</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">nullptr</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">root</span> <span class="o">==</span> <span class="n">A</span> <span class="o">||</span> <span class="n">root</span> <span class="o">==</span> <span class="n">B</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">root</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">auto</span><span class="o">*</span> <span class="n">pl</span> <span class="o">=</span> <span class="n">lowestCommonAncestor</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">);</span>
+        <span class="k">auto</span><span class="o">*</span> <span class="n">pr</span> <span class="o">=</span> <span class="n">lowestCommonAncestor</span><span class="p">(</span><span class="n">root</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">pl</span> <span class="o">&amp;&amp;</span> <span class="n">pr</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">root</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">pl</span><span class="o">?</span> <span class="n">pl</span><span class="o">:</span> <span class="n">pr</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+
+
+</div>
+
+
+<hr/>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'intgraph';
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+        </div>
+        <hr/>
+        <footer class="bs-footer" role="contentinfo">
+            <div class="container">
+                <p>Powered by IntGraph</p>
+                <p>This page is generated at 2015-06-25 00:15:55 CST.</p>
+                <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
+            </div>
+        </footer>
+
+         
+        
+<script>
+$(document).ready(function(){
+    $(".showbtn").click(function(){
+        var divname = $(this).attr("bind");
+        console.log(divname);
+        $("#" + divname).removeClass("hide");
+    });
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script>
+
+
+
+    </body>
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/jquery.min.js"></script>
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/font-awesome.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/pygments.css"/>
+        
+        <title>
+Fraction to Recurring Decimal - IntGraph
+</title>
+        
+        
+    </head>
+    <body ng-app="IgApp">
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/index.html">IntGraph</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    
+                    <li>
+                        <a href="/index.html">Problems</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/System Design.html">System Design</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Object Orinted Design.html">Object Orinted Design</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Contribute.html">Contribute</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/About.html">About</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            
+
+<h1> Fraction to Recurring Decimal </h1>
+
+<div class="panel">
+    <div class="panel-body">
+        <footer class="post-info">
+            <span class="label label-default">Date</span>
+            <span class="published">
+                <i class="icon-calendar"></i>2015-07-16 01:09:00
+            </span>
+            <p></p>
+            
+                <span class="label label-primary ">difficulty</span>
+                
+                <span> 3.5   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">categories</span>
+                
+                <span> math   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">source</span>
+                
+                <span> Leetcode  / </span>
+                
+                <span> google   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+        </footer>
+    </div>
+</div>
+
+
+
+
+<h2>Description</h2>
+
+
+
+<div>
+
+
+<p>Given two integers representing the numerator and denominator of a fraction, return the fraction in string format.</p>
+
+<p>If the fractional part is repeating, enclose the repeating part in parentheses.</p>
+
+<p>For example,</p>
+
+<ul>
+<li>Given numerator = 1, denominator = 2, return &ldquo;0.5&rdquo;.</li>
+<li>Given numerator = 2, denominator = 1, return &ldquo;2&rdquo;.</li>
+<li>Given numerator = 2, denominator = 3, return &ldquo;0.(6)&rdquo;.</li>
+</ul>
+
+
+</div>
+
+
+<h2>Solution</h2>
+
+
+
+<p>
+    <button type="button" class="btn btn-danger btn-lg showbtn" bind="class_Solution">Click to show</button>
+</p>
+
+<div class="hide" id="class_Solution">
+
+
+<p>It&#39;s great that there are several test cases in the description. But it&#39;s far from enough for us to solve this problem.</p>
+
+<p>There are always some pitfalls for some &ldquo;easy&rdquo; problems in the interview. The crux to deal with it is to ask the interviewer what is <strong>really</strong> want for this one.</p>
+
+<p>Here is some corner cases that we have to deal with:</p>
+
+<ul>
+<li>numerator = 0, denominator = 2, return &ldquo;0&rdquo;</li>
+<li>numerator = 1, denominator = 0, invalid test case</li>
+<li>numerator = 1, denominator = 333, return &ldquo;0.(003)&rdquo;</li>
+<li>numerator = -1, denominator = 2, return &ldquo;-0.5&rdquo;</li>
+<li>numerator = 1, denominator = -3, return &ldquo;-0.(3)&rdquo;</li>
+<li>numerator = -2147483648, denominator = -1, return &ldquo;2147483648&rdquo;, be ware that the result is beyond the range of a integer</li>
+</ul>
+
+<p>Other than write this cases out, you should run the &ldquo;code&rdquo; in your mind before you write it down on the paper or whiteboard. It&#39;s essential that you can change your mind easier than the code on the paper. Sometimes you just keep patching your written code, and eventually find out that the code becomes a mess and error-prone.</p>
+
+<p>Remember, case first, brain emulation second, code always comes the last.</p>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+    <span class="k">typedef</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">llint</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">string</span> <span class="n">fractionToDecimal</span><span class="p">(</span><span class="n">llint</span> <span class="n">numerator</span><span class="p">,</span> <span class="n">llint</span> <span class="n">denominator</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">sig</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">((</span><span class="n">numerator</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">^</span> <span class="p">(</span><span class="n">denominator</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">))</span> <span class="p">{</span>
+            <span class="n">sig</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">numerator</span>   <span class="o">=</span> <span class="n">abs</span><span class="p">(</span><span class="n">numerator</span><span class="p">);</span>
+        <span class="n">denominator</span> <span class="o">=</span> <span class="n">abs</span><span class="p">(</span><span class="n">denominator</span><span class="p">);</span>
+
+        <span class="n">string</span> <span class="n">a</span> <span class="o">=</span> <span class="n">to_string</span><span class="p">(</span><span class="n">numerator</span> <span class="o">/</span> <span class="n">denominator</span><span class="p">);</span>
+        <span class="n">string</span> <span class="n">b</span> <span class="o">=</span> <span class="n">do_frac_to_dec</span><span class="p">(</span><span class="n">numerator</span> <span class="o">%</span> <span class="n">denominator</span><span class="p">,</span> <span class="n">denominator</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="s">&quot;0&quot;</span> <span class="o">&amp;&amp;</span> <span class="n">b</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="s">&quot;0&quot;</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">sig</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="s">&quot;-&quot;</span> <span class="o">+</span> <span class="n">a</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">b</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">a</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="s">&quot;.&quot;</span> <span class="o">+</span> <span class="n">b</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="n">string</span> <span class="n">do_frac_to_dec</span><span class="p">(</span><span class="n">llint</span> <span class="n">a</span><span class="p">,</span> <span class="n">llint</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">llint</span><span class="p">,</span> <span class="n">llint</span><span class="o">&gt;</span> <span class="n">mp</span><span class="p">;</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="n">llint</span><span class="o">&gt;</span> <span class="n">vec</span><span class="p">;</span>
+
+        <span class="kt">int</span> <span class="n">ptr</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">mp</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">!=</span> <span class="n">mp</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="p">{</span>
+                <span class="n">ptr</span> <span class="o">=</span> <span class="n">mp</span><span class="p">[</span><span class="n">a</span><span class="p">];</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="n">mp</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">=</span> <span class="n">vec</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+            <span class="p">}</span>
+            <span class="n">a</span> <span class="o">*=</span> <span class="mi">10</span><span class="p">;</span>
+            <span class="n">vec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">a</span> <span class="o">/</span> <span class="n">b</span><span class="p">);</span>
+            <span class="n">a</span> <span class="o">%=</span> <span class="n">b</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="n">string</span> <span class="n">res</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">vec</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">ptr</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">res</span> <span class="o">+=</span> <span class="s">&quot;(&quot;</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="n">res</span> <span class="o">+=</span> <span class="n">to_string</span><span class="p">(</span><span class="n">vec</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ptr</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">res</span> <span class="o">+=</span> <span class="s">&quot;)&quot;</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+
+
+</div>
+
+
+<hr/>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'intgraph';
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+        </div>
+        <hr/>
+        <footer class="bs-footer" role="contentinfo">
+            <div class="container">
+                <p>Powered by IntGraph</p>
+                <p>This page is generated at 2015-07-16 01:12:07 CST.</p>
+                <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
+            </div>
+        </footer>
+
+         
+        
+<script>
+$(document).ready(function(){
+    $(".showbtn").click(function(){
+        var divname = $(this).attr("bind");
+        console.log(divname);
+        $("#" + divname).removeClass("hide");
+    });
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script>
+
+
+
+    </body>
+</html>

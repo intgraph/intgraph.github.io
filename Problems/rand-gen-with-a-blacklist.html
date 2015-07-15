@@ -151,7 +151,7 @@ Random Generator with a Blacklist - IntGraph
 
 <p>And it&#39;s not for us to see, if we&#39;ve got a number k, and the number of numbers in blacklist which is smaller than k. Then we can finally make a map.</p>
 <div class="highlight"><pre><span class="k">class</span> <span class="nc">RandWithBlack</span> <span class="p">{</span>
-<span class="nl">public:</span>
+<span class="k">public</span><span class="o">:</span>
     <span class="n">RandWithBlack</span><span class="p">(</span><span class="k">const</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">blacklist</span><span class="p">)</span><span class="o">:</span> <span class="n">_blacklist</span><span class="p">(</span><span class="n">blacklist</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">sort</span><span class="p">(</span><span class="n">_blacklist</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">_blacklist</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
     <span class="p">}</span>
@@ -181,7 +181,7 @@ Random Generator with a Blacklist - IntGraph
         <span class="p">}</span>
         <span class="k">return</span> <span class="n">l</span><span class="p">;</span>
     <span class="p">}</span>
-<span class="nl">private:</span>
+<span class="k">private</span><span class="o">:</span>
     <span class="kt">int</span> <span class="n">blacked_num</span><span class="p">(</span><span class="kt">int</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
         <span class="kt">int</span> <span class="n">res</span> <span class="o">=</span> <span class="n">distance</span><span class="p">(</span>
             <span class="n">_blacklist</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span>
@@ -193,7 +193,7 @@ Random Generator with a Blacklist - IntGraph
         <span class="p">);</span>
         <span class="k">return</span> <span class="n">res</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
     <span class="p">}</span>
-<span class="nl">private:</span>
+<span class="k">private</span><span class="o">:</span>
     <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">_blacklist</span><span class="p">;</span>
 <span class="p">};</span>
 </pre></div>
@@ -252,7 +252,7 @@ Random Generator with a Blacklist - IntGraph
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2015-07-09 09:34:41 CST.</p>
+                <p>This page is generated at 2015-07-16 01:12:08 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

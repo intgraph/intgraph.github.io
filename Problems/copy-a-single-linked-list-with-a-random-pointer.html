@@ -136,7 +136,7 @@ Copy a singly linked list with a random pointer - IntGraph
 <div class="highlight"><pre><span class="n">ListNode</span><span class="o">*</span> <span class="nf">copyListWithRandomPtr</span><span class="p">(</span><span class="n">ListNode</span> <span class="o">*</span><span class="n">head</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// &lt;= a solution of score 60</span>
     <span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">ListNode</span><span class="o">*</span><span class="p">,</span> <span class="n">ListNode</span><span class="o">*&gt;</span> <span class="n">mp</span><span class="p">;</span>
     <span class="n">ListNode</span> <span class="o">*</span><span class="n">ptr</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
-    <span class="n">ListNode</span> <span class="o">*</span><span class="n">dummyHead</span> <span class="o">=</span> <span class="n">nullptr</span><span class="p">,</span> <span class="o">*</span><span class="n">dummyPtr</span> <span class="o">=</span> <span class="n">nullptr</span><span class="p">;</span>
+    <span class="n">ListNode</span> <span class="o">*</span><span class="n">dummyHead</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">,</span> <span class="o">*</span><span class="n">dummyPtr</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
 
     <span class="k">while</span> <span class="p">(</span><span class="n">ptr</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">dummyPtr</span><span class="p">)</span> <span class="p">{</span>
@@ -164,7 +164,7 @@ Copy a singly linked list with a random pointer - IntGraph
 <p>The best solution is quite skillful. It changes the structure of the origin list, and devide it into two same list at last. Great answer for an interviewee to past the code test.</p>
 <div class="highlight"><pre><span class="n">ListNode</span><span class="o">*</span> <span class="nf">copyListWithRandomPtr</span><span class="p">(</span><span class="n">ListNode</span> <span class="o">*</span><span class="n">head</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">ListNode</span> <span class="o">*</span><span class="n">ptr</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
-    <span class="n">ListNode</span> <span class="o">*</span><span class="n">dummyHead</span> <span class="o">=</span> <span class="n">nullptr</span><span class="p">,</span> <span class="o">*</span><span class="n">dummyPtr</span> <span class="o">=</span> <span class="n">nullptr</span><span class="p">;</span>
+    <span class="n">ListNode</span> <span class="o">*</span><span class="n">dummyHead</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">,</span> <span class="o">*</span><span class="n">dummyPtr</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
 
     <span class="k">while</span> <span class="p">(</span><span class="n">ptr</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">auto</span> <span class="n">next</span> <span class="o">=</span> <span class="n">ptr</span> <span class="o">-&gt;</span> <span class="n">next</span><span class="p">;</span>
@@ -223,7 +223,7 @@ Copy a singly linked list with a random pointer - IntGraph
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2015-07-09 09:34:42 CST.</p>
+                <p>This page is generated at 2015-07-16 01:12:07 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

@@ -146,7 +146,7 @@ json_value: json_scalar
 
 <p>First of all, a pure virtual class as the superclass is essential. Because we can use a pointer of superclass for every subclass of different type.</p>
 <div class="highlight"><pre><span class="k">class</span> <span class="nc">JsonObject</span> <span class="p">{</span>
-<span class="nl">public:</span>
+<span class="k">public</span><span class="o">:</span>
     <span class="k">virtual</span> <span class="n">string</span> <span class="n">str</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">};</span>
 </pre></div>
@@ -154,35 +154,35 @@ json_value: json_scalar
 <p>And then, scalar type and string type are easy to deal with.</p>
 <div class="highlight"><pre><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
 <span class="k">class</span> <span class="nc">JsonScalar</span><span class="o">:</span> <span class="k">public</span> <span class="n">JsonObject</span> <span class="p">{</span>
-<span class="nl">public:</span>
+<span class="k">public</span><span class="o">:</span>
     <span class="n">JsonScalar</span><span class="p">(</span><span class="n">T</span> <span class="n">value</span><span class="p">)</span><span class="o">:</span> <span class="n">_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="p">{}</span>
     <span class="k">virtual</span> <span class="n">string</span> <span class="n">str</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">return</span> <span class="n">to_string</span><span class="p">(</span><span class="n">_value</span><span class="p">);</span>
     <span class="p">}</span>
-<span class="nl">private:</span>
+<span class="k">private</span><span class="o">:</span>
     <span class="n">T</span> <span class="n">_value</span><span class="p">;</span>
 <span class="p">};</span>
 
 <span class="k">class</span> <span class="nc">JsonString</span><span class="o">:</span> <span class="k">public</span> <span class="n">JsonObject</span> <span class="p">{</span>
-<span class="nl">public:</span>
+<span class="k">public</span><span class="o">:</span>
     <span class="n">JsonString</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">str</span><span class="p">)</span><span class="o">:</span> <span class="n">_str</span><span class="p">(</span><span class="n">str</span><span class="p">)</span> <span class="p">{}</span>
     <span class="k">virtual</span> <span class="n">string</span> <span class="n">str</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">return</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="n">_str</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="p">;</span>
     <span class="p">}</span>
-<span class="nl">private:</span>
+<span class="k">private</span><span class="o">:</span>
     <span class="n">string</span> <span class="n">_str</span><span class="p">;</span>
 <span class="p">};</span>
 </pre></div>
 
 <p>And then an array type, which contain a vector of <code>JsonObject*</code> to store the data of simple type or nested json structure.</p>
 <div class="highlight"><pre><span class="k">class</span> <span class="nc">JsonArray</span><span class="o">:</span> <span class="k">public</span> <span class="n">JsonObject</span> <span class="p">{</span>
-<span class="nl">public:</span>
+<span class="k">public</span><span class="o">:</span>
     <span class="n">JsonArray</span><span class="p">()</span> <span class="p">{}</span>
     <span class="n">JsonArray</span><span class="p">(</span><span class="k">const</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">JsonObject</span><span class="o">*&gt;</span> <span class="n">vec</span><span class="p">)</span><span class="o">:</span> <span class="n">_vec</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="p">{}</span>
     <span class="k">virtual</span> <span class="n">string</span> <span class="n">str</span><span class="p">()</span> <span class="p">{</span>
         <span class="n">string</span> <span class="n">res</span> <span class="o">=</span> <span class="s">&quot;[&quot;</span><span class="p">;</span>
         <span class="kt">int</span> <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-        <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">p</span><span class="o">:</span> <span class="n">_vec</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">p</span><span class="p">:</span> <span class="n">_vec</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">if</span> <span class="p">(</span><span class="n">cnt</span><span class="p">)</span> <span class="p">{</span>
                 <span class="n">res</span> <span class="o">+=</span> <span class="s">&quot;, &quot;</span><span class="p">;</span>
             <span class="p">}</span>
@@ -195,20 +195,20 @@ json_value: json_scalar
     <span class="kt">void</span> <span class="n">add</span><span class="p">(</span><span class="n">JsonObject</span><span class="o">*</span> <span class="n">object_p</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">_vec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">object_p</span><span class="p">);</span>
     <span class="p">}</span>
-<span class="nl">private:</span>
+<span class="k">private</span><span class="o">:</span>
     <span class="n">vector</span><span class="o">&lt;</span><span class="n">JsonObject</span><span class="o">*&gt;</span> <span class="n">_vec</span><span class="p">;</span>
 <span class="p">};</span>
 </pre></div>
 
 <p>And here comes the most important one, the dict class. And it&#39;s quite similar with the array type. Of course, it&#39;s actually the same.</p>
 <div class="highlight"><pre><span class="k">class</span> <span class="nc">JsonDict</span><span class="o">:</span> <span class="k">public</span> <span class="n">JsonObject</span> <span class="p">{</span>
-<span class="nl">public:</span>
+<span class="k">public</span><span class="o">:</span>
     <span class="n">JsonDict</span><span class="p">()</span> <span class="p">{}</span>
     <span class="n">JsonDict</span><span class="p">(</span><span class="k">const</span> <span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="n">JsonObject</span><span class="o">*&gt;</span> <span class="n">mp</span><span class="p">)</span><span class="o">:</span> <span class="n">_mp</span><span class="p">(</span><span class="n">mp</span><span class="p">)</span> <span class="p">{}</span>
     <span class="k">virtual</span> <span class="n">string</span> <span class="n">str</span><span class="p">()</span> <span class="p">{</span>
         <span class="n">string</span> <span class="n">res</span> <span class="o">=</span> <span class="s">&quot;{&quot;</span><span class="p">;</span>
         <span class="kt">int</span> <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-        <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">pp</span><span class="o">:</span> <span class="n">_mp</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">pp</span><span class="p">:</span> <span class="n">_mp</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">if</span> <span class="p">(</span><span class="n">cnt</span><span class="p">)</span> <span class="p">{</span>
                 <span class="n">res</span> <span class="o">+=</span> <span class="s">&quot;, &quot;</span><span class="p">;</span>
             <span class="p">}</span>
@@ -226,7 +226,7 @@ json_value: json_scalar
     <span class="kt">void</span> <span class="n">add</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">key</span><span class="p">,</span> <span class="n">JsonObject</span><span class="o">*</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">_mp</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>
     <span class="p">}</span>
-<span class="nl">private:</span>
+<span class="k">private</span><span class="o">:</span>
     <span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="n">JsonObject</span><span class="o">*&gt;</span> <span class="n">_mp</span><span class="p">;</span>
 <span class="p">};</span>
 </pre></div>
@@ -291,7 +291,7 @@ json_value: json_scalar
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2015-07-09 09:34:43 CST.</p>
+                <p>This page is generated at 2015-07-16 01:12:10 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

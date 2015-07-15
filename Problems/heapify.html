@@ -124,7 +124,7 @@ p.s. Any solution which is a min-heap array is acceptable.</code></pre>
 <p>The time complexity of time algorithm is <code>O(logN * N)</code> . For <code>N = 2^k</code>, it needs <code>sum(2^i * i)</code> steps to heapify the array.</p>
 <div class="highlight"><pre><span class="c1">// O(n * logn) time complexity</span>
 <span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
-<span class="nl">public:</span>
+<span class="k">public</span><span class="o">:</span>
     <span class="cm">/**</span>
 <span class="cm">     * @param A: Given an integer array</span>
 <span class="cm">     * @return: void</span>
@@ -139,7 +139,7 @@ p.s. Any solution which is a min-heap array is acceptable.</code></pre>
             <span class="p">}</span>
         <span class="p">}</span>
     <span class="p">}</span>
-<span class="nl">private:</span>
+<span class="k">private</span><span class="o">:</span>
     <span class="kt">int</span> <span class="n">parent</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
     <span class="p">}</span>
@@ -153,7 +153,7 @@ p.s. Any solution which is a min-heap array is acceptable.</code></pre>
 <p>To build a min-heap from bottom to top, it will take <code>sum(2^i * (k - i))</code> step to build that heap. And the final time complexity is <code>O(N)</code>.</p>
 <div class="highlight"><pre><span class="c1">// O(n) time complexity</span>
 <span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
-<span class="nl">public:</span>
+<span class="k">public</span><span class="o">:</span>
     <span class="cm">/**</span>
 <span class="cm">     * @param A: Given an integer array</span>
 <span class="cm">     * @return: void</span>
@@ -165,7 +165,7 @@ p.s. Any solution which is a min-heap array is acceptable.</code></pre>
             <span class="n">down</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
         <span class="p">}</span>
     <span class="p">}</span>
-<span class="nl">private:</span>
+<span class="k">private</span><span class="o">:</span>
     <span class="kt">int</span> <span class="n">down</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">A</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p</span><span class="p">)</span> <span class="p">{</span>
         <span class="kt">int</span> <span class="n">l</span> <span class="o">=</span> <span class="n">left</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
         <span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="n">right</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
@@ -225,7 +225,7 @@ p.s. Any solution which is a min-heap array is acceptable.</code></pre>
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2015-07-09 09:34:42 CST.</p>
+                <p>This page is generated at 2015-07-16 01:12:07 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

@@ -100,7 +100,7 @@ Random Deque - IntGraph
 <p>This is the interface of this data structure.</p>
 <div class="highlight"><pre><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
 <span class="k">class</span> <span class="nc">RandomDeque</span> <span class="p">{</span>
-<span class="nl">public:</span>
+<span class="k">public</span><span class="o">:</span>
     <span class="c1">// put an element to the back of the deque</span>
     <span class="kt">void</span> <span class="n">push_back</span><span class="p">(</span><span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">ele</span><span class="p">);</span> 
 
@@ -144,7 +144,7 @@ Random Deque - IntGraph
 <p>At the very beginning, I will show you how to implement the <code>class RandomDeque</code>. All the codes below are based on this data structure.</p>
 <div class="highlight"><pre><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
 <span class="k">class</span> <span class="nc">RandomDeque</span> <span class="p">{</span>
-<span class="nl">public:</span>
+<span class="k">public</span><span class="o">:</span>
     <span class="n">RandomDeque</span><span class="p">()</span><span class="o">:</span> <span class="n">prev</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">{}</span>
     <span class="n">RandomDeque</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span><span class="o">:</span> <span class="n">prev</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
@@ -183,7 +183,7 @@ Random Deque - IntGraph
     <span class="kt">size_t</span> <span class="n">size</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">return</span> <span class="n">dq</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
     <span class="p">}</span>
-<span class="nl">private:</span>
+<span class="k">private</span><span class="o">:</span>
     <span class="kt">int</span> <span class="n">prev</span><span class="p">;</span>
     <span class="n">deque</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">dq</span><span class="p">;</span>
 <span class="p">};</span>
@@ -319,7 +319,7 @@ Random Deque - IntGraph
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2015-07-09 09:34:41 CST.</p>
+                <p>This page is generated at 2015-07-16 01:12:09 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

@@ -9,7 +9,7 @@
         <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/pygments.css"/>
         
         <title>
-Alphabetic Encoding - IntGraph
+3-Sum++ - IntGraph
 </title>
         
         
@@ -48,14 +48,14 @@ Alphabetic Encoding - IntGraph
         <div class="container">
             
 
-<h1> Alphabetic Encoding </h1>
+<h1> 3-Sum++ </h1>
 
 <div class="panel">
     <div class="panel-body">
         <footer class="post-info">
             <span class="label label-default">Date</span>
             <span class="published">
-                <i class="icon-calendar"></i>2014-09-06 23:56:26
+                <i class="icon-calendar"></i>2015-07-19 17:35:12
             </span>
             <p></p>
             
@@ -67,15 +67,13 @@ Alphabetic Encoding - IntGraph
             
                 <span class="label label-primary ">categories</span>
                 
-                <span> dfs  / </span>
-                
                 <span> implementation   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
                 <span class="label label-primary ">source</span>
                 
-                <span> unknown   </span>
+                <span> Facebook   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
@@ -93,25 +91,9 @@ Alphabetic Encoding - IntGraph
 <div>
 
 
-<p>If a=1, b=2, c=3,&hellip;.z=26. </p>
+<p>Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0? Find the number of unique triplets in the array which gives the sum of the given target.</p>
 
-<p>Given a string, find all possible codes that string can generate. Give a count as well as print the strings. </p>
-
-<p>For example:</p>
-
-<pre><code>Input: 
-
-1123
-
-Output:
-
-aabc   // a = 1, a = 1, b = 2, c = 3 
-kbc    // since k is 11, b = 2, c= 3 
-alc    // a = 1, l = 12, c = 3 
-aaw    // a= 1, a =1, w= 23 
-kw     // k = 11, w = 23</code></pre>
-
-<p>Thanks to <strong>cheng</strong> who published this problem on the bbs of QQ group 待字闺中(347731858).</p>
+<p>Additionally, each number of the list can be used more than once. That why this problem is called <code>3sum++</code>.</p>
 
 
 </div>
@@ -128,31 +110,36 @@ kw     // k = 11, w = 23</code></pre>
 <div class="hide" id="class_Solution">
 
 
-<div class="highlight"><pre><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">ans</span><span class="p">;</span>
+<p>This problem is similar to the original <code>3sum</code> problem. The code is right here:</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">three_sum_plus</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">nums</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">p</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">q</span> <span class="o">&lt;=</span> <span class="n">r</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">+</span> <span class="n">nums</span><span class="p">[</span><span class="n">q</span><span class="p">]</span> <span class="o">+</span> <span class="n">nums</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">==</span> <span class="n">target</span><span class="p">:</span>
+                <span class="n">res</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">q</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">r</span> <span class="o">-=</span> <span class="mi">1</span>
+                <span class="k">continue</span>
 
-<span class="kt">void</span> <span class="nf">encode</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">code</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">pos</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;&amp;</span> <span class="n">chars</span><span class="p">)</span>
-<span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">pos</span> <span class="o">==</span> <span class="n">code</span><span class="p">.</span><span class="n">size</span><span class="p">())</span> <span class="p">{</span>
-                <span class="n">string</span> <span class="n">s</span><span class="p">;</span>
-                <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">c</span><span class="p">:</span> <span class="n">chars</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="n">s</span> <span class="o">+=</span> <span class="n">c</span><span class="p">;</span>
-                <span class="p">}</span>
-                <span class="n">ans</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
-        <span class="p">}</span>
-        <span class="kt">int</span> <span class="n">v</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-        <span class="k">while</span> <span class="p">(</span><span class="nb">true</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// suppose a-&gt;1, b-&gt;2 ... z-&gt;26</span>
-                <span class="n">v</span> <span class="o">=</span> <span class="n">v</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="p">(</span><span class="n">code</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span> <span class="o">-</span> <span class="sc">&#39;0&#39;</span><span class="p">);</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">v</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="mi">26</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="k">return</span><span class="p">;</span>
-                <span class="p">}</span>
-                <span class="n">chars</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span><span class="p">(</span><span class="n">v</span><span class="p">));</span>
-                <span class="n">encode</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="o">++</span><span class="n">pos</span><span class="p">,</span> <span class="n">chars</span><span class="p">);</span>
-                <span class="n">chars</span><span class="p">.</span><span class="n">pop_back</span><span class="p">();</span>
-        <span class="p">}</span>
-<span class="p">}</span>
+            <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">+</span> <span class="n">nums</span><span class="p">[</span><span class="n">q</span><span class="p">]</span> <span class="o">+</span> <span class="n">nums</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">target</span><span class="p">:</span>
+                <span class="n">r</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">nums</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">+</span> <span class="n">nums</span><span class="p">[</span><span class="n">q</span><span class="p">]</span> <span class="o">+</span> <span class="n">nums</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">target</span><span class="p">:</span>
+                <span class="n">q</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">res</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">raw_input</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">_case</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">raw_input</span><span class="p">())</span>
+        <span class="k">print</span> <span class="n">three_sum_plus</span><span class="p">(</span>
+                <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">raw_input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()),</span>
+                <span class="n">target</span><span class="p">)</span>
 </pre></div>
-
-<p>Easy piece, no more explaination. Just be ware of that <code>while (true)</code> loop which might lead to some tiny mistakes.</p>
 
 
 </div>

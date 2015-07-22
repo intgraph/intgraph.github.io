@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/jquery.min.js"></script>
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/font-awesome.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/pygments.css"/>
+        
+        <title>
+One Edit Distance++ - IntGraph
+</title>
+        
+        
+    </head>
+    <body ng-app="IgApp">
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/index.html">IntGraph</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    
+                    <li>
+                        <a href="/index.html">Problems</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/System Design.html">System Design</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Object Orinted Design.html">Object Orinted Design</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Contribute.html">Contribute</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/About.html">About</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            
+
+<h1> One Edit Distance++ </h1>
+
+<div class="panel">
+    <div class="panel-body">
+        <footer class="post-info">
+            <span class="label label-default">Date</span>
+            <span class="published">
+                <i class="icon-calendar"></i>2015-07-22 09:49:39
+            </span>
+            <p></p>
+            
+                <span class="label label-primary ">difficulty</span>
+                
+                <span> 4   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">categories</span>
+                
+                <span> implementation   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">source</span>
+                
+                <span> Facebook   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+        </footer>
+    </div>
+</div>
+
+
+
+
+<h2>Description</h2>
+
+
+
+<div>
+
+
+<p>From the <a href="http://intgraph.wizmann.tk/Problems/one-edit-distance.html">previous problem</a>, we have learned something about the &ldquo;one-or-zero edit distance&rdquo;. And here is an advanced problem.</p>
+
+<p>We have two strings <code>A</code> and <code>B</code>, but we can only access the two strings by the <strong>iterators</strong>.</p>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">StrIterator</span> <span class="p">{</span>
+        <span class="kt">bool</span> <span class="n">has_next</span><span class="p">();</span>
+        <span class="kt">bool</span> <span class="nf">is_null</span><span class="p">();</span>
+        <span class="kt">int</span> <span class="nf">next</span><span class="p">();</span>
+        <span class="kt">char</span> <span class="nf">get</span><span class="p">();</span>
+<span class="p">};</span>
+</pre></div>
+
+<p>That is, we can only be aware of the current character, and if there a following character. We have no idea about the length of the string. As a result, this problem is harder than the previous one.</p>
+
+<p>Try your best to solve it. :)</p>
+
+
+</div>
+
+
+<h2>Solution</h2>
+
+
+
+<p>
+    <button type="button" class="btn btn-danger btn-lg showbtn" bind="class_Solution">Click to show</button>
+</p>
+
+<div class="hide" id="class_Solution">
+
+
+<p>The intuitive thought for the problem is DFS. We would search for all possibilities if there is a dismatch between <code>A</code> and <code>B</code>.</p>
+
+<p>Because there is only one or zero dismatch between the strings, the time complexity is <code>O(n)</code>. However, we should do better than that.</p>
+
+<p>Before we come up our solution, the test cases should come first.</p>
+
+<pre><code>Case1:
+abcxxx
+abcxxx
+
+Case2:
+abcxxx
+abdxxx
+
+Case3:
+abxxx
+abcxxx
+
+Case4:
+abcxxx
+abxxx</code></pre>
+
+<p>For case1, we just iterate through the strings, then reach the end, and find no dismatch.</p>
+
+<p>But for the rest cases, it&#39;s hard to detect because there are multiple choices for us to manipulate the iterators.</p>
+
+<p>For exmaple, <code>abcxxx</code> and <code>abdxxx</code>. We find the dismatch at position 3, between the character <code>c</code> and <code>d</code>. Because we have no knowledge of the length of the strings, and it&#39;s might be OK to delete <code>c</code> or <code>d</code>, or just ignore this dismatch.</p>
+
+<p>That&#39;s true. Since our lack of knowledge of the two strings, we have to consider every possibilities. Luckily, if we just look forward for one single character of both strings, all the possibilities could be settled.</p>
+<div class="highlight"><pre><span class="cm">/*</span>
+<span class="cm">class StrIterator {</span>
+<span class="cm">        bool has_next();</span>
+<span class="cm">        bool is_null();</span>
+<span class="cm">};</span>
+<span class="cm">*/</span>
+
+<span class="k">class</span> <span class="nc">OneEditDistance</span> <span class="p">{</span>
+        <span class="kt">bool</span> <span class="n">one_or_zero_edit_distance</span><span class="p">(</span>
+                        <span class="n">StrIterator</span> <span class="n">iter_A</span><span class="p">,</span>
+                        <span class="n">StrIterator</span> <span class="n">iter_B</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">iter_A</span><span class="p">.</span><span class="n">is_null</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">iter_B</span><span class="p">.</span><span class="n">is_null</span><span class="p">())</span> <span class="p">{</span>
+                        <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">iter_A</span> <span class="o">!=</span> <span class="o">*</span><span class="n">iter_B</span><span class="p">)</span> <span class="p">{</span>
+                                <span class="k">break</span><span class="p">;</span>
+                        <span class="p">}</span>
+                        <span class="n">iter_A</span><span class="o">++</span><span class="p">;</span>
+                        <span class="n">iter_B</span><span class="o">++</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">iter_A</span><span class="p">.</span><span class="n">is_null</span><span class="p">())</span> <span class="p">{</span>
+                        <span class="c1">// abc  vs abcc</span>
+                        <span class="c1">//    ^       ^</span>
+                        <span class="c1">//  iter_A  iter_B</span>
+                        <span class="c1">// ---</span>
+                        <span class="c1">// abc   vs abc</span>
+                        <span class="c1">//    ^        ^</span>
+                        <span class="c1">//  iter_A   iter_B</span>
+                        <span class="k">return</span> <span class="n">iter_B</span><span class="p">.</span><span class="n">has_next</span><span class="p">();</span>
+                <span class="p">}</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">iter_B</span><span class="p">.</span><span class="n">is_null</span><span class="p">())</span> <span class="p">{</span>
+                        <span class="k">return</span> <span class="n">iter_A</span><span class="p">.</span><span class="n">has_next</span><span class="p">();</span>
+                <span class="p">}</span>
+
+                <span class="k">auto</span> <span class="n">iter_AA</span> <span class="o">=</span> <span class="n">iter_A</span><span class="p">;</span>
+                <span class="o">++</span><span class="n">iter_AA</span><span class="p">;</span>
+
+                <span class="k">auto</span> <span class="n">iter_BB</span> <span class="o">=</span> <span class="n">iter_B</span><span class="p">;</span>
+                <span class="o">++</span><span class="n">iter_BB</span><span class="p">;</span>
+
+                <span class="kt">int</span> <span class="n">dismatch</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+
+                <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">iter_AA</span><span class="p">.</span><span class="n">is_null</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">iter_BB</span><span class="p">.</span><span class="n">is_null</span><span class="p">())</span> <span class="p">{</span>
+                        <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">iter_AA</span> <span class="o">!=</span> <span class="o">*</span><span class="n">iter_BB</span><span class="p">)</span> <span class="p">{</span>
+                                <span class="n">dismatch</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">++</span><span class="p">;</span>
+                        <span class="p">}</span>
+                        <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">iter_A</span> <span class="o">!=</span> <span class="o">*</span><span class="n">iter_BB</span><span class="p">)</span> <span class="p">{</span>
+                                <span class="n">dismatch</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">++</span><span class="p">;</span>
+                        <span class="p">}</span>
+                        <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">iter_AA</span> <span class="o">!=</span> <span class="o">*</span><span class="n">iter_B</span><span class="p">)</span> <span class="p">{</span>
+                                <span class="n">dismatch</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">++</span><span class="p">;</span>
+                        <span class="p">}</span>
+                <span class="p">}</span>
+
+                <span class="kt">bool</span> <span class="n">ans</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+                <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="n">ans</span> <span class="o">|=</span> <span class="n">dismatch</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">;</span>
+                <span class="p">}</span>
+
+                <span class="k">return</span> <span class="n">ans</span> <span class="o">&amp;&amp;</span> <span class="n">iter_AA</span><span class="p">.</span><span class="n">is_null</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">iter_BB</span><span class="p">.</span><span class="n">is_null</span><span class="p">();</span>
+        <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+
+
+</div>
+
+
+<hr/>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'intgraph';
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+        </div>
+        <hr/>
+        <footer class="bs-footer" role="contentinfo">
+            <div class="container">
+                <p>Powered by IntGraph</p>
+                <p>This page is generated at 2015-07-22 09:50:52 CST.</p>
+                <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
+            </div>
+        </footer>
+
+         
+        
+<script>
+$(document).ready(function(){
+    $(".showbtn").click(function(){
+        var divname = $(this).attr("bind");
+        console.log(divname);
+        $("#" + divname).removeClass("hide");
+    });
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script>
+
+
+
+    </body>
+</html>

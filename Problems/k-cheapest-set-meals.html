@@ -9,7 +9,7 @@
         <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/pygments.css"/>
         
         <title>
-Find the Brightest Star - IntGraph
+K-Cheapest Set Meals - 1 - IntGraph
 </title>
         
         
@@ -48,34 +48,34 @@ Find the Brightest Star - IntGraph
         <div class="container">
             
 
-<h1> Find the Brightest Star </h1>
+<h1> K-Cheapest Set Meals - 1 </h1>
 
 <div class="panel">
     <div class="panel-body">
         <footer class="post-info">
             <span class="label label-default">Date</span>
             <span class="published">
-                <i class="icon-calendar"></i>2014-10-30 09:42:39
+                <i class="icon-calendar"></i>2015-08-03 23:30:24
             </span>
             <p></p>
             
                 <span class="label label-primary ">difficulty</span>
                 
-                <span> 3.5   </span>
+                <span> 2.5   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
                 <span class="label label-primary ">categories</span>
                 
-                <span> mathmatical induction  / </span>
+                <span> sort  / </span>
                 
-                <span> graph   </span>
+                <span> merge sort   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
                 <span class="label label-primary ">source</span>
                 
-                <span> mitbbs   </span>
+                <span> unknown   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
@@ -93,11 +93,19 @@ Find the Brightest Star - IntGraph
 <div>
 
 
-<p>There is another party held on another backyard. All the participants are stars. During the party, they want to find out who is the most popular star, that is, everyone considers that the brightest star is more famous than himself/herself.</p>
+<p>Welcome to IntGraph restaurant. We are offering set meals for our customers.</p>
 
-<p>There&#39;s a function <code>cmp(a, b)</code> helps us to compare who is more famous. However, the comparison is not transitive. For example, <code>cmp(a, b) == 1</code> and <code>cmp(b, c) == 1</code>, there is no guarantee that <code>cmp(a, c) == 1</code>.</p>
+<p>Each set meal contains one main course and one dessert. And the price of the set meal is <code>Price(main course) + Price(dessert)</code>.</p>
 
-<p>Please find a way to solve this problem as fast as possible.</p>
+<p>Now given the list of main course and dessert. As we are lack of money, please help us to find K cheapest set meals.</p>
+
+<pre><code>Sample Input
+3 5 4     // K, the number of main courses, the number of dessert
+3 2 1 5 8 // the prices of main courses
+2 3 3 4   // the prices of desserts
+
+Sample Output
+3 4 4</code></pre>
 
 
 </div>
@@ -114,20 +122,49 @@ Find the Brightest Star - IntGraph
 <div class="hide" id="class_Solution">
 
 
-<p>This problem is quite same as &ldquo;Find the Star&rdquo;. It is because if <code>cmp(a, b) &lt; 0</code> which means that the star <code>a</code> considers <code>b</code> is more popular. As a result, star <code>a</code> can&#39;t be the brightest star in the party.</p>
-
-<p>So, we can exclude one star from the &ldquo;brightest star candidate list&rdquo; by one comparison. So the time complexity here is O(N). And we have to check if the the one we choose is the &ldquo;real brightest star&rdquo;, it also take O(N) time here.</p>
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">find_the_brightest_star</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="nb">cmp</span><span class="p">):</span>
-    <span class="n">star</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">cmp</span><span class="p">(</span><span class="n">star</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">star</span> <span class="o">=</span> <span class="n">i</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">star</span> <span class="ow">and</span> <span class="nb">cmp</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">star</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">star</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-            <span class="k">break</span>
-    <span class="k">return</span> <span class="n">star</span>
+<p>The simplest way is to enumerate the composition of main courses and desserts. The time complexity of this method is <code>O(n * m * log(n * m))</code>.</p>
+<div class="highlight"><pre><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">raw_input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+<span class="n">ns</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">raw_input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+<span class="n">ms</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">raw_input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+<span class="k">print</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+    <span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span>
+        <span class="nb">sorted</span><span class="p">([</span><span class="n">n_</span> <span class="o">+</span> <span class="n">m_</span> <span class="k">for</span> <span class="n">n_</span> <span class="ow">in</span> <span class="n">ns</span> <span class="k">for</span> <span class="n">m_</span> <span class="ow">in</span> <span class="n">ms</span><span class="p">])[:</span><span class="n">k</span><span class="p">]</span>
+    <span class="p">)</span>
+<span class="p">)</span>
 </pre></div>
+
+<p>This method would not satisfies anybody. Because if we use priority queue, the time complexity will be optimized to <code>O(log(k) * n * m)</code>.</p>
+
+<p>However, there is always something better. Here we convert this problem to a &ldquo;merge sort&rdquo; like one. We consider that there are N sorted list, each one is formed by <code>map(lambda x: ns[i] + x, ms)</code> with the list <code>ms</code> sorted.</p>
+
+<p>With this method, we can deal with the problem with time complexity <code>O(m * log(m) + k * log(n))</code>.</p>
+
+<pre><code>import heapq
+
+(k, n, m) = map(int, raw_input().split())
+ns = map(int, raw_input().split())
+ms = map(int, raw_input().split())
+ms.sort()
+
+class Node:
+    def __init__(self, a, b):
+        self.a = a
+        self.b = b
+    def __lt__(self, other):
+        return self.sum() &lt; other.sum()
+    def sum(self):
+        return ns[self.a] + ms[self.b]
+
+q = [Node(i, 0) for i in xrange(n)]
+heapq.heapify(q)
+ans = []
+for i in xrange(k):
+    top = heapq.heappop(q)
+    ans.append(top.sum())
+    if top.b + 1 &lt; len(ms):
+        top.b += 1
+        heapq.heappush(q, top)
+print ' '.join(map(str, ans))</code></pre>
 
 
 </div>

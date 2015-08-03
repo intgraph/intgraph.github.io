@@ -9,7 +9,7 @@
         <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/pygments.css"/>
         
         <title>
-Command Within The Same Shell - IntGraph
+K-Cheapest Set Meals - 1 - IntGraph
 </title>
         
         
@@ -48,28 +48,28 @@ Command Within The Same Shell - IntGraph
         <div class="container">
             
 
-<h1> Command Within The Same Shell </h1>
+<h1> K-Cheapest Set Meals - 1 </h1>
 
 <div class="panel">
     <div class="panel-body">
         <footer class="post-info">
             <span class="label label-default">Date</span>
             <span class="published">
-                <i class="icon-calendar"></i>2014-08-16 18:46:00
+                <i class="icon-calendar"></i>2015-08-03 23:30:24
             </span>
             <p></p>
             
                 <span class="label label-primary ">difficulty</span>
                 
-                <span> 1   </span>
+                <span> 2.5   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
                 <span class="label label-primary ">categories</span>
                 
-                <span> pipeline  / </span>
+                <span> sort  / </span>
                 
-                <span> shell   </span>
+                <span> merge sort   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
@@ -93,23 +93,19 @@ Command Within The Same Shell - IntGraph
 <div>
 
 
-<p>Suppose that you have to write a script to receive argument from command line, which is another command.
-The command which passed as argument will run in the current shell and return some results.</p>
+<p>Welcome to IntGraph restaurant. We are offering set meals for our customers.</p>
 
-<p>For example, you have to list all the process when you start a shell, of course including the shell process.
-And do some other things with the results.</p>
+<p>Each set meal contains one main course and one dessert. And the price of the set meal is <code>Price(main course) + Price(dessert)</code>.</p>
 
-<p>Run by</p>
+<p>Now given the list of main course and dessert. As we are lack of money, please help us to find K cheapest set meals.</p>
 
-<pre><code>$./example.sh 'ps aux'</code></pre>
+<pre><code>Sample Input
+3 5 4     // K, the number of main courses, the number of dessert
+3 2 1 5 8 // the prices of main courses
+2 3 3 4   // the prices of desserts
 
-<p>In shell script</p>
-<div class="highlight"><pre><span class="c">#!/bin/bash</span>
-
-<span class="c">#How to run the command</span>
-</pre></div>
-
-<p>contribute by: violet</p>
+Sample Output
+3 4 4</code></pre>
 
 
 </div>
@@ -126,13 +122,49 @@ And do some other things with the results.</p>
 <div class="hide" id="class_Solution">
 
 
-<p>Use pipeline with echo</p>
-<div class="highlight"><pre><span class="c">#!/bin/bash</span>
-
-<span class="nb">echo</span> <span class="nv">$*</span> <span class="p">|</span> bash
-
-<span class="c">#do something else</span>
+<p>The simplest way is to enumerate the composition of main courses and desserts. The time complexity of this method is <code>O(n * m * log(n * m))</code>.</p>
+<div class="highlight"><pre><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">raw_input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+<span class="n">ns</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">raw_input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+<span class="n">ms</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">raw_input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+<span class="k">print</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+    <span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span>
+        <span class="nb">sorted</span><span class="p">([</span><span class="n">n_</span> <span class="o">+</span> <span class="n">m_</span> <span class="k">for</span> <span class="n">n_</span> <span class="ow">in</span> <span class="n">ns</span> <span class="k">for</span> <span class="n">m_</span> <span class="ow">in</span> <span class="n">ms</span><span class="p">])[:</span><span class="n">k</span><span class="p">]</span>
+    <span class="p">)</span>
+<span class="p">)</span>
 </pre></div>
+
+<p>This method would not satisfies anybody. Because if we use priority queue, the time complexity will be optimized to <code>O(log(k) * n * m)</code>.</p>
+
+<p>However, there is always something better. Here we convert this problem to a &ldquo;merge sort&rdquo; like one. We consider that there are N sorted list, each one is formed by <code>map(lambda x: ns[i] + x, ms)</code> with the list <code>ms</code> sorted.</p>
+
+<p>With this method, we can deal with the problem with time complexity <code>O(m * log(m) + k * log(n))</code>.</p>
+
+<pre><code>import heapq
+
+(k, n, m) = map(int, raw_input().split())
+ns = map(int, raw_input().split())
+ms = map(int, raw_input().split())
+ms.sort()
+
+class Node:
+    def __init__(self, a, b):
+        self.a = a
+        self.b = b
+    def __lt__(self, other):
+        return self.sum() &lt; other.sum()
+    def sum(self):
+        return ns[self.a] + ms[self.b]
+
+q = [Node(i, 0) for i in xrange(n)]
+heapq.heapify(q)
+ans = []
+for i in xrange(k):
+    top = heapq.heappop(q)
+    ans.append(top.sum())
+    if top.b + 1 &lt; len(ms):
+        top.b += 1
+        heapq.heappush(q, top)
+print ' '.join(map(str, ans))</code></pre>
 
 
 </div>

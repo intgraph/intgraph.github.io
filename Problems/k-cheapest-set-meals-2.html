@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/jquery.min.js"></script>
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/font-awesome.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/pygments.css"/>
+        
+        <title>
+K-Cheapest Set Meals - 2 - IntGraph
+</title>
+        
+        
+    </head>
+    <body ng-app="IgApp">
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/index.html">IntGraph</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    
+                    <li>
+                        <a href="/index.html">Problems</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/System Design.html">System Design</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Object Orinted Design.html">Object Orinted Design</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Contribute.html">Contribute</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/About.html">About</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            
+
+<h1> K-Cheapest Set Meals - 2 </h1>
+
+<div class="panel">
+    <div class="panel-body">
+        <footer class="post-info">
+            <span class="label label-default">Date</span>
+            <span class="published">
+                <i class="icon-calendar"></i>2015-08-04 00:05:52
+            </span>
+            <p></p>
+            
+                <span class="label label-primary ">difficulty</span>
+                
+                <span> 3.5   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">categories</span>
+                
+                <span> sort  / </span>
+                
+                <span> merge sort   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">source</span>
+                
+                <span> unknown   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+        </footer>
+    </div>
+</div>
+
+
+
+
+<h2>Description</h2>
+
+
+
+<div>
+
+
+<p>Welcome to IntGraph restaurant. We are offering set meals for our customers.</p>
+
+<p>Each set meal contains P kinds of dishes, such as &ldquo;main course&rdquo;, &ldquo;desserts&rdquo;, &ldquo;beverage&rdquo;, etc. And the price of the set meal is <code>sum(prices(dishes))</code>.</p>
+
+<p>Now given the list of main course and dessert. As we are lack of money, please help us to find K cheapest set meals.</p>
+
+<pre><code>Sample Input
+3 3       // K, P
+5 4 3     // the number of each kind of dishes
+3 2 1 5 8 // the prices of catagory_1
+2 4 3 1   // the prices of catagory_2
+9 6 7     // the prices of catagory_3
+
+Sample Output
+3 4 4</code></pre>
+
+
+</div>
+
+
+<h2>Solution</h2>
+
+
+
+<p>
+    <button type="button" class="btn btn-danger btn-lg showbtn" bind="class_Solution">Click to show</button>
+</p>
+
+<div class="hide" id="class_Solution">
+
+
+<p>If we get only two catagories, the method for the problem is same as &ldquo;K-Cheapest Set Meals - 1&rdquo;. And if we get other catagories, the k-cheapest must be the ones which contains the k-cheapest from the first two catagories.</p>
+
+<p>And we can solve the problem with the code which is based on the one from previous problem.</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">heapq</span>
+
+<span class="k">def</span> <span class="nf">deal</span><span class="p">(</span><span class="n">ns</span><span class="p">,</span> <span class="n">ms</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="n">n</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ns</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">ms</span><span class="p">)</span>
+    <span class="n">ms</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+
+    <span class="k">class</span> <span class="nc">Node</span><span class="p">:</span>
+        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="n">a</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">b</span>
+        <span class="k">def</span> <span class="nf">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="k">def</span> <span class="nf">sum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">ns</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">]</span> <span class="o">+</span> <span class="n">ms</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="p">]</span>
+
+    <span class="n">q</span> <span class="o">=</span> <span class="p">[</span><span class="n">Node</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="n">heapq</span><span class="o">.</span><span class="n">heapify</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+
+    <span class="n">ans</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+        <span class="n">top</span> <span class="o">=</span> <span class="n">heapq</span><span class="o">.</span><span class="n">heappop</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+        <span class="n">ans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">top</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">top</span><span class="o">.</span><span class="n">b</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">ms</span><span class="p">):</span>
+            <span class="n">top</span><span class="o">.</span><span class="n">b</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">top</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ans</span>
+
+<span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">raw_input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+<span class="n">ps</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">raw_input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+<span class="n">res</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="n">ns</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">raw_input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">deal</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">ns</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">res</span><span class="p">))</span>
+</pre></div>
+
+
+</div>
+
+
+<hr/>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'intgraph';
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+        </div>
+        <hr/>
+        <footer class="bs-footer" role="contentinfo">
+            <div class="container">
+                <p>Powered by IntGraph</p>
+                <p>This page is generated at 2015-08-04 00:07:05 CST.</p>
+                <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
+            </div>
+        </footer>
+
+         
+        
+<script>
+$(document).ready(function(){
+    $(".showbtn").click(function(){
+        var divname = $(this).attr("bind");
+        console.log(divname);
+        $("#" + divname).removeClass("hide");
+    });
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script>
+
+
+
+    </body>
+</html>

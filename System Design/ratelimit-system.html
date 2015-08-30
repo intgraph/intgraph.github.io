@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/jquery.min.js"></script>
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/font-awesome.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/pygments.css"/>
+        <title>
+Design a Rate-limit System - IntGraph
+</title>
+        
+        
+    </head>
+    <body ng-app="IgApp">
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/index.html">IntGraph</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    
+                    <li>
+                        <a href="/index.html">Problems</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/System Design.html">System Design</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Object Orinted Design.html">Object Orinted Design</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Contribute.html">Contribute</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/About.html">About</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            
+
+<h1> Design a Rate-limit System </h1>
+
+<div class="panel">
+    <div class="panel-body">
+        <footer class="post-info">
+            <span class="label label-default">Date</span>
+            <span class="published">
+                <i class="icon-calendar"></i>2015-08-31 01:09:45
+            </span>
+            <p></p>
+            
+                <span class="label label-primary ">difficulty</span>
+                
+                <span> 3   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">categories</span>
+                
+                <span> distributed system   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">source</span>
+                
+                <span> unknown   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+        </footer>
+    </div>
+</div>
+
+
+
+
+<h2>Description</h2>
+
+
+
+<div>
+
+
+<p>Design a rate-limit system for our website that block user when the requests are more than 10/min or 100/hour or 1000/day&hellip;</p>
+
+
+</div>
+
+
+<h2>Solution</h2>
+
+
+
+<p>
+    <button type="button" class="btn btn-danger btn-lg showbtn" bind="class_Solution">Click to show</button>
+</p>
+
+<div class="hide" id="class_Solution">
+
+
+<h3>Requirements analysis</h3>
+
+<table><thead>
+<tr>
+<th>Requirements</th>
+<th>Simplified Solution</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Block malicious users(*)</td>
+<td>Count the number of user requests in a time period</td>
+</tr>
+<tr>
+<td>Collect the request information</td>
+<td>Use MQ or just collect the log file from the service</td>
+</tr>
+<tr>
+<td>Deal with big data</td>
+<td>the system must be scalable and should optimize the resources usage</td>
+</tr>
+<tr>
+<td>Realtime</td>
+<td>the delay of the system should be as short as it can</td>
+</tr>
+</tbody></table>
+
+<h3>Lv1. Smoke test - rate-limit System on a Single Machine</h3>
+
+<p>I&#39;ll write a sample code to describe the system.</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
+
+<span class="k">class</span> <span class="nc">RatelimitSystem</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dq</span> <span class="o">=</span> <span class="n">deque</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">adjust</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_record</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">counter</span><span class="p">[</span><span class="n">user_id</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">THRESHOLD</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">OK</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">BLOCK_IT</span>
+
+    <span class="k">def</span> <span class="nf">adjust</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur_time</span>
+        <span class="k">while</span> <span class="n">dq</span><span class="p">:</span>
+            <span class="p">(</span><span class="n">usr</span><span class="p">,</span> <span class="n">tm</span><span class="p">)</span> <span class="o">=</span> <span class="n">dq</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">cur</span> <span class="o">-</span> <span class="n">tm</span> <span class="o">&gt;=</span> <span class="n">THRESHOLD</span><span class="p">:</span>
+                <span class="n">dq</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">counter</span><span class="p">[</span><span class="n">usr</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">break</span>
+        <span class="k">return</span> <span class="n">SUCCESS</span>
+
+    <span class="k">def</span> <span class="nf">add_record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">counter</span><span class="p">[</span><span class="n">user_id</span><span class="p">]</span> <span class="o">=</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">counter</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">dq</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">user_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur_time</span><span class="p">()))</span>
+        <span class="k">return</span> <span class="n">SUCCESS</span>
+
+    <span class="k">def</span> <span class="nf">cur_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+</pre></div>
+
+<p>That is, every user requests should be send to this system, call <code>query(user_id)</code>, then we will return if this user is a friendly one or a malicious one.</p>
+
+<p>We can use MySQL as the storage engine while Redis(or memcache) is better. Because Redis offers better performance and the builtin deque data structure.</p>
+
+<h2>Lv2. Optimize and Trade-offs</h2>
+
+<h3>Collect the information</h3>
+
+<p>In the simplified system above, we skip the information collect part which is essential for our system.</p>
+
+<p>The very first step for the information collecting is to design a interface(or prototype) for this part.</p>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">ICollector</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="n">collect</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">status</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+
+<p>We can design the collector for HDFS, or using a MQ to get the request information from the service directly. If the service can&#39;t offer us an interface for these information, it&#39;s OK to collect the log from the hard disk as a fallback plan.</p>
+
+<h3>Optimize the Resources Usage</h3>
+
+<p>If we put all the user request information to the main memory, sometimes it needs a lot of space that we can&#39;t afford.</p>
+
+<p>Here we use the LRU (Least Recent Use) strategy to move some less likely malicious user from the cache to storage them in the hard disk (or SSD) which is larger, slower and cheaper. And we aggregate the information in the cache to reduce the visit time of database which is slow.</p>
+
+<p><img src="http://wizmann-pic.qiniudn.com/15-8-31/19748924.jpg" alt=""></p>
+
+<h3>Realtime or Half Realtime</h3>
+
+<p>At the solution above, we design a &ldquo;full realtime&rdquo; rate-limit system, for example, a user sends a request on time <code>t</code>, we will check if this user have too many request between time <code>[t - THRESHOLD, t]</code>.</p>
+
+<p>To implement this, we have to storage the all the request  information in the time period in a deque. But if we change the definition of a &ldquo;time period&rdquo; we can safe a lot of memory without the deque.</p>
+
+<p>Assuming there is a user request at &ldquo;08:30&rdquo;, then we just check whether the request number is exceed the limitation in &ldquo;[08:00, 09:00]&rdquo;.</p>
+
+<p>That is, we refresh our rate-limit records every one hour in this example. And simplify the system by removing the request information deque.</p>
+
+<h2>Lv.3 Distribute it</h2>
+
+<p>The distributed rate-limit system is similar to the single machine version. We just use cluster of brokers and ratelimiters for collecting more information that can&#39;t be handled by one single machine.</p>
+
+<p><img src="http://wizmann-pic.qiniudn.com/15-8-31/7688908.jpg" alt=""></p>
+
+
+</div>
+
+
+<hr/>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'intgraph';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+        </div>
+        <hr/>
+        <footer class="bs-footer" role="contentinfo">
+            <div class="container">
+                <p>Powered by IntGraph</p>
+                <p>This page is generated at 2015-08-31 01:12:10 CST.</p>
+                <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
+            </div>
+        </footer>
+
+         
+        
+<script>
+$(document).ready(function(){
+    $(".showbtn").click(function(){
+        var divname = $(this).attr("bind");
+        console.log(divname);
+        $("#" + divname).removeClass("hide");
+    });
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script>
+<script> $("div.container table").addClass("table table-bordered"); </script>
+
+
+        <style> div.container img { max-width: 100%; } </style>
+        
+    </body>
+</html>

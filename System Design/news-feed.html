@@ -129,23 +129,76 @@ public:
 
 <p>We use SQL database as the backend storage engine. So we can design our database schema for the newsfeed system.</p>
 
-<p>| UserID | Name | Age | Sex |
-|-|
-| 1 | Alice | 20 | F |
-| 2 | Bob | 21 | M |</p>
+<table><thead>
+<tr>
+<th>UserID</th>
+<th>Name</th>
+<th>Age</th>
+<th>Sex</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>1</td>
+<td>Alice</td>
+<td>20</td>
+<td>F</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Bob</td>
+<td>21</td>
+<td>M</td>
+</tr>
+</tbody></table>
 
-<p>| FriendshipID | FromUser | ToUser |
-|-|
-| 1 | 1 | 2 |
-| 2 | 2 | 1 |</p>
+<table><thead>
+<tr>
+<th>FriendshipID</th>
+<th>FromUser</th>
+<th>ToUser</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+</tr>
+</tbody></table>
 
-<p>| FeedID | UserID | Time | ContentID |
-|-|
-| 1 | 1 | 2015-01-01 | 1 |</p>
+<table><thead>
+<tr>
+<th>FeedID</th>
+<th>UserID</th>
+<th>Time</th>
+<th>ContentID</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>2015-01-01</td>
+<td>1</td>
+</tr>
+</tbody></table>
 
-<p>| ContentID | Type | Content |
-|-|
-| 1 | Tweet | &ldquo;hello world&rdquo; |</p>
+<table><thead>
+<tr>
+<th>ContentID</th>
+<th>Type</th>
+<th>Content</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>1</td>
+<td>Tweet</td>
+<td>&ldquo;hello world&rdquo;</td>
+</tr>
+</tbody></table>
 
 <h3>Get the newsfeed</h3>
 <div class="highlight"><pre><span class="n">friends</span> <span class="o">=</span> <span class="n">FriendTable</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">usr_id</span><span class="p">)</span>
@@ -180,10 +233,21 @@ public:
 
 <p>We design a mailbox services that collects all the news feed that belongs to one user to his/her mailbox.</p>
 
-<p>| UserID | FeedIDList |
-|-|
-| 1 | [2, 3, 4 &hellip;] |
-| 2 | [1, 4, 10 &hellip;] |</p>
+<table><thead>
+<tr>
+<th>UserID</th>
+<th>FeedIDList</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>1</td>
+<td>[2, 3, 4 &hellip;]</td>
+</tr>
+<tr>
+<td>2</td>
+<td>[1, 4, 10 &hellip;]</td>
+</tr>
+</tbody></table>
 
 <p>That is, if a user request for his news feeds, we will get the list of the news feeds. Then we use the feed ids to get the contents itself, and do some tricks of filtering, sorting or something else. After all, we show news feeds to users.</p>
 
@@ -239,13 +303,39 @@ using deduplicate and compression the string could save memory up to 90% (this d
 
 <h3>The comparison between the &ldquo;push&rdquo; and &ldquo;pull&rdquo;</h3>
 
-<p>| - | Push | Pull |
-| - |
-| real-time | OK except some &ldquo;star users&rdquo;| Good |
-| server status | keeping pushing status (SUCC/FAIL) | N/A |
-| client status | N/A | keep current data |
-| storage | centralize on feed server | distributed to all clients |
-| load balance | by server | by client |</p>
+<table><thead>
+<tr>
+<th>-</th>
+<th>Push</th>
+<th>Pull</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>real-time</td>
+<td>OK except some &ldquo;star users&rdquo;</td>
+<td>Good</td>
+</tr>
+<tr>
+<td>server status</td>
+<td>keeping pushing status (SUCC/FAIL)</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>client status</td>
+<td>N/A</td>
+<td>keep current data</td>
+</tr>
+<tr>
+<td>storage</td>
+<td>centralize on feed server</td>
+<td>distributed to all clients</td>
+</tr>
+<tr>
+<td>load balance</td>
+<td>by server</td>
+<td>by client</td>
+</tr>
+</tbody></table>
 
 
 </div>
@@ -273,7 +363,7 @@ using deduplicate and compression the string could save memory up to 90% (this d
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2015-08-30 17:42:05 CST.</p>
+                <p>This page is generated at 2015-08-30 17:50:11 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/jquery.min.js"></script>
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/font-awesome.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/pygments.css"/>
+        <title>
+Non-overlaped segments - IntGraph
+</title>
+        
+        
+    </head>
+    <body ng-app="IgApp">
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/index.html">IntGraph</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    
+                    <li>
+                        <a href="/index.html">Problems</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/System Design.html">System Design</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Object Orinted Design.html">Object Orinted Design</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Contribute.html">Contribute</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/About.html">About</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            
+
+<h1> Non-overlaped segments </h1>
+
+<div class="panel">
+    <div class="panel-body">
+        <footer class="post-info">
+            <span class="label label-default">Date</span>
+            <span class="published">
+                <i class="icon-calendar"></i>2015-09-19 20:14:46
+            </span>
+            <p></p>
+            
+                <span class="label label-primary ">difficulty</span>
+                
+                <span> 2.5   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">categories</span>
+                
+                <span> sorting   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">source</span>
+                
+                <span> 51nod   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+        </footer>
+    </div>
+</div>
+
+
+
+
+<h2>Description</h2>
+
+
+
+<div>
+
+
+<p>Given a batch of segments, please find a subset of the segments which are not overlaped.</p>
+
+<p>The definition of overlap is for segment &ldquo;[a, b]&rdquo; and &ldquo;[c, d]&rdquo;, there is always <code>(c - a) * (c - b) &gt;= 0 &amp;&amp; (d - a) * (d - b) &gt;= 0</code>. That is, &ldquo;[1, 2]&rdquo; and &ldquo;[2, 3]&rdquo; is not overlaped, at time same time &ldquo;[1, 3]&rdquo; and &ldquo;[2, 3]&rdquo; is overlaped.</p>
+
+<pre><code>Sample Input
+&gt;&gt; [1, 5], [2, 3], [3, 6]
+
+Sample Output
+&lt;&lt; 2</code></pre>
+
+
+</div>
+
+
+<h2>Solution</h2>
+
+
+
+<p>
+    <button type="button" class="btn btn-danger btn-lg showbtn" bind="class_Solution">Click to show</button>
+</p>
+
+<div class="hide" id="class_Solution">
+
+
+<p>For the &ldquo;segment problems&rdquo;, there are two things you need to do before you try to give the final solution.</p>
+
+<p>First one is sorting. Because the segments are on the same axis, and the order is of crucial important for them.</p>
+
+<p>Second one is find the right induction hypothesis. In this problem, the induction hypothesis is:</p>
+
+<blockquote>
+<p>We know how to solve the problem for the set of (sorted) segments [1&hellip;n]</p>
+</blockquote>
+
+<p>The basic case is trivial, because it&#39;s easy to handle only one segment. Assuming we&#39;ve got a <strong>non-overlapped</strong> segments set, add we are trying to add other one to it. There are two scenarios:</p>
+
+<ol>
+<li>the new commer is non-overlapped with the last element of the set, then we just simply add it to the sets</li>
+<li>the new commer is overlapped with the last one in the set.
+
+<ul>
+<li>because the segments is sorted, so the new comer will only overlapped with the last one.</li>
+<li>then if the end point of the new comer is on the left side of the end point of the last element, we just replace it by the new one</li>
+</ul></li>
+</ol>
+
+<p>And it&#39;s easy to prove the correctness of the solution. So I just skip it and post my code here.</p>
+<div class="highlight"><pre><span class="c1">// http://www.51nod.com/onlineJudge/questionCode.html#!problemId=1133</span>
+<span class="cp">#include &lt;cstdio&gt;</span>
+<span class="cp">#include &lt;cstdlib&gt;</span>
+<span class="cp">#include &lt;cstring&gt;</span>
+<span class="cp">#include &lt;iostream&gt;</span>
+<span class="cp">#include &lt;algorithm&gt;</span>
+<span class="cp">#include &lt;vector&gt;</span>
+<span class="cp">#include &lt;set&gt;</span>
+<span class="cp">#include &lt;limits&gt;</span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="cp">#define print(x) cout &lt;&lt; x &lt;&lt; endl</span>
+<span class="cp">#define input(x) cin &gt;&gt; x</span>
+
+<span class="n">vector</span><span class="o">&lt;</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">lines</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">n</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">;</span>
+    <span class="n">input</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">input</span><span class="p">(</span><span class="n">a</span> <span class="o">&gt;&gt;</span> <span class="n">b</span><span class="p">);</span>
+        <span class="n">lines</span><span class="p">.</span><span class="n">push_back</span><span class="p">({</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">});</span>
+    <span class="p">}</span>
+
+    <span class="k">auto</span> <span class="n">cmp</span> <span class="o">=</span> <span class="p">[](</span><span class="k">const</span> <span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">pa</span><span class="p">,</span> <span class="k">const</span> <span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">pb</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">pa</span><span class="p">.</span><span class="n">first</span> <span class="o">&lt;</span> <span class="n">pb</span><span class="p">.</span><span class="n">first</span><span class="p">;</span>
+    <span class="p">};</span>
+
+    <span class="n">sort</span><span class="p">(</span><span class="n">lines</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">lines</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">cmp</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">last</span> <span class="o">=</span> <span class="n">numeric_limits</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">min</span><span class="p">();</span>
+    <span class="kt">int</span> <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">line</span><span class="p">:</span> <span class="n">lines</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">sp</span> <span class="o">=</span> <span class="n">line</span><span class="p">.</span><span class="n">first</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">ep</span> <span class="o">=</span> <span class="n">line</span><span class="p">.</span><span class="n">second</span><span class="p">;</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">sp</span> <span class="o">&gt;=</span> <span class="n">last</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">cnt</span><span class="o">++</span><span class="p">;</span>
+            <span class="n">last</span> <span class="o">=</span> <span class="n">ep</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">last</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">last</span> <span class="p">,</span><span class="n">ep</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">print</span><span class="p">(</span><span class="n">cnt</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+</div>
+
+
+<hr/>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'intgraph';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+        </div>
+        <hr/>
+        <footer class="bs-footer" role="contentinfo">
+            <div class="container">
+                <p>Powered by IntGraph</p>
+                <p>This page is generated at 2015-09-19 20:16:46 CST.</p>
+                <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
+            </div>
+        </footer>
+
+         
+        
+<script>
+$(document).ready(function(){
+    $(".showbtn").click(function(){
+        var divname = $(this).attr("bind");
+        console.log(divname);
+        $("#" + divname).removeClass("hide");
+    });
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script>
+<script> $("div.container table").addClass("table table-bordered"); </script>
+
+
+        <style> div.container img { max-width: 100%; } </style>
+        
+    </body>
+</html>

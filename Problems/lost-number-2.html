@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/jquery.min.js"></script>
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/font-awesome.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/pygments.css"/>
+        <title>
+lost number - 2 - IntGraph
+</title>
+        
+        
+    </head>
+    <body ng-app="IgApp">
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/index.html">IntGraph</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    
+                    <li>
+                        <a href="/index.html">Problems</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/System Design.html">System Design</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Object Orinted Design.html">Object Orinted Design</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Contribute.html">Contribute</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/About.html">About</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            
+
+<h1> lost number - 2 </h1>
+
+<div class="panel">
+    <div class="panel-body">
+        <footer class="post-info">
+            <span class="label label-default">Date</span>
+            <span class="published">
+                <i class="icon-calendar"></i>2015-09-22 23:49:35
+            </span>
+            <p></p>
+            
+                <span class="label label-primary ">difficulty</span>
+                
+                <span> 3.5   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">categories</span>
+                
+                <span> radix sort  / </span>
+                
+                <span> in-place algorithm   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">source</span>
+                
+                <span> cc150   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+        </footer>
+    </div>
+</div>
+
+
+
+
+<h2>Description</h2>
+
+
+
+<div>
+
+
+<p>An array[1..n] contains all integers from 0 to n except for one number which is missing. Your task is to find out the missing one.</p>
+
+<p>Additionally, the array is a read-only one. And you can&#39;t access an entire interger from A with a single operation. The only thing you can do is <strong>get the jth bit from ith element</strong>, and this operation takes constant time.</p>
+
+<p>Write code to find the missing number. Do it in O(n) time and O(1) extra memory space.</p>
+
+
+</div>
+
+
+<h2>Solution</h2>
+
+
+
+<p>
+    <button type="button" class="btn btn-danger btn-lg showbtn" bind="class_Solution">Click to show</button>
+</p>
+
+<div class="hide" id="class_Solution">
+
+
+<p>If we can access the entire numbers from array A. The problem can be solve by radix sort, which takes O(n) time and O(1) extra space.</p>
+
+<p>But in this problem, we can&#39;t get entire number form the array. Instead, we can only get one bit from one number at one time.</p>
+
+<p>Assuming there is another array B, which contains all integers from 0 to n (no missing integer). Then we count the rightmost bit of all the nubmers in B. Of course, the number of <code>0</code>s is <code>n / 2 + 1</code>, and the number of <code>1</code>s is <code>(n + 1) / 2</code>.</p>
+
+<p>As a result, if the number of <code>0</code> and <code>1</code> of the right most bit of array A is not match the number in array B. We can easily find out the right most bit of the missing number.</p>
+
+<p>Then we use the same method to find out every bit of the missing number. At last, we can definitely get the right answer.</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+
+<span class="k">def</span> <span class="nf">solve_1</span><span class="p">(</span><span class="n">ns</span><span class="p">):</span> <span class="c"># &lt;= this is for test</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">while</span> <span class="n">ns</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">i</span><span class="p">:</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="n">ns</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">a</span> <span class="o">&gt;=</span> <span class="n">n</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="k">if</span> <span class="n">ns</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">ns</span><span class="p">[</span><span class="n">a</span><span class="p">]:</span>
+                <span class="k">break</span>
+            <span class="n">ns</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">ns</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">=</span> <span class="n">ns</span><span class="p">[</span><span class="n">a</span><span class="p">],</span> <span class="n">ns</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">ns</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">i</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">i</span>
+    <span class="k">return</span> <span class="bp">None</span>
+
+<span class="k">def</span> <span class="nf">solve_2</span><span class="p">(</span><span class="n">ns</span><span class="p">):</span> <span class="c"># &lt;= the solution for this problem</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">32</span><span class="p">):</span>
+        <span class="n">ones</span><span class="p">,</span> <span class="n">zeros</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">j</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">):</span>
+                <span class="n">ones</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">zeros</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="n">cnt_0</span><span class="p">,</span> <span class="n">cnt_1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">ns</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">num</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">):</span>
+                <span class="n">cnt_1</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">cnt_0</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">cnt_0</span> <span class="o">==</span> <span class="n">zeros</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">|=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span>
+
+<span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+    <span class="n">ns</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span>
+    <span class="n">ns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">n</span> <span class="c"># &lt;= replace the &quot;missing number&quot; with n</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span>
+
+    <span class="n">ns1</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span>
+    <span class="n">ns2</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span>
+
+    <span class="n">a</span> <span class="o">=</span> <span class="n">solve_1</span><span class="p">(</span><span class="n">ns1</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">solve_2</span><span class="p">(</span><span class="n">ns2</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">a</span> <span class="o">==</span> <span class="n">b</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+    <span class="n">test</span><span class="p">()</span>
+</pre></div>
+
+
+</div>
+
+
+<hr/>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'intgraph';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+        </div>
+        <hr/>
+        <footer class="bs-footer" role="contentinfo">
+            <div class="container">
+                <p>Powered by IntGraph</p>
+                <p>This page is generated at 2015-09-22 23:50:31 CST.</p>
+                <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
+            </div>
+        </footer>
+
+         
+        
+<script>
+$(document).ready(function(){
+    $(".showbtn").click(function(){
+        var divname = $(this).attr("bind");
+        console.log(divname);
+        $("#" + divname).removeClass("hide");
+    });
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script>
+<script> $("div.container table").addClass("table table-bordered"); </script>
+
+
+        <style> div.container img { max-width: 100%; } </style>
+        
+    </body>
+</html>

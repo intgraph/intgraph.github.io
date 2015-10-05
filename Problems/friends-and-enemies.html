@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/jquery.min.js"></script>
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/font-awesome.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/pygments.css"/>
+        <title>
+Friends and Enemies - IntGraph
+</title>
+        
+        
+    </head>
+    <body ng-app="IgApp">
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/index.html">IntGraph</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    
+                    <li>
+                        <a href="/index.html">Problems</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/System Design.html">System Design</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Object Orinted Design.html">Object Orinted Design</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Contribute.html">Contribute</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/About.html">About</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            
+
+<h1> Friends and Enemies </h1>
+
+<div class="panel">
+    <div class="panel-body">
+        <footer class="post-info">
+            <span class="label label-default">Date</span>
+            <span class="published">
+                <i class="icon-calendar"></i>2015-10-05 20:51
+            </span>
+            <p></p>
+            
+                <span class="label label-primary ">difficulty</span>
+                
+                <span> 4   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">categories</span>
+                
+                <span> disjoint-set  / </span>
+                
+                <span> heuristic algorithm   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">source</span>
+                
+                <span> 51nod   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+        </footer>
+    </div>
+</div>
+
+
+
+
+<h2>Description</h2>
+
+
+
+<div>
+
+
+<p>There is a country with N people. At the beginning, all the people here are independent individuals, that is, there are no friends or no enemies in the country.</p>
+
+<p>And we, play as god, are able to change the relationship of two people at a single time. There are two operations we can do in this problem: (1) set friends (2) set enemies.</p>
+
+<p>If two people is vaild to set as friends or enemies, print &ldquo;YES&rdquo; as an acknowlegement. Otherwise, print &ldquo;NO&rdquo; to show the operation is illegal.</p>
+
+<p>There are at most 10^5 operations, and the identity numbers of people can up to 10^8.</p>
+
+<p>Here is an example:</p>
+
+<pre><code>&gt;&gt; INPUT
+3
+1 2 1
+1 3 1
+2 3 0
+
+&lt;&lt; OUTPUT
+YES
+YES
+NO</code></pre>
+
+<p>The &ldquo;3&rdquo; in the first line shows that there are 3 operations in total.</p>
+
+<p>And the first operation is to set people &ldquo;1&rdquo; and &ldquo;2&rdquo; as friends. Because the people are all independent at the very beginning. It&#39;s OK for that operation. So we print &ldquo;YES&rdquo;.</p>
+
+<p>The second operation is similar to the first one which is legal. We simply print &ldquo;YES&rdquo;.</p>
+
+<p>However, the intent of the last operation is to set &ldquo;2&rdquo; and &ldquo;3&rdquo; as enemies. Here we know that &ldquo;1&rdquo;, &ldquo;2&rdquo; and &ldquo;3&rdquo; are friends. So the operation is illegal. We print &ldquo;NO&rdquo; as a result.</p>
+
+<blockquote>
+<p>Source: http://www.51nod.com/onlineJudge/questionCode.html#!problemId=1515</p>
+</blockquote>
+
+
+</div>
+
+
+<h2>Solution</h2>
+
+
+
+<p>
+    <button type="button" class="btn btn-danger btn-lg showbtn" bind="class_Solution">Click to show</button>
+</p>
+
+<div class="hide" id="class_Solution">
+
+
+<p>Let&#39;s simplify the problem. It&#39;s easy to find out we can use disjoint-set to detect if two people is in a same group or not. If people &ldquo;a&rdquo; and people &ldquo;b&rdquo; are in the same set, they are definetely friend. Otherwise, they may be strangers or enemies.</p>
+
+<p>So the next thing we should do is try to find a way to detect the relationship of enemies.</p>
+
+<p>It&#39;s also not hard to point out that a hash table is a good data strucature to store &amp; search the hostile relationship.</p>
+
+<p>But here comes the problem, as we have to merge the disjoint-set of friend relationship. The hostile relationship must be updated everytime the merging happens. By a simple calculation, we might find out that the time complexity is up to <code>O(n * n)</code>, which is not acceptable in this problem.</p>
+
+<p>For example, &ldquo;1&rdquo; &amp; &ldquo;2&rdquo; are friends, and &ldquo;1&rdquo; &amp; &ldquo;10&rdquo;, &ldquo;2&rdquo; &amp; &ldquo;11&rdquo; are enemies. If we set &ldquo;3&rdquo; &amp; (&ldquo;1&rdquo;, &ldquo;2&rdquo;) as friends, we have to set &ldquo;3&rdquo; &amp; &ldquo;10&rdquo;, &ldquo;3&rdquo; &amp; &ldquo;11&rdquo; as enemies. If the relaionship is complex, it will take a long time to maintain the relationship.</p>
+
+<p>The solution for the difficult situation is called &ldquo;heuristic merging&rdquo;. It&#39;s an optimization of the disjoint-set. The principle of this algorithm is to merge the smaller set into the larger set. It will remarkably reduce the time compleixty for the worst case of the merging of disjoint-set.</p>
+
+<p>In our problem, we intend to merge the group with less enemies into the group with more enemies. And the time complexity will be <code>O(n)</code> sum up all the merging operations.</p>
+
+<p>The code is something like this:</p>
+<div class="highlight"><pre><span class="cp">#include &lt;cstdio&gt;</span>
+<span class="cp">#include &lt;cstdlib&gt;</span>
+<span class="cp">#include &lt;cstring&gt;</span>
+<span class="cp">#include &lt;iostream&gt;</span>
+<span class="cp">#include &lt;algorithm&gt;</span>
+<span class="cp">#include &lt;vector&gt;</span>
+<span class="cp">#include &lt;map&gt;</span>
+<span class="cp">#include &lt;set&gt;</span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="cp">#define print(x) cout &lt;&lt; x &lt;&lt; endl</span>
+<span class="cp">#define input(x) cin &gt;&gt; x</span>
+
+<span class="k">struct</span> <span class="n">Command</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">p</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">const</span> <span class="kt">int</span> <span class="n">SIZE</span> <span class="o">=</span> <span class="mi">123456</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="n">n</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">father</span><span class="p">[</span><span class="n">SIZE</span><span class="p">];</span>
+<span class="n">vector</span><span class="o">&lt;</span><span class="n">Command</span><span class="o">&gt;</span> <span class="n">cmds</span><span class="p">;</span>
+<span class="n">vector</span><span class="o">&lt;</span><span class="n">set</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">not_equal</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">init</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">SIZE</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">father</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">not_equal</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="n">SIZE</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">find_father</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="n">father</span><span class="p">[</span><span class="n">x</span><span class="p">])</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">x</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">father</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">find_father</span><span class="p">(</span><span class="n">father</span><span class="p">[</span><span class="n">x</span><span class="p">]);</span>
+<span class="p">}</span>
+
+<span class="c1">// crucial point: **heuristic algorithm**</span>
+<span class="kt">void</span> <span class="nf">do_union</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">not_equal</span><span class="p">[</span><span class="n">a</span><span class="p">].</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">not_equal</span><span class="p">[</span><span class="n">b</span><span class="p">].</span><span class="n">size</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">swap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">father</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">v</span><span class="p">:</span> <span class="n">not_equal</span><span class="p">[</span><span class="n">a</span><span class="p">])</span> <span class="p">{</span>
+        <span class="n">not_equal</span><span class="p">[</span><span class="n">b</span><span class="p">].</span><span class="n">insert</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
+        <span class="n">not_equal</span><span class="p">[</span><span class="n">v</span><span class="p">].</span><span class="n">erase</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+        <span class="n">not_equal</span><span class="p">[</span><span class="n">v</span><span class="p">].</span><span class="n">insert</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">not_equal</span><span class="p">[</span><span class="n">a</span><span class="p">].</span><span class="n">clear</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">solve</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">init</span><span class="p">();</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">cmd</span><span class="p">:</span> <span class="n">cmds</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="n">find_father</span><span class="p">(</span><span class="n">cmd</span><span class="p">.</span><span class="n">x</span><span class="p">);</span>
+        <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="n">find_father</span><span class="p">(</span><span class="n">cmd</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">swap</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="kt">int</span> <span class="n">p</span> <span class="o">=</span> <span class="n">cmd</span><span class="p">.</span><span class="n">p</span><span class="p">;</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">p</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">puts</span><span class="p">(</span><span class="s">&quot;YES&quot;</span><span class="p">);</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">not_equal</span><span class="p">[</span><span class="n">x</span><span class="p">].</span><span class="n">find</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">==</span> <span class="n">not_equal</span><span class="p">[</span><span class="n">x</span><span class="p">].</span><span class="n">end</span><span class="p">())</span> <span class="p">{</span>
+                <span class="n">do_union</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+                <span class="n">puts</span><span class="p">(</span><span class="s">&quot;YES&quot;</span><span class="p">);</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="n">puts</span><span class="p">(</span><span class="s">&quot;NO&quot;</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">puts</span><span class="p">(</span><span class="s">&quot;NO&quot;</span><span class="p">);</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">not_equal</span><span class="p">[</span><span class="n">x</span><span class="p">].</span><span class="n">find</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">==</span> <span class="n">not_equal</span><span class="p">[</span><span class="n">x</span><span class="p">].</span><span class="n">end</span><span class="p">())</span> <span class="p">{</span>
+                <span class="n">not_equal</span><span class="p">[</span><span class="n">x</span><span class="p">].</span><span class="n">insert</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
+                <span class="n">not_equal</span><span class="p">[</span><span class="n">y</span><span class="p">].</span><span class="n">insert</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+                <span class="n">puts</span><span class="p">(</span><span class="s">&quot;YES&quot;</span><span class="p">);</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="n">puts</span><span class="p">(</span><span class="s">&quot;YES&quot;</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">;</span>
+    <span class="n">input</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+    <span class="n">map</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">mp</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d%d%d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">c</span><span class="p">);</span>
+        <span class="n">cmds</span><span class="p">.</span><span class="n">push_back</span><span class="p">({</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">});</span>
+        <span class="n">mp</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="n">mp</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">int</span> <span class="n">idx</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">p</span><span class="p">:</span> <span class="n">mp</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">p</span><span class="p">.</span><span class="n">second</span> <span class="o">=</span> <span class="n">idx</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">cmd</span><span class="p">:</span> <span class="n">cmds</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">cmd</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">mp</span><span class="p">[</span><span class="n">cmd</span><span class="p">.</span><span class="n">x</span><span class="p">];</span>
+        <span class="n">cmd</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">mp</span><span class="p">[</span><span class="n">cmd</span><span class="p">.</span><span class="n">y</span><span class="p">];</span>
+    <span class="p">}</span>
+
+    <span class="n">solve</span><span class="p">();</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+</div>
+
+
+<hr/>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'intgraph';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+        </div>
+        <hr/>
+        <footer class="bs-footer" role="contentinfo">
+            <div class="container">
+                <p>Powered by IntGraph</p>
+                <p>This page is generated at 2015-10-05 20:54:14 CST.</p>
+                <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
+            </div>
+        </footer>
+
+         
+        
+<script>
+$(document).ready(function(){
+    $(".showbtn").click(function(){
+        var divname = $(this).attr("bind");
+        console.log(divname);
+        $("#" + divname).removeClass("hide");
+    });
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script>
+<script> $("div.container table").addClass("table table-bordered"); </script>
+
+
+        <style> div.container img { max-width: 100%; } </style>
+        
+    </body>
+</html>

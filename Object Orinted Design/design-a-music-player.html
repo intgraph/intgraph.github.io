@@ -8,7 +8,7 @@
         <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/font-awesome.min.css"/>
         <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/pygments.css"/>
         <title>
-All Twice Excpet One - IntGraph
+Design a Music Player - IntGraph
 </title>
         
         
@@ -47,32 +47,32 @@ All Twice Excpet One - IntGraph
         <div class="container">
             
 
-<h1> All Twice Excpet One </h1>
+<h1> Design a Music Player </h1>
 
 <div class="panel">
     <div class="panel-body">
         <footer class="post-info">
             <span class="label label-default">Date</span>
             <span class="published">
-                <i class="icon-calendar"></i>2014-08-13 23:14:00
+                <i class="icon-calendar"></i>2015-10-05 23:07:46
             </span>
             <p></p>
             
                 <span class="label label-primary ">difficulty</span>
                 
-                <span> 2   </span>
+                <span> 3   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
                 <span class="label label-primary ">categories</span>
                 
-                <span> bit manipulation   </span>
+                <span> mvc   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
                 <span class="label label-primary ">source</span>
                 
-                <span> unknown   </span>
+                <span> anonymous   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
@@ -90,7 +90,9 @@ All Twice Excpet One - IntGraph
 <div>
 
 
-<p>Given an array of integers, every element appears twice except for one. Find that single one.</p>
+<p>Design a music player like Winamp.</p>
+
+<p><img src="http://wizmann-pic.qiniudn.com/15-10-5/49325408.jpg" alt="Alt text"></p>
 
 
 </div>
@@ -107,15 +109,32 @@ All Twice Excpet One - IntGraph
 <div class="hide" id="class_Solution">
 
 
-<p>This problem is the very basic one. So I just paste my code here. If you are confused with the xor operator， you might have to review the knowledge of <strong>bit manipulation</strong> carefully.</p>
-<div class="highlight"><pre><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
-    <span class="c"># @param A, a list of integer</span>
-    <span class="c"># @return an integer</span>
-    <span class="k">def</span> <span class="nf">singleNumber</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">^</span> <span class="n">y</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
-</pre></div>
+<h3>1. Requirement analysis</h3>
 
-<p>Time complexity: O(n)</p>
+<p>| Requirements | Solutions |
+| - | - |
+| Play music | Use the api to play audio file |
+| Show the info of the playing music file | load the info from the file, and use a timer to show the play time / remain time |
+| Control the volumn (and some other properties) | use the api provided by the audio playing api |
+| The playlist | use an array / list to store the list |</p>
+
+<h3>2. Design anaylisys</h3>
+
+<p>In the requirements analysis, we can find out that the music player is strongly rely on the auto playing API which provided by the codec. So a &ldquo;Codec&rdquo; is necessary for our music player to encapsulate the audio APIs.</p>
+
+<p>At the same time, the &ldquo;Playlist&rdquo; is also a important part for the player. User can &ldquo;add&rdquo;, &ldquo;remove&rdquo; or &ldquo;save&rdquo; the playlist. And user can play the whole list in order, in shuffle or keep playing a same music repeatly.</p>
+
+<p>At last, we need a &ldquo;ControlCenter&rdquo; to provide all the information which is needed by the user interface.</p>
+
+<h3>3. the MVC-like pattern</h3>
+
+<p><img src="http://wizmann-pic.qiniudn.com/15-10-5/26286902.jpg" alt="Alt text"></p>
+
+<p>The &ldquo;view&rdquo; module is actually the user interface. It communicate with the &ldquo;controller&rdquo; module to change the status of the player and get some essential information.</p>
+
+<p>The &ldquo;controller&rdquo; modules offers multiple interface for UI. To avoid make a &ldquo;god object&rdquo;, we create two handler classes: &ldquo;PlaylistHandler&rdquo; and &ldquo;CodecHandler&rdquo; to divide the &ldquo;controller class&rdquo;, to make them focus on specific problems of different facet of a music player.</p>
+
+<p>The &ldquo;model&rdquo; modules is in charge of the playlists. And the &ldquo;CodecUtils&rdquo; modules is the one responsible for the music playing, file detection, etc.</p>
 
 
 </div>
@@ -143,7 +162,7 @@ All Twice Excpet One - IntGraph
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2015-10-05 23:08:46 CST.</p>
+                <p>This page is generated at 2015-10-05 23:08:48 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

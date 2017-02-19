@@ -127,7 +127,7 @@ When s3 = &ldquo;aadbbbaccc&rdquo;, return false.</p>
 dp[i][j] |= str2[i] == str3[i + j]? dp[i][j - 1];</code></pre>
 
 <p>And here it is.</p>
-<div class="highlight"><pre><span class="kt">int</span> <span class="n">dp</span><span class="p">[</span><span class="mi">2048</span><span class="p">][</span><span class="mi">2048</span><span class="p">];</span> <span class="c1">// it&#39;s not right to guess the scale of the input, but who cares :)</span>
+<div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">dp</span><span class="p">[</span><span class="mi">2048</span><span class="p">][</span><span class="mi">2048</span><span class="p">];</span> <span class="c1">// it&#39;s not right to guess the scale of the input, but who cares :)</span>
 
 <span class="kt">bool</span> <span class="nf">isInterleaving</span><span class="p">(</span><span class="n">string</span> <span class="n">str1</span><span class="p">,</span> <span class="n">string</span> <span class="n">str2</span><span class="p">,</span> <span class="n">string</span> <span class="n">str3</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">str1</span><span class="p">.</span><span class="n">length</span><span class="p">()</span> <span class="o">+</span> <span class="n">str2</span><span class="p">.</span><span class="n">length</span><span class="p">()</span> <span class="o">!=</span> <span class="n">str3</span><span class="p">.</span><span class="n">length</span><span class="p">())</span> <span class="p">{</span>
@@ -178,7 +178,7 @@ dp[i][j] |= str2[i] == str3[i + j]? dp[i][j - 1];</code></pre>
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2015-10-28 01:48:34 CST.</p>
+                <p>This page is generated at 2017-02-19 15:06:21 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

@@ -141,7 +141,7 @@ $$</p>
 <p>It&#39;s the same problem as <a href="http://intgraph.wizmann.tk/Problems/sum-of-negative-binary-numbers.html">here</a> if <code>w == 2</code>, so I called this problem &ldquo;The Sum of Negative Binary Number - 2&rdquo;, but it&#39;s not the binary number actually.</p>
 
 <p>It&#39;s fine to share the same points of the two problems. The first step is convert m to w-based number.</p>
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
     <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">while</span> <span class="n">b</span><span class="p">:</span>
         <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span> <span class="o">%</span> <span class="n">a</span><span class="p">)</span>
@@ -152,7 +152,7 @@ $$</p>
 <p>For each digit of the w-based number, it OK if the digit is in [-1, 0, 1], because it&#39;s in the range of $k_i$. And it&#39;s OK too if the digit is in [w - 1, w], because we can borrow the value of the next digit.</p>
 
 <p>So, with the help of some examples, we can make the it work easily. But if you think it&#39;s difficult to make some examples, just deal with it with some kinds of brute force algorithm. Not hard, and won&#39;t be mentioned here.</p>
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
 
 <span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
     <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
@@ -177,9 +177,9 @@ $$</p>
             <span class="k">break</span>
 
     <span class="k">if</span> <span class="n">flag</span><span class="p">:</span>
-        <span class="k">print</span> <span class="s">&#39;YES&#39;</span>
+        <span class="k">print</span> <span class="s1">&#39;YES&#39;</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">print</span> <span class="s">&#39;NO&#39;</span>
+        <span class="k">print</span> <span class="s1">&#39;NO&#39;</span>
 </pre></div>
 
 
@@ -208,7 +208,7 @@ $$</p>
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2015-10-28 01:48:38 CST.</p>
+                <p>This page is generated at 2017-02-19 15:06:24 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

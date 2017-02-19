@@ -131,7 +131,7 @@ B:     3</code></pre>
 <p>For all these conditions, we all have to compare <code>&lt;A[0], B[0]&gt;</code> and <code>&lt;A[1], B[0]&gt;</code>. That is, we <code>A[i] &lt; B[j]</code>, the next pair we have to compare is <code>&lt;A[i + 1], B[j]&gt;</code>.</p>
 
 <p>And then, we can write code like this.</p>
-<div class="highlight"><pre><span class="n">A</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">raw_input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+<div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">raw_input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
 <span class="n">B</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">raw_input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
 
 <span class="n">la</span><span class="p">,</span> <span class="n">lb</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
@@ -152,7 +152,7 @@ B:     3</code></pre>
 <p>If you think it&#39;s hard to enumerate all the conditions, there is another way to solve this problem.</p>
 
 <p>Merge sort is one of the well-known algorithm, and this problem is quite similar to this algorithm. We merge the two array into one, and find the minimal difference between the element from the different arrays. That will be excellent, but will cost an extra memory space. But we can change a little and make it work.</p>
-<div class="highlight"><pre><span class="n">A</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">raw_input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+<div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">raw_input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
 <span class="n">B</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">raw_input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
 
 <span class="n">la</span><span class="p">,</span> <span class="n">lb</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
@@ -206,7 +206,7 @@ B:     3</code></pre>
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2015-10-28 01:48:36 CST.</p>
+                <p>This page is generated at 2017-02-19 15:06:22 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

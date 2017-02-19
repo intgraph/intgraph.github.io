@@ -200,13 +200,13 @@ public:
 </tbody></table>
 
 <h3>Get the newsfeed</h3>
-<div class="highlight"><pre><span class="n">friends</span> <span class="o">=</span> <span class="n">FriendTable</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">usr_id</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="n">friends</span> <span class="o">=</span> <span class="n">FriendTable</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">usr_id</span><span class="p">)</span>
 <span class="n">feeds</span> <span class="o">=</span> <span class="n">FeedTable</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
         <span class="n">user_id__in</span> <span class="o">=</span> <span class="n">friends</span><span class="p">,</span>
         <span class="n">sort_by__reverse</span> <span class="o">=</span> <span class="n">time</span>
 <span class="p">)[</span><span class="n">OFFSET</span><span class="p">:</span><span class="n">OFFSET</span> <span class="o">+</span> <span class="n">LIMIT</span><span class="p">]</span>
 
-<span class="c"># some filter and sorting logic</span>
+<span class="c1"># some filter and sorting logic</span>
 
 <span class="k">for</span> <span class="n">feed</span> <span class="ow">in</span> <span class="n">feeds</span><span class="p">:</span>
     <span class="n">feed</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="n">ContentTable</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span> <span class="o">=</span> <span class="n">feed</span><span class="o">.</span><span class="n">content_id</span><span class="p">)</span>
@@ -362,7 +362,7 @@ using deduplicate and compression the string could save memory up to 90% (this d
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2015-10-28 01:48:39 CST.</p>
+                <p>This page is generated at 2017-02-19 15:06:25 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

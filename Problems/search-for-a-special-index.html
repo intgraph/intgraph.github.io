@@ -136,7 +136,7 @@ a[i] &lt;= i &amp;&amp; a[j] &gt;= j &amp;&amp; a[j] &gt;= j &amp;&amp; a[k] &lt
 </code></p>
 
 <p>As a result, if we can concat these two &ldquo;special arrays&rdquo;, the index <code>j</code> must be a <code>special index</code>. In another word, that is, if an array is <code>maybe specical array</code>, then either part of the biparting subarray is another <code>maybe special subarray</code>.</p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">randint</span>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">randint</span>
 
 <span class="k">def</span> <span class="nf">gen</span><span class="p">():</span>
     <span class="n">n</span> <span class="o">=</span> <span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
@@ -145,10 +145,10 @@ a[i] &lt;= i &amp;&amp; a[j] &gt;= j &amp;&amp; a[j] &gt;= j &amp;&amp; a[k] &lt
     <span class="k">return</span> <span class="n">ns</span>
 
 <span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="n">ns</span><span class="p">):</span>
-    <span class="c"># Contain only distinct number</span>
+    <span class="c1"># Contain only distinct number</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">ns</span><span class="p">))</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span>
 
-    <span class="c"># The array is sorted</span>
+    <span class="c1"># The array is sorted</span>
     <span class="k">assert</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span> <span class="o">==</span> <span class="n">ns</span>
 
     <span class="n">l</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
@@ -165,7 +165,7 @@ a[i] &lt;= i &amp;&amp; a[j] &gt;= j &amp;&amp; a[j] &gt;= j &amp;&amp; a[k] &lt
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
         <span class="n">ns</span> <span class="o">=</span> <span class="n">gen</span><span class="p">()</span>
         <span class="n">idx</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span>
@@ -202,7 +202,7 @@ a[i] &lt;= i &amp;&amp; a[j] &gt;= j &amp;&amp; a[j] &gt;= j &amp;&amp; a[k] &lt
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2015-10-28 01:48:38 CST.</p>
+                <p>This page is generated at 2017-02-19 15:06:24 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

@@ -118,7 +118,7 @@ Rounding Up/Down to the Next Power of 2 - IntGraph
 <p>The key to implementing <code>flp2</code> is to find the leftmost bit of the number <code>x</code>. As we can get the rightmost bit of a number by <code>lowbit(x) = x &amp; (-x)</code>, there&#39;s no efficient way to find the leftmost bit like that. However, we can set all the bits which on the right of the leftmost 1-bit to &ldquo;1&rdquo;, and then get the value of <code>x - (x &gt;&gt; 1)</code> which is the final answer.</p>
 
 <p>The code is like this.</p>
-<div class="highlight"><pre><span class="kt">uint32_t</span> <span class="nf">flp2</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="kt">uint32_t</span> <span class="nf">flp2</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">);</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">);</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">);</span>
@@ -131,7 +131,7 @@ Rounding Up/Down to the Next Power of 2 - IntGraph
 <p>The algorithm is based on right-propagating the leftmost 1-bit. And it&#39;s a <strong>branch-free algorithm</strong> which runs fast.</p>
 
 <p>The <code>clp2</code> function is similar to <code>flp2</code>, but it&#39;s more ingenious.</p>
-<div class="highlight"><pre><span class="kt">uint32_t</span> <span class="nf">clp2</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="kt">uint32_t</span> <span class="nf">clp2</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">);</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">|</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">);</span>
@@ -170,7 +170,7 @@ Rounding Up/Down to the Next Power of 2 - IntGraph
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2015-10-28 01:48:34 CST.</p>
+                <p>This page is generated at 2017-02-19 15:06:20 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

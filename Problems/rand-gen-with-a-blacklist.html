@@ -118,7 +118,7 @@ Random Generator with a Blacklist - IntGraph
 </blockquote>
 
 <p>If the range of the random number is small, we can make a 1-to-1 mapping of the numbers which don&#39;t on the blacklist to make a consecutive sequence.</p>
-<div class="highlight"><pre><span class="k">class</span> <span class="nc">RandWithBlack</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">RandWithBlack</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">range_</span><span class="p">,</span> <span class="n">blacklist</span><span class="p">):</span>
         <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
@@ -149,7 +149,7 @@ Random Generator with a Blacklist - IntGraph
 <p>As the chart above, the key for us to solve the problem is to make a mapping about the number and the number except blacklist.</p>
 
 <p>And it&#39;s not for us to see, if we&#39;ve got a number k, and the number of numbers in blacklist which is smaller than k. Then we can finally make a map.</p>
-<div class="highlight"><pre><span class="k">class</span> <span class="nc">RandWithBlack</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">RandWithBlack</span> <span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
     <span class="n">RandWithBlack</span><span class="p">(</span><span class="k">const</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">blacklist</span><span class="p">)</span><span class="o">:</span> <span class="n">_blacklist</span><span class="p">(</span><span class="n">blacklist</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">sort</span><span class="p">(</span><span class="n">_blacklist</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">_blacklist</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
@@ -204,7 +204,7 @@ Random Generator with a Blacklist - IntGraph
 </blockquote>
 
 <p>In this scenario, the solution is quite similar to the scenario 1. </p>
-<div class="highlight"><pre><span class="k">class</span> <span class="nc">RandWithBlack</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">RandWithBlack</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">range_</span><span class="p">,</span> <span class="n">blacklist</span><span class="p">):</span>
         <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
@@ -251,7 +251,7 @@ Random Generator with a Blacklist - IntGraph
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2015-10-28 01:48:37 CST.</p>
+                <p>This page is generated at 2017-02-19 15:06:23 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

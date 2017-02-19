@@ -128,7 +128,7 @@ Survivor - IntGraph
 <p>For example, the position of the No.5 guy is 5 initially. And then the position changes to 3, then to 2.</p>
 
 <p>Here we get a solution for this problem with <code>O(n)</code> time complexity and memory complexity.</p>
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">survivor</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">survivor</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
     <span class="n">dp</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
     <span class="n">trans</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
 
@@ -168,7 +168,7 @@ Thrid Step: 2 (10) -&gt; Killed</code></pre>
 <p>It&#39;s easy to see that the rightmost <code>1</code> bit moves to left, until there is another <code>1</code>, then the guy is killed.</p>
 
 <p>We can write code like this:</p>
-<div class="highlight"><pre><span class="n">lowbit</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&amp;</span> <span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="n">lowbit</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&amp;</span> <span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">)</span>
 
 <span class="n">k</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">raw_input</span><span class="p">())</span>
 <span class="k">while</span> <span class="n">k</span> <span class="o">!=</span> <span class="n">lowbit</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
@@ -202,7 +202,7 @@ Thrid Step: 2 (10) -&gt; Killed</code></pre>
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2015-10-28 01:48:38 CST.</p>
+                <p>This page is generated at 2017-02-19 15:06:25 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

@@ -125,7 +125,7 @@ Output: String “Yes” or “No”</p>
 
 
 <p>It&#39;s known to us all that this problem has an <code>O(n^2)</code> solution.</p>
-<div class="highlight"><pre><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
     <span class="kt">bool</span> <span class="n">verifyPreorder</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">preorder</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">return</span> <span class="n">do_verify_preorder</span><span class="p">(</span><span class="n">preorder</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">preorder</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
@@ -159,7 +159,7 @@ Output: String “Yes” or “No”</p>
 <p>The main idea for this solution is to split the array to the left &amp; right part of the tree. And then check if there are invalid elements in the both subtree.</p>
 
 <p>This is correct, but not optimized. And here is another idea that deferring the check of the subtree until the leaves node.</p>
-<div class="highlight"><pre><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
     <span class="kt">bool</span> <span class="n">verifyPreorder</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">preorder</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">return</span> <span class="n">do_verify_preorder</span><span class="p">(</span>
@@ -216,7 +216,7 @@ Output: String “Yes” or “No”</p>
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2015-10-28 01:48:39 CST.</p>
+                <p>This page is generated at 2017-02-19 15:06:25 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

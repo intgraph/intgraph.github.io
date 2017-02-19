@@ -122,25 +122,25 @@ Max Rectangle in the Matrix - 1 - IntGraph
 <p>Assuming we have an array with <code>0</code> and <code>1</code>, if there is an effective way to find out if there is a <strong>segment</strong> which the end points is <code>1</code>.</p>
 
 <p>That is quite simple, actually. Just one line of simple Python code.</p>
-<div class="highlight"><pre><span class="k">print</span> <span class="s">&#39;yes&#39;</span> <span class="k">if</span> <span class="n">array0</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="s">&#39;no&#39;</span>
+<div class="highlight"><pre><span></span><span class="k">print</span> <span class="s1">&#39;yes&#39;</span> <span class="k">if</span> <span class="n">array0</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="s1">&#39;no&#39;</span>
 </pre></div>
 
 <p>Or verbosely,</p>
-<div class="highlight"><pre><span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+<div class="highlight"><pre><span></span><span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">array0</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">item</span><span class="p">:</span>
         <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="k">if</span> <span class="n">cnt</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">print</span> <span class="s">&#39;yes&#39;</span>
+        <span class="k">print</span> <span class="s1">&#39;yes&#39;</span>
         <span class="k">break</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">&#39;no&#39;</span>
+    <span class="k">print</span> <span class="s1">&#39;no&#39;</span>
 </pre></div>
 
 <p>We can generalize it to the 2D matrix. The time complexity is <code>O(n^3)</code>. </p>
 
 <p>As you can see, it&#39;s quite similar to &ldquo;the max sum of a sub-array&rdquo; and &ldquo;the max sum of a sub-matrix&rdquo;, which takes <code>O(n)</code> and <code>O(n^3)</code> time complexity.</p>
-<div class="highlight"><pre><span class="n">mat</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight"><pre><span></span><span class="n">mat</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
     <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
@@ -188,7 +188,7 @@ Max Rectangle in the Matrix - 1 - IntGraph
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2015-10-28 01:48:35 CST.</p>
+                <p>This page is generated at 2017-02-19 15:06:21 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

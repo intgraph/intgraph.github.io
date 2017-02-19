@@ -93,7 +93,7 @@ One Edit Distance++ - IntGraph
 <p>From the <a href="http://intgraph.wizmann.tk/Problems/one-edit-distance.html">previous problem</a>, we have learned something about the &ldquo;one-or-zero edit distance&rdquo;. And here is an advanced problem.</p>
 
 <p>We have two strings <code>A</code> and <code>B</code>, but we can only access the two strings by the <strong>iterators</strong>.</p>
-<div class="highlight"><pre><span class="k">class</span> <span class="nc">StrIterator</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">StrIterator</span> <span class="p">{</span>
         <span class="kt">bool</span> <span class="n">has_next</span><span class="p">();</span>
         <span class="kt">bool</span> <span class="nf">is_null</span><span class="p">();</span>
         <span class="kt">int</span> <span class="nf">next</span><span class="p">();</span>
@@ -149,7 +149,7 @@ abxxx</code></pre>
 <p>For exmaple, <code>abcxxx</code> and <code>abdxxx</code>. We find the dismatch at position 3, between the character <code>c</code> and <code>d</code>. Because we have no knowledge of the length of the strings, and it&#39;s might be OK to delete <code>c</code> or <code>d</code>, or just ignore this dismatch.</p>
 
 <p>That&#39;s true. Since our lack of knowledge of the two strings, we have to consider every possibilities. Luckily, if we just look forward for one single character of both strings, all the possibilities could be settled.</p>
-<div class="highlight"><pre><span class="cm">/*</span>
+<div class="highlight"><pre><span></span><span class="cm">/*</span>
 <span class="cm">class StrIterator {</span>
 <span class="cm">        bool has_next();</span>
 <span class="cm">        bool is_null();</span>
@@ -237,7 +237,7 @@ abxxx</code></pre>
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2015-10-28 01:48:37 CST.</p>
+                <p>This page is generated at 2017-02-19 15:06:23 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

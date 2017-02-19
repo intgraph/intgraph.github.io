@@ -121,7 +121,7 @@ p.s. Any solution which is a min-heap array is acceptable.</code></pre>
 <p>The basic solution is well known. As an array with only one element is of course a min-heap array. And then we add one number at one time, and keep the new array as a min-heap.</p>
 
 <p>The time complexity of time algorithm is <code>O(logN * N)</code> . For <code>N = 2^k</code>, it needs <code>sum(2^i * i)</code> steps to heapify the array.</p>
-<div class="highlight"><pre><span class="c1">// O(n * logn) time complexity</span>
+<div class="highlight"><pre><span></span><span class="c1">// O(n * logn) time complexity</span>
 <span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
     <span class="cm">/**</span>
@@ -150,7 +150,7 @@ p.s. Any solution which is a min-heap array is acceptable.</code></pre>
 <p>As we describe above, we build the min-heap from the top to bottom. If we build the heap from bottom to top, we could make it faster.</p>
 
 <p>To build a min-heap from bottom to top, it will take <code>sum(2^i * (k - i))</code> step to build that heap. And the final time complexity is <code>O(N)</code>.</p>
-<div class="highlight"><pre><span class="c1">// O(n) time complexity</span>
+<div class="highlight"><pre><span></span><span class="c1">// O(n) time complexity</span>
 <span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
     <span class="cm">/**</span>
@@ -224,7 +224,7 @@ p.s. Any solution which is a min-heap array is acceptable.</code></pre>
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2015-10-28 01:48:34 CST.</p>
+                <p>This page is generated at 2017-02-19 15:06:21 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

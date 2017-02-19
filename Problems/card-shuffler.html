@@ -114,7 +114,7 @@ Card Shuffler - IntGraph
 <p>If a shuffler could be &ldquo;rewind&rdquo;, every elements could come back to its original position after several steps. We can find out that by a dfs-like algorithm. If the path could be a circle, e.g. <code>1 -&gt; 2 -&gt; 3 -&gt; 1</code>, it&#39;s easy to know that the element with index <code>1</code> could be rewind. Additionally, the number <code>2</code> and number <code>3</code> could be rewined, either. We can call all the elements on the circle as &ldquo;shuffle group&rdquo;.</p>
 
 <p>There might be serveral &ldquo;shuffle groups&rdquo; in the suffler. And the shuffle period is the LCM(Lowest Common Multiple) of all the periods of sub-groups.</p>
-<div class="highlight"><pre><span class="k">class</span> <span class="nc">CardShuffler</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CardShuffler</span> <span class="p">{</span>
     <span class="k">typedef</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">llint</span><span class="p">;</span>
 <span class="k">public</span><span class="o">:</span>
     <span class="n">llint</span> <span class="n">solve</span><span class="p">(</span><span class="k">const</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">shuffle_array</span><span class="p">)</span> <span class="p">{</span>
@@ -192,7 +192,7 @@ Card Shuffler - IntGraph
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2015-10-28 01:48:33 CST.</p>
+                <p>This page is generated at 2017-02-19 15:06:20 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

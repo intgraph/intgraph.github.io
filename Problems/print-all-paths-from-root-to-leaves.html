@@ -120,7 +120,7 @@ Print All Paths from Root to Leaves - IntGraph
 
 
 <p>The DFS solution is simple.</p>
-<div class="highlight"><pre><span class="k">struct</span> <span class="n">TreeNode</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="k">struct</span> <span class="n">TreeNode</span> <span class="p">{</span>
     <span class="kt">char</span> <span class="n">c</span><span class="p">;</span>
     <span class="n">TreeNode</span><span class="o">*</span> <span class="n">left</span><span class="p">;</span>
     <span class="n">TreeNode</span><span class="o">*</span> <span class="n">right</span><span class="p">;</span>
@@ -155,7 +155,7 @@ Print All Paths from Root to Leaves - IntGraph
 </pre></div>
 
 <p>The interative solution is quite tricky. Because we don&#39;t quite use this kind of algorithm in our daily job. But sometimes you have to remember some classic algorithm to cope with the interviewers. :)</p>
-<div class="highlight"><pre><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
     <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">path_traversal</span><span class="p">(</span><span class="n">TreeNode</span><span class="o">*</span> <span class="n">root</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">res</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
@@ -208,7 +208,7 @@ Print All Paths from Root to Leaves - IntGraph
 <p>The code below is similar to the binary tree traversal with a stack，but more complicated. Because you have to print the path.</p>
 
 <p>And here is another solution, which is a more simple iterative solution &ndash; BFS. I think it&#39;s much better than the previous one. This is the &ldquo;security flaw&rdquo; that we can take advantage of.</p>
-<div class="highlight"><pre><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
     <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">path_traversal</span><span class="p">(</span><span class="n">TreeNode</span><span class="o">*</span> <span class="n">root</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">res</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
@@ -277,7 +277,7 @@ Print All Paths from Root to Leaves - IntGraph
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2015-10-28 01:48:37 CST.</p>
+                <p>This page is generated at 2017-02-19 15:06:23 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

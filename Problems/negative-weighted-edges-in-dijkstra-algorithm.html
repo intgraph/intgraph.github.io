@@ -8,7 +8,7 @@
         <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/font-awesome.min.css"/>
         <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/pygments.css"/>
         <title>
-Find the Star - IntGraph
+Negative Weighted Edges in Dijkstra Algorithm - IntGraph
 </title>
         
         
@@ -47,34 +47,34 @@ Find the Star - IntGraph
         <div class="container">
             
 
-<h1> Find the Star </h1>
+<h1> Negative Weighted Edges in Dijkstra Algorithm </h1>
 
 <div class="panel">
     <div class="panel-body">
         <footer class="post-info">
             <span class="label label-default">Date</span>
             <span class="published">
-                <i class="icon-calendar"></i>2014-10-30 09:34:15
+                <i class="icon-calendar"></i>2017-02-19 15:04:38
             </span>
             <p></p>
             
                 <span class="label label-primary ">difficulty</span>
                 
-                <span> 3.5   </span>
+                <span> 3   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
                 <span class="label label-primary ">categories</span>
                 
-                <span> mathmatical induction  / </span>
+                <span> graph  / </span>
                 
-                <span> graph   </span>
+                <span> induction   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
                 <span class="label label-primary ">source</span>
                 
-                <span> Algorithms: A Creative Approach   </span>
+                <span> unknown   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
@@ -92,11 +92,9 @@ Find the Star - IntGraph
 <div>
 
 
-<p>A party is being held in a backyard. And among the crowd, there is a star which is well-known that everyone who participates this party knows him. But, as a star, he must keep &ldquo;高冷&rdquo;, that is, he doesn&#39;t know anyone in this party.</p>
+<p>It is well known that the Dijkstra algorithm is designed for the &ldquo;single-source shortest path&rdquo; problem in a graph with non-negative weighted edges.</p>
 
-<p>Your mission is to find the star from the crowd. Since you don&#39;t have any idea about the relationiship among the crowd, you have to make a query like this: &ldquo;Do you know that crazy person?&rdquo;</p>
-
-<p>What is the fast way to find out the star? Or determine that there is not a real star among the crowd.</p>
+<p>The problem is, in which circumstances the negative weighted edges will break the correctness of Dijkstra algorithm?</p>
 
 
 </div>
@@ -113,22 +111,31 @@ Find the Star - IntGraph
 <div class="hide" id="class_Solution">
 
 
-<p>As described above, everyone in the party knows the star, and the star doesn&#39;t know anyone. As a result, if A knows B, A can&#39;t be the star. And if A doesn&#39;t know B, B can&#39;t be the star.</p>
+<p>As we discussed before (about a year ago), the wisdom of prove or disprove the correctness is the induction.</p>
 
-<p>So, we can exclude one person from the &ldquo;star list&rdquo; by a single query. The time complexity is no doubt O(n).</p>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find_the_star</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-    <span class="n">star</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">do_know</span><span class="p">(</span><span class="n">star</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
-            <span class="n">star</span> <span class="o">=</span> <span class="n">i</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">star</span> <span class="o">!=</span> <span class="n">i</span> <span class="ow">and</span> \
-                <span class="n">do_know</span><span class="p">(</span><span class="n">star</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="ow">or</span> \
-                <span class="ow">not</span> <span class="n">do_know</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">star</span><span class="p">):</span>
-            <span class="n">star</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-            <span class="k">break</span>
-    <span class="k">return</span> <span class="n">star</span>
-</pre></div>
+<p>So, first thing here is to figure out the induction hypothesis of Dijkstra algorhtm.</p>
+
+<blockquote>
+<p>Induction Hypothesis:<br>
+Given a graph and a vertex v, we know the k vertices that are closest to v and the lengths of the shortest path to them.
+(Introduction to Algorithm, Udi Manber)</p>
+</blockquote>
+
+<p>To make it easier, assume that we have a connected graph with <code>n</code> vertices, and the starting point is <code>p</code>. At the same time, we have already know the the shortest path from the starting point <code>p</code> to any other points in the graph.</p>
+
+<p>Accroding to the induction hypothesis, if we find out how to expand the graph <code>g</code> we already have correctly, we can solve the problem. The method to expand the graph in Dijkstra algorithm is to find a vertex which has the shortest distance to any vertex in the graph <code>g</code>, make it a new graph with size <code>n + 1</code> and we mark it as <code>g&#39;</code>.</p>
+
+<p>As a result, we have to focus on the expanding process. If this process break the induction hypothesis, it leads to the incorrectness of the algorithm.</p>
+
+<p>Let&#39;s review the expanding process. When adding a new vertex to the graph, we have to make sure that the shortest distance for every vertex in graph <code>g</code> remains the same. Otherwise, it break the hypothesis that &ldquo;we know the shortest path from <code>p</code> to any other vertex in <code>g</code>&rdquo;.</p>
+
+<p>The conclusion is, if the newly added negative weighted edge doesn&#39;t interfere with the correctness of the shortest path in the origin graph, it&#39;s still OK. Otherwise, we should choose another algorithm, e.g. Bellman-ford, SPFA, etc.</p>
+
+<p><img src="http://wizmann-pic.qiniudn.com/17-2-19/64105144-file_1487487621586_6d5a.png" alt=""></p>
+
+<p><img src="http://wizmann-pic.qiniudn.com/17-2-19/77276054-file_1487487604753_e855.png" alt=""></p>
+
+<p><img src="http://wizmann-pic.qiniudn.com/17-2-19/98544718-file_1487487681018_13bb.png" alt=""></p>
 
 
 </div>
@@ -156,7 +163,7 @@ Find the Star - IntGraph
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2017-02-19 15:06:20 CST.</p>
+                <p>This page is generated at 2017-02-19 15:06:22 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

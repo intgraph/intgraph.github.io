@@ -150,14 +150,14 @@ abxxx</code></pre>
 <li>If length of string B is a character longer than A, it&#39;s the same scenario as the previous one.</li>
 <li>Otherwise, string A and string B has no &ldquo;one-or-zero edit distance&rdquo;.</li>
 </ol>
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">deal_len_delta_0</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">deal_len_delta_0</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
         <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)):</span>
                 <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">else</span> <span class="mi">0</span>
         <span class="k">return</span> <span class="n">cnt</span> <span class="o">&lt;=</span> <span class="mi">1</span>
 
 <span class="k">def</span> <span class="nf">deal_len_delta_1</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
-        <span class="c"># assert len(A) == len(B) + 1</span>
+        <span class="c1"># assert len(A) == len(B) + 1</span>
         <span class="n">pa</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">pb</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
@@ -179,21 +179,21 @@ abxxx</code></pre>
         <span class="n">lenB</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">lenA</span> <span class="o">==</span> <span class="n">lenB</span><span class="p">:</span>
-                <span class="k">print</span> <span class="s">&#39;YES&#39;</span> <span class="k">if</span> <span class="n">deal_len_delta_0</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span> <span class="k">else</span> <span class="s">&#39;NO&#39;</span>
+                <span class="k">print</span> <span class="s1">&#39;YES&#39;</span> <span class="k">if</span> <span class="n">deal_len_delta_0</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span> <span class="k">else</span> <span class="s1">&#39;NO&#39;</span>
         <span class="k">elif</span> <span class="n">lenA</span> <span class="o">==</span> <span class="n">lenB</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="k">print</span> <span class="s">&#39;YES&#39;</span> <span class="k">if</span> <span class="n">deal_len_delta_1</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span> <span class="k">else</span> <span class="s">&#39;NO&#39;</span>
+                <span class="k">print</span> <span class="s1">&#39;YES&#39;</span> <span class="k">if</span> <span class="n">deal_len_delta_1</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span> <span class="k">else</span> <span class="s1">&#39;NO&#39;</span>
         <span class="k">elif</span> <span class="n">lenB</span> <span class="o">==</span> <span class="n">lenA</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="k">print</span> <span class="s">&#39;YES&#39;</span> <span class="k">if</span> <span class="n">deal_len_delta_1</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span> <span class="k">else</span> <span class="s">&#39;NO&#39;</span>
+                <span class="k">print</span> <span class="s1">&#39;YES&#39;</span> <span class="k">if</span> <span class="n">deal_len_delta_1</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span> <span class="k">else</span> <span class="s1">&#39;NO&#39;</span>
         <span class="k">else</span><span class="p">:</span>
-                <span class="k">print</span> <span class="s">&#39;NO&#39;</span>
+                <span class="k">print</span> <span class="s1">&#39;NO&#39;</span>
 
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
-        <span class="n">solve</span><span class="p">(</span><span class="s">&#39;abcxxx&#39;</span><span class="p">,</span> <span class="s">&#39;abcxxx&#39;</span><span class="p">)</span>
-        <span class="n">solve</span><span class="p">(</span><span class="s">&#39;abcxxx&#39;</span><span class="p">,</span> <span class="s">&#39;abdxxx&#39;</span><span class="p">)</span>
-        <span class="n">solve</span><span class="p">(</span><span class="s">&#39;abxxx&#39;</span><span class="p">,</span>  <span class="s">&#39;abcxxx&#39;</span><span class="p">)</span>
-        <span class="n">solve</span><span class="p">(</span><span class="s">&#39;abcxxx&#39;</span><span class="p">,</span> <span class="s">&#39;abxxx&#39;</span><span class="p">)</span>
-        <span class="n">solve</span><span class="p">(</span><span class="s">&#39;xxx&#39;</span><span class="p">,</span>    <span class="s">&#39;yyy&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+        <span class="n">solve</span><span class="p">(</span><span class="s1">&#39;abcxxx&#39;</span><span class="p">,</span> <span class="s1">&#39;abcxxx&#39;</span><span class="p">)</span>
+        <span class="n">solve</span><span class="p">(</span><span class="s1">&#39;abcxxx&#39;</span><span class="p">,</span> <span class="s1">&#39;abdxxx&#39;</span><span class="p">)</span>
+        <span class="n">solve</span><span class="p">(</span><span class="s1">&#39;abxxx&#39;</span><span class="p">,</span>  <span class="s1">&#39;abcxxx&#39;</span><span class="p">)</span>
+        <span class="n">solve</span><span class="p">(</span><span class="s1">&#39;abcxxx&#39;</span><span class="p">,</span> <span class="s1">&#39;abxxx&#39;</span><span class="p">)</span>
+        <span class="n">solve</span><span class="p">(</span><span class="s1">&#39;xxx&#39;</span><span class="p">,</span>    <span class="s1">&#39;yyy&#39;</span><span class="p">)</span>
 </pre></div>
 
 
@@ -222,7 +222,7 @@ abxxx</code></pre>
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2015-10-28 01:48:37 CST.</p>
+                <p>This page is generated at 2017-02-19 15:06:23 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

@@ -144,14 +144,14 @@ json_value: json_scalar
 <p>Here, it&#39;s easy for us to find out that a json structure is definitely a tree. We have to design a type hierarchy to represent that tree, and find out a way of traversal.</p>
 
 <p>First of all, a pure virtual class as the superclass is essential. Because we can use a pointer of superclass for every subclass of different type.</p>
-<div class="highlight"><pre><span class="k">class</span> <span class="nc">JsonObject</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">JsonObject</span> <span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
     <span class="k">virtual</span> <span class="n">string</span> <span class="n">str</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">};</span>
 </pre></div>
 
 <p>And then, scalar type and string type are easy to deal with.</p>
-<div class="highlight"><pre><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
 <span class="k">class</span> <span class="nc">JsonScalar</span><span class="o">:</span> <span class="k">public</span> <span class="n">JsonObject</span> <span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
     <span class="n">JsonScalar</span><span class="p">(</span><span class="n">T</span> <span class="n">value</span><span class="p">)</span><span class="o">:</span> <span class="n">_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="p">{}</span>
@@ -174,7 +174,7 @@ json_value: json_scalar
 </pre></div>
 
 <p>And then an array type, which contain a vector of <code>JsonObject*</code> to store the data of simple type or nested json structure.</p>
-<div class="highlight"><pre><span class="k">class</span> <span class="nc">JsonArray</span><span class="o">:</span> <span class="k">public</span> <span class="n">JsonObject</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">JsonArray</span><span class="o">:</span> <span class="k">public</span> <span class="n">JsonObject</span> <span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
     <span class="n">JsonArray</span><span class="p">()</span> <span class="p">{}</span>
     <span class="n">JsonArray</span><span class="p">(</span><span class="k">const</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">JsonObject</span><span class="o">*&gt;</span> <span class="n">vec</span><span class="p">)</span><span class="o">:</span> <span class="n">_vec</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="p">{}</span>
@@ -200,7 +200,7 @@ json_value: json_scalar
 </pre></div>
 
 <p>And here comes the most important one, the dict class. And it&#39;s quite similar with the array type. Of course, it&#39;s actually the same.</p>
-<div class="highlight"><pre><span class="k">class</span> <span class="nc">JsonDict</span><span class="o">:</span> <span class="k">public</span> <span class="n">JsonObject</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">JsonDict</span><span class="o">:</span> <span class="k">public</span> <span class="n">JsonObject</span> <span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
     <span class="n">JsonDict</span><span class="p">()</span> <span class="p">{}</span>
     <span class="n">JsonDict</span><span class="p">(</span><span class="k">const</span> <span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="n">JsonObject</span><span class="o">*&gt;</span> <span class="n">mp</span><span class="p">)</span><span class="o">:</span> <span class="n">_mp</span><span class="p">(</span><span class="n">mp</span><span class="p">)</span> <span class="p">{}</span>
@@ -231,11 +231,11 @@ json_value: json_scalar
 </pre></div>
 
 <p>At the very last, we use a <code>typedef</code> to implement to root node of the json structure.</p>
-<div class="highlight"><pre><span class="k">typedef</span> <span class="n">JsonDict</span> <span class="n">Json</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="n">JsonDict</span> <span class="n">Json</span><span class="p">;</span>
 </pre></div>
 
 <p>In our main function, we can add everything into a json structure, and print it out to console as a legal json string.</p>
-<div class="highlight"><pre><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="c1">// if you want something more insane, you can deal with</span>
     <span class="c1">// the whole thing with tons of brackets. Thanks to C++11.</span>
     <span class="c1">// LOL</span>
@@ -290,7 +290,7 @@ json_value: json_scalar
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2015-10-28 01:48:39 CST.</p>
+                <p>This page is generated at 2017-02-19 15:06:26 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

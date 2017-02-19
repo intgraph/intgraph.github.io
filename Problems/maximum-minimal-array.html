@@ -126,7 +126,7 @@ maximum minimal array - IntGraph
 <p>It&#39;s because if you ever find a faster algorithm, you can optimize the sort algorithm, and this will change the world. (Wow~)</p>
 
 <p>The solution of the problem is like this. And we can do it in place if we like.</p>
-<div class="highlight"><pre><span class="c1">// not tested</span>
+<div class="highlight"><pre><span></span><span class="c1">// not tested</span>
 <span class="kt">void</span> <span class="nf">solve</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">A</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">set</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">st</span><span class="p">;</span>
     <span class="kt">size_t</span> <span class="n">n</span> <span class="o">=</span> <span class="n">A</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
@@ -152,7 +152,7 @@ maximum minimal array - IntGraph
 <p>So the formula is like this: <code>B[i] = max(reverse(u), B[i - 1])</code>. And <code>reverse()</code> here stands for <code>reverse(u) = min(i | A[i] == u)</code>.</p>
 
 <p>However, by now, I can&#39;t find a in place algorithm for this problem. But the code below is good enough for this puzzle.</p>
-<div class="highlight"><pre><span class="c1">// this code is written by @Roba</span>
+<div class="highlight"><pre><span></span><span class="c1">// this code is written by @Roba</span>
 <span class="kt">void</span> <span class="nf">solve</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">A</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">B</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">memset</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
     <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
@@ -195,7 +195,7 @@ maximum minimal array - IntGraph
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2015-10-28 01:48:35 CST.</p>
+                <p>This page is generated at 2017-02-19 15:06:22 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

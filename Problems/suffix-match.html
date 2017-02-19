@@ -125,7 +125,7 @@ banana</code></pre>
 <p>Accroding to &ldquo;suffix match&rdquo;, it&#39;s not hard to associate the &ldquo;prefix match&rdquo;. And &ldquo;prefix match&rdquo; is the basic concept of the <strong>KMP algorithm</strong>. If we can get the &ldquo;prefix match&rdquo; of a string, the &ldquo;suffix match&rdquo; is the &ldquo;prefix match&rdquo; of the reversed string.</p>
 
 <p>The algorith for KMP is like here below. The prefix match of the position <code>i</code> is <code>str[i - next[i]:i]</code>.</p>
-<div class="highlight"><pre><span class="kt">void</span> <span class="nf">get_next</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">needle</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">get_next</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">needle</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">next</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
     <span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="n">needle</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
     <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
@@ -145,7 +145,7 @@ banana</code></pre>
 <p>For example, the <code>next</code> array of the word <code>banana</code> is: <code>[-1, 0, 0, 0, 0, 0, 0]</code>, because there is no prefix match. And for the word <code>ananab</code>, the reversed of <code>banana</code>, the <code>next</code> array is <code>[-1, 0, 0, 1, 2, 3, 0]</code>.</p>
 
 <p>And we can get all the prefix match like this:</p>
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">get_prefix_match</span><span class="p">(</span><span class="n">S</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_prefix_match</span><span class="p">(</span><span class="n">S</span><span class="p">):</span>
     <span class="n">nexts</span> <span class="o">=</span> <span class="n">get_next</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
     <span class="k">print</span> <span class="n">S</span>
     <span class="k">print</span> <span class="n">nexts</span>
@@ -153,11 +153,11 @@ banana</code></pre>
         <span class="k">if</span> <span class="n">u</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">continue</span>
         <span class="n">v</span> <span class="o">=</span> <span class="n">u</span>
-        <span class="k">print</span> <span class="s">&#39;&gt;&gt;&#39;</span><span class="p">,</span> <span class="n">S</span><span class="p">[:</span><span class="n">u</span><span class="p">],</span> <span class="s">&quot;</span><span class="se">\t</span><span class="s">[0...</span><span class="si">%d</span><span class="s">]&quot;</span> <span class="o">%</span> <span class="n">u</span><span class="p">,</span> <span class="n">S</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">u</span><span class="p">:</span> <span class="n">i</span><span class="p">],</span> <span class="s">&quot;</span><span class="se">\t</span><span class="s">[</span><span class="si">%d</span><span class="s">...</span><span class="si">%d</span><span class="s">]&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">u</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s1">&#39;&gt;&gt;&#39;</span><span class="p">,</span> <span class="n">S</span><span class="p">[:</span><span class="n">u</span><span class="p">],</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">[0...</span><span class="si">%d</span><span class="s2">]&quot;</span> <span class="o">%</span> <span class="n">u</span><span class="p">,</span> <span class="n">S</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">u</span><span class="p">:</span> <span class="n">i</span><span class="p">],</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">[</span><span class="si">%d</span><span class="s2">...</span><span class="si">%d</span><span class="s2">]&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">u</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
 </pre></div>
 
 <p>And the suffix match is the prefix match of the reversed string.</p>
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">get_next</span><span class="p">(</span><span class="n">needle</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_next</span><span class="p">(</span><span class="n">needle</span><span class="p">):</span>
     <span class="n">l</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">needle</span><span class="p">)</span>
     <span class="n">nexts</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
     <span class="n">nexts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
@@ -179,13 +179,13 @@ banana</code></pre>
         <span class="k">if</span> <span class="n">u</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">continue</span>
         <span class="n">v</span> <span class="o">=</span> <span class="n">u</span>
-        <span class="k">print</span> <span class="s">&#39;&gt;&gt;&#39;</span><span class="p">,</span> <span class="n">S</span><span class="p">[:</span><span class="n">u</span><span class="p">],</span> <span class="s">&quot;</span><span class="se">\t</span><span class="s">[0...</span><span class="si">%d</span><span class="s">]&quot;</span> <span class="o">%</span> <span class="n">u</span><span class="p">,</span> <span class="n">S</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">u</span><span class="p">:</span> <span class="n">i</span><span class="p">],</span> <span class="s">&quot;</span><span class="se">\t</span><span class="s">[</span><span class="si">%d</span><span class="s">...</span><span class="si">%d</span><span class="s">]&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">u</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s1">&#39;&gt;&gt;&#39;</span><span class="p">,</span> <span class="n">S</span><span class="p">[:</span><span class="n">u</span><span class="p">],</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">[0...</span><span class="si">%d</span><span class="s2">]&quot;</span> <span class="o">%</span> <span class="n">u</span><span class="p">,</span> <span class="n">S</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">u</span><span class="p">:</span> <span class="n">i</span><span class="p">],</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">[</span><span class="si">%d</span><span class="s2">...</span><span class="si">%d</span><span class="s2">]&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">u</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">get_suffix_match</span><span class="p">(</span><span class="n">S</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">get_prefix_match</span><span class="p">(</span><span class="n">S</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">get_suffix_match</span><span class="p">(</span><span class="s">&#39;banana&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">get_suffix_match</span><span class="p">(</span><span class="s1">&#39;banana&#39;</span><span class="p">)</span>
 </pre></div>
 
 <p>And the result is like this:</p>
@@ -223,7 +223,7 @@ ananab
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2015-10-28 01:48:38 CST.</p>
+                <p>This page is generated at 2017-02-19 15:06:24 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

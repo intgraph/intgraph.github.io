@@ -116,7 +116,7 @@ Random with 0/1 - IntGraph
 <p>This is a traditional problem of random number. And it&#39;s not hard to come up with the way to solve it.</p>
 
 <p>For example, <code>rand4()</code>:</p>
-<div class="highlight"><pre><span class="kt">uint32_t</span> <span class="nf">rand4</span><span class="p">()</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="kt">uint32_t</span> <span class="nf">rand4</span><span class="p">()</span> <span class="p">{</span>
     <span class="kt">uint32_t</span> <span class="n">a</span> <span class="o">=</span> <span class="n">rand2</span><span class="p">();</span>
     <span class="kt">uint32_t</span> <span class="n">b</span> <span class="o">=</span> <span class="n">rand2</span><span class="p">();</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="n">b</span><span class="p">;</span>
@@ -124,7 +124,7 @@ Random with 0/1 - IntGraph
 </pre></div>
 
 <p><code>rand5()</code> actually is <code>rand8()</code>:</p>
-<div class="highlight"><pre><span class="kt">uint32_t</span> <span class="nf">rand5</span><span class="p">()</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="kt">uint32_t</span> <span class="nf">rand5</span><span class="p">()</span> <span class="p">{</span>
     <span class="kt">uint32_t</span> <span class="n">u</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
     <span class="k">do</span> <span class="p">{</span>
         <span class="n">u</span> <span class="o">=</span> <span class="n">rand8</span><span class="p">();</span>
@@ -143,7 +143,7 @@ Random with 0/1 - IntGraph
 <p>And, how about <code>rand(N)</code>?</p>
 
 <p>First of all, the number N should be rounded to the nearest <code>$2^t$</code>. And then, we use a loop the generate a number with is less than N.</p>
-<div class="highlight"><pre><span class="kt">uint32_t</span> <span class="nf">randN</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="kt">uint32_t</span> <span class="nf">randN</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
     <span class="kt">uint32_t</span> <span class="n">u</span> <span class="o">=</span> <span class="n">clp2</span><span class="p">(</span><span class="n">n</span><span class="p">);</span> <span class="c1">// round n to the nearest 2^t</span>
     <span class="k">while</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
         <span class="kt">uint32_t</span> <span class="n">v</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
@@ -158,7 +158,7 @@ Random with 0/1 - IntGraph
 </pre></div>
 
 <p>Now, our problem is function <code>clp2()</code>. Of course, we have multiple ways to implement it. But here is the coolest one.</p>
-<div class="highlight"><pre><span class="kt">uint32_t</span> <span class="nf">clp2</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight"><pre><span></span><span class="kt">uint32_t</span> <span class="nf">clp2</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
     <span class="n">x</span> <span class="o">|=</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">);</span>
     <span class="n">x</span> <span class="o">|=</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">);</span>
@@ -195,7 +195,7 @@ Random with 0/1 - IntGraph
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2015-10-28 01:48:37 CST.</p>
+                <p>This page is generated at 2017-02-19 15:06:23 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

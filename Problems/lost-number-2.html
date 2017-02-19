@@ -122,10 +122,10 @@ lost number - 2 - IntGraph
 <p>As a result, if the number of <code>0</code> and <code>1</code> of the right most bit of array A is not match the number in array B. We can easily find out the right most bit of the missing number.</p>
 
 <p>Then we use the same method to find out every bit of the missing number. At last, we can definitely get the right answer.</p>
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">random</span>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">import</span> <span class="nn">copy</span>
 
-<span class="k">def</span> <span class="nf">solve_1</span><span class="p">(</span><span class="n">ns</span><span class="p">):</span> <span class="c"># &lt;= this is for test</span>
+<span class="k">def</span> <span class="nf">solve_1</span><span class="p">(</span><span class="n">ns</span><span class="p">):</span> <span class="c1"># &lt;= this is for test</span>
     <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
         <span class="k">while</span> <span class="n">ns</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">i</span><span class="p">:</span>
@@ -141,7 +141,7 @@ lost number - 2 - IntGraph
             <span class="k">return</span> <span class="n">i</span>
     <span class="k">return</span> <span class="bp">None</span>
 
-<span class="k">def</span> <span class="nf">solve_2</span><span class="p">(</span><span class="n">ns</span><span class="p">):</span> <span class="c"># &lt;= the solution for this problem</span>
+<span class="k">def</span> <span class="nf">solve_2</span><span class="p">(</span><span class="n">ns</span><span class="p">):</span> <span class="c1"># &lt;= the solution for this problem</span>
     <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
     <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">32</span><span class="p">):</span>
@@ -166,7 +166,7 @@ lost number - 2 - IntGraph
     <span class="n">n</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
     <span class="n">ns</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
     <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span>
-    <span class="n">ns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">n</span> <span class="c"># &lt;= replace the &quot;missing number&quot; with n</span>
+    <span class="n">ns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">n</span> <span class="c1"># &lt;= replace the &quot;missing number&quot; with n</span>
     <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span>
 
     <span class="n">ns1</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span>
@@ -207,7 +207,7 @@ lost number - 2 - IntGraph
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2015-10-28 01:48:35 CST.</p>
+                <p>This page is generated at 2017-02-19 15:06:21 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

@@ -8,7 +8,7 @@
         <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/font-awesome.min.css"/>
         <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/pygments.css"/>
         <title>
-Find the Star - IntGraph
+6 Pirates - IntGraph
 </title>
         
         
@@ -47,14 +47,14 @@ Find the Star - IntGraph
         <div class="container">
             
 
-<h1> Find the Star </h1>
+<h1> 6 Pirates </h1>
 
 <div class="panel">
     <div class="panel-body">
         <footer class="post-info">
             <span class="label label-default">Date</span>
             <span class="published">
-                <i class="icon-calendar"></i>2014-10-30 09:34:15
+                <i class="icon-calendar"></i>2017-08-19 15:43:13
             </span>
             <p></p>
             
@@ -66,15 +66,13 @@ Find the Star - IntGraph
             
                 <span class="label label-primary ">categories</span>
                 
-                <span> mathmatical induction  / </span>
-                
-                <span> graph   </span>
+                <span> mathmatical induction   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
                 <span class="label label-primary ">source</span>
                 
-                <span> Algorithms: A Creative Approach   </span>
+                <span> The Algorithm Design Manual   </span>
                 
                 <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
             
@@ -92,11 +90,22 @@ Find the Star - IntGraph
 <div>
 
 
-<p>A party is being held in a backyard. And among the crowd, there is a star which is well-known that everyone who participates this party knows him. But, as a star, he must keep &ldquo;高冷&rdquo;, that is, he doesn&#39;t know anyone in this party.</p>
+<p>6 pirates must divide 300 gold coins among themselves. The division is to proceed as follows:</p>
 
-<p>Your mission is to find the star from the crowd. Since you don&#39;t have any idea about the relationiship among the crowd, you have to make a query like this: &ldquo;Do you know that crazy person?&rdquo;</p>
+<ol>
+<li>Mark the pirates as No.1 to No.6</li>
+<li>The pirate who has the maximal number process the way to divide the coins</li>
+<li>Then all pirates vote.</li>
+<li>If the pirate get at least half votes, he survives and the division remains.</li>
+<li>Otherwise, he is killed.</li>
+<li>The pirates repeats step 2 to step 4 until a division is accepted.</li>
+</ol>
 
-<p>What is the fast way to find out the star? Or determine that there is not a real star among the crowd.</p>
+<p>If all pirates are intelligent and the first priority is to stay alive and get as much as money as possible, what will happen during that process?</p>
+
+<blockquote>
+<p>Source: The Algorithm Design Manual, Cpt2, Exercise 2-51</p>
+</blockquote>
 
 
 </div>
@@ -113,22 +122,30 @@ Find the Star - IntGraph
 <div class="hide" id="class_Solution">
 
 
-<p>As described above, everyone in the party knows the star, and the star doesn&#39;t know anyone. As a result, if A knows B, A can&#39;t be the star. And if A doesn&#39;t know B, B can&#39;t be the star.</p>
+<p>The problem is twisted at the very first attempt if you start with 6 pirates situation. Because the rest 5 pirates who vote can either accept the division or sentence the No.1 pirates to death to get more coins.</p>
 
-<p>So, we can exclude one person from the &ldquo;star list&rdquo; by a single query. The time complexity is no doubt O(n).</p>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find_the_star</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-    <span class="n">star</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">do_know</span><span class="p">(</span><span class="n">star</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
-            <span class="n">star</span> <span class="o">=</span> <span class="n">i</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">star</span> <span class="o">!=</span> <span class="n">i</span> <span class="ow">and</span> \
-                <span class="n">do_know</span><span class="p">(</span><span class="n">star</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="ow">or</span> \
-                <span class="ow">not</span> <span class="n">do_know</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">star</span><span class="p">):</span>
-            <span class="n">star</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-            <span class="k">break</span>
-    <span class="k">return</span> <span class="n">star</span>
-</pre></div>
+<p>But we can start from a simplified situation. What if there&#39;re only 2 pirates?</p>
+
+<p>It&#39;s quite easy to understand that the No.1 pirate will get all while the No.2 pirate will get nothing. Because No.1 pirate will definitely win the vote which of course is in the best interest for himself.</p>
+
+<p>And for 3 pirates situation, the No.3 pirate who has the smallest number knows that if No.1 pirate is killed, he will get nothing. So if No.1 what survive, he should satisfy No.3 with &hellip; ONE coin, at least it&#39;s better than nothing, right? As a result, at that vote, No.1 pirate get 299 coins and No.3 pirates get 1 coin, and both of them will fully support that division.</p>
+
+<p>So we can get the answer step by step as we know that a pirate will support a division if he can get more.</p>
+
+<p><img src="http://wizmann-pic.qiniudn.com/17-8-19/78418745.jpg" alt=""></p>
+
+<p>From the that table, we can make a conclusion that the pirate can make at most <code>300 - (n - 1) / 2</code> coins, and here is the way we can prove it.</p>
+
+<ol>
+<li><p>Induction hypothesis:    </p>
+
+<blockquote>
+<p>For a situation of <code>n</code> pirates, there will be <code>(n - 1) / 2</code> pirates get <strong>one single coin</strong>, and pirate with the largest number will get all the rest. And the division will be passed because there will be at least half pirates vote for it.</p>
+</blockquote></li>
+<li><p>From the table below, we know for the initial several cases the hypothesis is true.</p></li>
+<li><p>Suppose the situation of <code>n</code> pirates is true, there is <code>(n + 1) / 2</code> pirates get no money at all. So in the <code>n + 1</code> pirates situation, firstly we will give the <code>(n + 1) / 2</code> pirates one single coin to make them vote for the division, and the pirate with the largest number, the pirate <code>n + 1</code>, get all the rest of the coins. And it&#39;s easy to prove that <code>(n + 1) / 2 + 1 &gt;= n / 2</code>.</p></li>
+<li><p>Our hypothesis is well proved.</p></li>
+</ol>
 
 
 </div>
@@ -156,7 +173,7 @@ Find the Star - IntGraph
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2017-08-19 16:02:07 CST.</p>
+                <p>This page is generated at 2017-08-19 16:02:06 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

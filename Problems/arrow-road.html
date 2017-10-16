@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/jquery.min.js"></script>
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/font-awesome.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/pygments.css"/>
+        <title>
+Arrow road - IntGraph
+</title>
+        
+        
+    </head>
+    <body ng-app="IgApp">
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/index.html">IntGraph</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    
+                    <li>
+                        <a href="/index.html">Problems</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/System Design.html">System Design</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Object Orinted Design.html">Object Orinted Design</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Contribute.html">Contribute</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/About.html">About</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            
+
+<h1> Arrow road </h1>
+
+<div class="panel">
+    <div class="panel-body">
+        <footer class="post-info">
+            <span class="label label-default">Date</span>
+            <span class="published">
+                <i class="icon-calendar"></i>2017-10-17 00:36:19
+            </span>
+            <p></p>
+            
+                <span class="label label-primary ">difficulty</span>
+                
+                <span> 4   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">categories</span>
+                
+                <span> array  / </span>
+                
+                <span> binary search   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">source</span>
+                
+                <span> Unknown   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+        </footer>
+    </div>
+</div>
+
+
+
+
+<h2>Description</h2>
+
+
+
+<div>
+
+
+<p>Given a road with n grids. Each grid has an arrow in it, pointing to left or right. </p>
+
+<p>When you step on a grid with an arrow, the arrow will disappeard. And at the same time, you will move by the direction of the arrow, until you step on another arrow or you move out of the road.</p>
+
+<p><img src="http://wizmann-pic.qiniudn.com/17-10-16/88926922.jpg" alt=""></p>
+
+<p>You can start from arbitrary grid, and here we want to know the maximum grids you can step on during the whole process until you move out of the road.</p>
+
+<pre><code>Input1     
+&lt;&lt;&gt;&gt;&gt;&lt;&lt;     
+Output1     
+7
+
+Input2
+&gt;&gt;&lt;&gt;&lt;&lt;&lt;
+Output2
+7</code></pre>
+
+
+</div>
+
+
+<h2>Solution</h2>
+
+
+
+<p>
+    <button type="button" class="btn btn-danger btn-lg showbtn" bind="class_Solution">Click to show</button>
+</p>
+
+<div class="hide" id="class_Solution">
+
+
+<p>First problem of this problem is the given sample is too complicated to understand. Here is some simple ones:</p>
+<div class="highlight"><pre><span></span><span class="n">assert</span><span class="p">(</span><span class="n">solve</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;&lt;&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">);</span>
+<span class="n">assert</span><span class="p">(</span><span class="n">solve</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;&gt;&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">);</span>
+<span class="n">assert</span><span class="p">(</span><span class="n">solve</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&quot;&gt;&lt;&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">);</span>
+<span class="n">assert</span><span class="p">(</span><span class="n">solve</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">&quot;&gt;&lt;&lt;&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">);</span>
+<span class="n">assert</span><span class="p">(</span><span class="n">solve</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s">&quot;&gt;&gt;&lt;&lt;&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">);</span>
+<span class="n">assert</span><span class="p">(</span><span class="n">solve</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s">&quot;&gt;&lt;&gt;&lt;&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">);</span>
+</pre></div>
+
+<p>From the examples, we can find out that the total steps on the road depends on:</p>
+
+<ul>
+<li>the direction of the initial grid</li>
+<li>the number of &ldquo;right arrow&rdquo;(&gt;) on the left of the initial grid </li>
+<li>the number of &ldquo;left arrow&rdquo;(&lt;) on the right of the initial grid</li>
+</ul>
+
+<p>For example, if we start from the second grid of the road <code>&gt;&gt;&lt;&lt;</code>, we can step on every grid of that road because the number of the left arrows and right arrows are the same. </p>
+
+<p>And for the road <code>&gt;&gt;&gt;&lt;&lt;</code>, we can also walk through all the grid when we start from the second or the third grid. The difference between the two choices is the final direction after walking through all the grids. So, for the road <code>&lt;&lt;&gt;&gt;&gt;&lt;&lt;</code>, we will take the fourth gird, and for the road <code>&gt;&gt;&gt;&lt;&lt;&gt;&gt;</code>, we will take the third.</p>
+
+<p>According to the discussion above, we know we can predict the final status by counting the number of arrows on the left and right side of the initial position.</p>
+
+<ul>
+<li>If the grid we choose is &#39;&gt;&#39;
+
+<ul>
+<li>if number of &ldquo;&gt;&rdquo; on the left (mark as <code>l</code>) is greater than the number of &ldquo;&lt;&rdquo; on the right (mark as <code>r</code>)
+
+<ul>
+<li>the final direction after the moving is to the left (of course)</li>
+<li>we will step on at most <code>min(l, r)</code> right arrows on the left side of the initial grid</li>
+<li>and another right arrow on the initial grid</li>
+<li>we will step on at most <code>min(l, r) + 1</code> left arrows on the right side of the initial grid</li>
+</ul></li>
+<li>otherwise
+
+<ul>
+<li>the final direction after the moving is to the right</li>
+<li>we will step on at mose <code>min(l, r)</code> right arrows on the left side</li>
+<li>and another right arrow on the initial grid</li>
+<li>we will step on at most <code>min(l, r) + 1</code> left arrows on the right side</li>
+</ul></li>
+</ul></li>
+<li>If the gird we choose is &#39;&lt;&#39;, it&#39;s obviously symmetrical to the previous condition
+
+<ul>
+<li>and we will skip that</li>
+</ul></li>
+</ul>
+
+<p>In addition, if there is no enough arrows on the left or right, we will take the boundaries (the position <code>0</code> and <code>n - 1</code>) as the final position.</p>
+
+<p>By the prefix sum algorithm, we can get the number of the arrows (both left and right) with <code>O(n)</code> preprocessing and <code>O(1)</code> for each query. And using binary search algorithm to find the specific position with specific number of arrows.</p>
+
+<p>The code will be like this:</p>
+<div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;cstdio&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;cstring&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;cmath&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;cassert&gt;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="cp">#define print(x) cout &lt;&lt; x &lt;&lt; endl</span>
+<span class="cp">#define input(x) cin &gt;&gt; x</span>
+
+<span class="kt">int</span> <span class="nf">solve</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span>    
+    <span class="c1">// begin preprocessing</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">left</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">right</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">left</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">?</span> <span class="n">left</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span><span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">left</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;&gt;&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">right</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">n</span><span class="o">?</span> <span class="n">right</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">right</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;&lt;&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c1">// end preprocessing</span>
+
+    <span class="kt">int</span> <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">l</span> <span class="o">=</span> <span class="n">left</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="n">right</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="kt">int</span> <span class="n">ld</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">rd</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+
+        <span class="c1">// begin calculation the number of arrows</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;&gt;&#39;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">l</span> <span class="o">&gt;</span> <span class="n">r</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">ld</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+                <span class="n">rd</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="n">ld</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+                <span class="n">rd</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">r</span> <span class="o">&gt;</span> <span class="n">l</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">rd</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+                <span class="n">ld</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="n">ld</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">);</span>
+                <span class="n">rd</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="c1">// end calculation the number of arrows</span>
+
+        <span class="c1">// begin get the leftmost and right most position</span>
+        <span class="kt">int</span> <span class="n">lp</span> <span class="o">=</span> <span class="n">lower_bound</span><span class="p">(</span>
+            <span class="n">left</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> 
+            <span class="n">left</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> 
+            <span class="n">l</span> <span class="o">-</span> <span class="n">ld</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">left</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+        <span class="kt">int</span> <span class="n">rp</span> <span class="o">=</span> <span class="n">upper_bound</span><span class="p">(</span>
+            <span class="n">right</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span> <span class="o">+</span> <span class="n">i</span><span class="p">,</span> 
+            <span class="n">right</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> 
+            <span class="n">r</span> <span class="o">-</span> <span class="n">rd</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> 
+            <span class="n">greater</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">())</span> <span class="o">-</span> <span class="n">right</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="c1">// end get the leftmost and right most position</span>
+
+        <span class="n">lp</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">lp</span><span class="p">);</span>
+        <span class="n">rp</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">rp</span><span class="p">);</span>
+
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">rp</span> <span class="o">-</span> <span class="n">lp</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">ans</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// brute force method for testing</span>
+<span class="kt">int</span> <span class="nf">brute_force</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">string</span> <span class="n">ss</span> <span class="o">=</span> <span class="n">s</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">p</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">p</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kt">int</span> <span class="n">dir</span> <span class="o">=</span> <span class="n">ss</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;&gt;&#39;</span><span class="o">?</span> <span class="mi">1</span><span class="o">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+            <span class="n">ss</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;x&#39;</span><span class="p">;</span>
+            <span class="n">cnt</span><span class="o">++</span><span class="p">;</span>
+            <span class="k">while</span> <span class="p">(</span><span class="n">p</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="o">&amp;&amp;</span> <span class="n">ss</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;x&#39;</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">p</span> <span class="o">+=</span> <span class="n">dir</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">max</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">cnt</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">ans</span><span class="p">;</span>    
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">n</span><span class="p">;</span>
+    <span class="n">string</span> <span class="n">s</span><span class="p">;</span>
+
+    <span class="n">assert</span><span class="p">(</span><span class="n">solve</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s">&quot;&lt;&gt;&lt;&lt;&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">solve</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s">&quot;&lt;&gt;&lt;&gt;&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">solve</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s">&quot;&gt;&lt;&lt;&gt;&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">);</span>
+
+    <span class="n">assert</span><span class="p">(</span><span class="n">solve</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;&lt;&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">solve</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;&gt;&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">solve</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&quot;&gt;&lt;&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">solve</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">&quot;&gt;&lt;&lt;&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">solve</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s">&quot;&gt;&gt;&lt;&lt;&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">solve</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s">&quot;&gt;&lt;&gt;&lt;&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">);</span>
+
+    <span class="n">assert</span><span class="p">(</span><span class="n">solve</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s">&quot;&lt;&lt;&lt;&lt;&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">solve</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s">&quot;&gt;&gt;&gt;&lt;&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">solve</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="s">&quot;&gt;&gt;&gt;&gt;&gt;&lt;&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">6</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">solve</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="s">&quot;&lt;&lt;&gt;&lt;&lt;&gt;&gt;&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">solve</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">&quot;&lt;&gt;&gt;&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">solve</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&quot;&lt;&gt;&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">solve</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s">&quot;&lt;&lt;&gt;&gt;&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">solve</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s">&quot;&lt;&lt;&gt;&gt;&gt;&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">solve</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="s">&quot;&lt;&lt;&gt;&gt;&gt;&lt;&lt;&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">7</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">solve</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="s">&quot;&gt;&gt;&lt;&gt;&lt;&lt;&lt;&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">7</span><span class="p">);</span>
+
+
+    <span class="k">const</span> <span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">N</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">string</span> <span class="n">s</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">j</span><span class="p">))</span> <span class="p">{</span>
+                <span class="n">s</span> <span class="o">+=</span> <span class="sc">&#39;&gt;&#39;</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="n">s</span> <span class="o">+=</span> <span class="sc">&#39;&lt;&#39;</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">assert</span><span class="p">(</span><span class="n">solve</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="n">s</span><span class="p">)</span> <span class="o">==</span> <span class="n">brute_force</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="n">s</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="n">print</span><span class="p">(</span><span class="s">&quot;done&quot;</span><span class="p">);</span>
+
+    <span class="n">input</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+    <span class="n">input</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+
+    <span class="n">print</span><span class="p">(</span><span class="n">solve</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">s</span><span class="p">));</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+</div>
+
+
+<hr/>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'intgraph';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+        </div>
+        <hr/>
+        <footer class="bs-footer" role="contentinfo">
+            <div class="container">
+                <p>Powered by IntGraph</p>
+                <p>This page is generated at 2017-10-17 00:37:12 CST.</p>
+                <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
+            </div>
+        </footer>
+
+         
+        
+<script>
+$(document).ready(function(){
+    $(".showbtn").click(function(){
+        var divname = $(this).attr("bind");
+        console.log(divname);
+        $("#" + divname).removeClass("hide");
+    });
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script>
+<script> $("div.container table").addClass("table table-bordered"); </script>
+
+
+        <style> div.container img { max-width: 100%; } </style>
+        
+    </body>
+</html>

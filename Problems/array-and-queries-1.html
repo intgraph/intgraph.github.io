@@ -114,6 +114,7 @@ Array and queries - 1 - IntGraph
 <h3>Sample Input/Output</h3>
 
 <pre><code>Sample Input
+2
 3
 1 2 3
 5
@@ -169,7 +170,9 @@ Sample Output
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">T</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">raw_input</span><span class="p">())</span>
     <span class="k">for</span> <span class="n">case_</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">raw_input</span><span class="p">())</span>
         <span class="n">ns</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">raw_input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span> <span class="o">==</span> <span class="n">n</span>
         <span class="k">print</span> <span class="n">solve</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span>
 </pre></div>
 
@@ -199,7 +202,7 @@ Sample Output
         <footer class="bs-footer" role="contentinfo">
             <div class="container">
                 <p>Powered by IntGraph</p>
-                <p>This page is generated at 2018-01-28 19:28:54 CST.</p>
+                <p>This page is generated at 2018-01-28 20:29:31 CST.</p>
                 <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
             </div>
         </footer>

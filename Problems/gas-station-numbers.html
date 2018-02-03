@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/jquery.min.js"></script>
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/font-awesome.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/pygments.css"/>
+        <title>
+Gas Station Numbers - IntGraph
+</title>
+        
+        
+    </head>
+    <body ng-app="IgApp">
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/index.html">IntGraph</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    
+                    <li>
+                        <a href="/index.html">Problems</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/System Design.html">System Design</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Object Orinted Design.html">Object Orinted Design</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Contribute.html">Contribute</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/About.html">About</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            
+
+<h1> Gas Station Numbers </h1>
+
+<div class="panel">
+    <div class="panel-body">
+        <footer class="post-info">
+            <span class="label label-default">Date</span>
+            <span class="published">
+                <i class="icon-calendar"></i>2018-02-03 23:31:54
+            </span>
+            <p></p>
+            
+                <span class="label label-primary ">difficulty</span>
+                
+                <span> 3   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">categories</span>
+                
+                <span> implementation   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">source</span>
+                
+                <span> POJ   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+        </footer>
+    </div>
+</div>
+
+
+
+
+<h2>Description</h2>
+
+
+
+<div>
+
+
+<p>Many gas stations use plastic digits on an illuminated sign to indicate prices. When there is an insufficient quantity of a particular digit, the attendant may substitute another one upside down. 
+The digit &ldquo;6&rdquo; looks much like &ldquo;9&rdquo; upside down. The digits &ldquo;0&rdquo;, &ldquo;1&rdquo; and &ldquo;8&rdquo; look like themselves. The digit &ldquo;2&rdquo; looks a bit like a &ldquo;5&rdquo; upside down (well, at least enough so that gas stations use it). </p>
+
+<p>Due to rapidly increasing prices, a certain gas station has used all of its available digits to display the current price. Fortunately, this shortage of digits need not prevent the attendant from raising prices. She can simply rearrange the digits, possibly reversing some of them as described above. </p>
+
+<p>Your job is to compute, given the current price of gas, the <strong>next highest price</strong> that can be displayed using exactly the same digits. </p>
+
+<p>The number of the digits could be as large as 1000, and there is no leading zeros. If the price cannot be raised, print <code>The price cannot be raised.</code>.</p>
+
+<h3>Input / Output</h3>
+
+<pre><code>Sample Input
+
+652
+767
+777
+.
+
+Sample Output
+
+655
+776
+The price cannot be raised.</code></pre>
+
+<h3>Source</h3>
+
+<p><a href="http://poj.org/problem?id=2611">POJ2611 - Gas Station Numbers</a> (with modifications)</p>
+
+
+</div>
+
+
+<h2>Solution</h2>
+
+
+
+<p>
+    <button type="button" class="btn btn-danger btn-lg showbtn" bind="class_Solution">Click to show</button>
+</p>
+
+<div class="hide" id="class_Solution">
+
+
+<p>For starters, we try to simplify this problem like we always do.</p>
+
+<blockquote>
+<p>Given the number, try to find the <strong>next highest price</strong> by just reordering the digits.</p>
+</blockquote>
+
+<p>You may acquainted with this version because it&#39;s the classical &ldquo;next permutation&rdquo; problem.</p>
+
+<p>For example, we&#39;ve got the number &#39;123&#39;, the next higher price should be &#39;132&#39;. Because &#39;132&#39; is one step greater than &#39;123&#39; by the lexicographical order.</p>
+
+<p>Let&#39;s review the &ldquo;next permutation&rdquo; algorithm:</p>
+
+<ol>
+<li>find the position of a digit <code>D</code> when every number to its right is in <strong>descending order</strong></li>
+<li>find the next larger digit <code>L</code> to the right of digit <code>D</code></li>
+<li>swap <code>D</code> and <code>L</code></li>
+<li>put the numbers on the right side of <code>L</code> in ascending order</li>
+</ol>
+
+<p>Similarly, we can implement a updated version algorithm to the numbers in current problem. But there are some tricks:</p>
+
+<ol>
+<li>as we can &ldquo;flip&rdquo; the numbers, so we have to take it into consideration when we are trying to find the &ldquo;larger digit&rdquo;</li>
+<li>before we put the remain numbers on the right side in ascending order, we have to flip some numbers to make it as small as possible</li>
+</ol>
+
+<p>Here is the code:</p>
+<div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;cstdio&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;cstdlib&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;cstring&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;functional&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;numeric&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;set&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;map&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;cassert&gt;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="cp">#define print(x) cout &lt;&lt; x &lt;&lt; endl</span>
+<span class="cp">#define input(x) cin &gt;&gt; x</span>
+
+<span class="k">const</span> <span class="kt">int</span> <span class="n">INF</span> <span class="o">=</span> <span class="mh">0x3f3f3f3f</span><span class="p">;</span>
+
+<span class="n">map</span><span class="o">&lt;</span><span class="kt">char</span><span class="p">,</span> <span class="kt">char</span><span class="o">&gt;</span> <span class="n">gm</span><span class="p">;</span>
+<span class="n">map</span><span class="o">&lt;</span><span class="kt">char</span><span class="p">,</span> <span class="kt">char</span><span class="o">&gt;</span> <span class="n">lm</span><span class="p">;</span>
+
+<span class="n">string</span> <span class="nf">solve</span><span class="p">(</span><span class="n">string</span> <span class="n">num</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">num</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">ptr</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="kt">char</span> <span class="n">mini</span> <span class="o">=</span> <span class="sc">&#39;~&#39;</span><span class="p">;</span>
+        <span class="kt">bool</span> <span class="n">flip</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kt">char</span> <span class="n">cur</span> <span class="o">=</span> <span class="n">num</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+            <span class="kt">char</span> <span class="n">fur</span> <span class="o">=</span> <span class="n">gm</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">cur</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="o">?</span> <span class="nl">cur</span><span class="p">:</span> <span class="n">gm</span><span class="p">[</span><span class="n">cur</span><span class="p">];</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="n">cur</span> <span class="o">&gt;</span> <span class="n">num</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="n">cur</span> <span class="o">&lt;</span> <span class="n">mini</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">mini</span> <span class="o">=</span> <span class="n">cur</span><span class="p">;</span>
+                <span class="n">ptr</span> <span class="o">=</span> <span class="n">j</span><span class="p">;</span>
+                <span class="n">flip</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="n">fur</span> <span class="o">&gt;</span> <span class="n">num</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="n">fur</span> <span class="o">&lt;</span> <span class="n">mini</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">mini</span> <span class="o">=</span> <span class="n">fur</span><span class="p">;</span>
+                <span class="n">ptr</span> <span class="o">=</span> <span class="n">j</span><span class="p">;</span>
+                <span class="n">flip</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">ptr</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">continue</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="n">swap</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">num</span><span class="p">[</span><span class="n">ptr</span><span class="p">]);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">flip</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">num</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">gm</span><span class="p">[</span><span class="n">num</span><span class="p">[</span><span class="n">i</span><span class="p">]];</span>
+        <span class="p">}</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">num</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">lm</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="o">?</span> <span class="n">num</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">:</span> <span class="n">lm</span><span class="p">[</span><span class="n">num</span><span class="p">[</span><span class="n">j</span><span class="p">]];</span>
+        <span class="p">}</span>
+
+        <span class="n">sort</span><span class="p">(</span><span class="n">num</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+        <span class="k">return</span> <span class="n">num</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">string</span> <span class="n">num</span><span class="p">;</span>
+
+    <span class="n">gm</span><span class="p">[</span><span class="sc">&#39;2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;5&#39;</span><span class="p">;</span>
+    <span class="n">gm</span><span class="p">[</span><span class="sc">&#39;6&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;9&#39;</span><span class="p">;</span>
+    <span class="n">gm</span><span class="p">[</span><span class="sc">&#39;5&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;2&#39;</span><span class="p">;</span>
+    <span class="n">gm</span><span class="p">[</span><span class="sc">&#39;9&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;6&#39;</span><span class="p">;</span>
+
+    <span class="n">lm</span><span class="p">[</span><span class="sc">&#39;5&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;2&#39;</span><span class="p">;</span>
+    <span class="n">lm</span><span class="p">[</span><span class="sc">&#39;9&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;6&#39;</span><span class="p">;</span>
+
+    <span class="n">assert</span><span class="p">(</span><span class="n">solve</span><span class="p">(</span><span class="s">&quot;2300&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s">&quot;3002&quot;</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">solve</span><span class="p">(</span><span class="s">&quot;199&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s">&quot;616&quot;</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">solve</span><span class="p">(</span><span class="s">&quot;12345&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s">&quot;12354&quot;</span><span class="p">);</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="n">input</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">num</span> <span class="o">!=</span> <span class="s">&quot;.&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">string</span> <span class="n">res</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">num</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
+            <span class="n">puts</span><span class="p">(</span><span class="s">&quot;The price cannot be raised.&quot;</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">print</span><span class="p">(</span><span class="n">res</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+</div>
+
+
+<hr/>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'intgraph';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+        </div>
+        <hr/>
+        <footer class="bs-footer" role="contentinfo">
+            <div class="container">
+                <p>Powered by IntGraph</p>
+                <p>This page is generated at 2018-02-03 23:32:43 CST.</p>
+                <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
+            </div>
+        </footer>
+
+         
+        
+<script>
+$(document).ready(function(){
+    $(".showbtn").click(function(){
+        var divname = $(this).attr("bind");
+        console.log(divname);
+        $("#" + divname).removeClass("hide");
+    });
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script>
+<script> $("div.container table").addClass("table table-bordered"); </script>
+
+
+        <style> div.container img { max-width: 100%; } </style>
+        
+    </body>
+</html>

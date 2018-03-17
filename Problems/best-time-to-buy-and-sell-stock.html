@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/jquery.min.js"></script>
+        <script src="http://intgraph.qiniudn.com/static/bootstrap3/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/bootstrap3/css/font-awesome.min.css"/>
+        <link rel="stylesheet" type="text/css" href="http://intgraph.qiniudn.com/static/pygments.css"/>
+        <title>
+Best Time to Buy and Sell Stock - IntGraph
+</title>
+        
+        
+    </head>
+    <body ng-app="IgApp">
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/index.html">IntGraph</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    
+                    <li>
+                        <a href="/index.html">Problems</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/System Design.html">System Design</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Object Orinted Design.html">Object Orinted Design</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/Contribute.html">Contribute</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/About.html">About</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            
+
+<h1> Best Time to Buy and Sell Stock </h1>
+
+<div class="panel">
+    <div class="panel-body">
+        <footer class="post-info">
+            <span class="label label-default">Date</span>
+            <span class="published">
+                <i class="icon-calendar"></i>2018-03-17 18:27:42
+            </span>
+            <p></p>
+            
+                <span class="label label-primary ">difficulty</span>
+                
+                <span> 2   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">categories</span>
+                
+                <span> dp   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+                <span class="label label-primary ">source</span>
+                
+                <span> Leetcode   </span>
+                
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            
+        </footer>
+    </div>
+</div>
+
+
+
+
+<h2>Description</h2>
+
+
+
+<div>
+
+
+<p>Say you have an array for which the ith element is the price of a given stock on day i.</p>
+
+<p>You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).</p>
+
+<p>Design algorithms to find the maximum profit.</p>
+
+<ol>
+<li>when you were permitted to complete at most <strong>one</strong> transaction</li>
+<li>when you were permitted to complete at most <strong>two</strong> transactions</li>
+<li>when you were permitted to complete as many transactions as you like</li>
+<li>with no limit number of transactions, you must have a &ldquo;cool down&rdquo; period for 1 days between any two transactions</li>
+<li>with no limit number of transactions, you have to pay a transaction fee for each transaction</li>
+</ol>
+
+<p>Sample</p>
+
+<pre><code>&gt; Problem1:
+
+Input: [7, 1, 5, 3, 6, 4]
+Output: 5
+
+&gt; Problem2:
+Input: [7, 1, 5, 3, 6, 4]
+Output: 7
+
+&gt; Problem3:
+Input: [7, 1, 5, 3, 6, 4, 1, 2, 10]
+Output: 16
+
+&gt; Problem4:
+Input: [1, 2, 3, 0, 2]
+Output: 3
+
+&gt; Problem5:
+Input: prices = [1, 3, 2, 8, 4, 9], fee = 2
+Output: 8</code></pre>
+
+
+</div>
+
+
+<h2>Solution</h2>
+
+
+
+<p>
+    <button type="button" class="btn btn-danger btn-lg showbtn" bind="class_Solution">Click to show</button>
+</p>
+
+<div class="hide" id="class_Solution">
+
+
+<p>Those 5 problems above is quite similar because it&#39;s all about the transactions to buy/sell stocks. But there&#39;s different rules that make them different from each other.</p>
+
+<p>But there&#39;s a common solution for all those problems. That is, we deduce all the optimal states for current day from the optimal states for previous day.</p>
+
+<p>For example, in problem 1, we maintain 3 states:</p>
+
+<ol>
+<li>the max profit if we doesn&#39;t buy any stocks (always 0)</li>
+<li>the max profit if we&#39;ve bought one stock</li>
+<li>the max profit if we finished one transaction (buy then sell)</li>
+</ol>
+
+<p>The code could be like this:</p>
+<div class="highlight"><pre><span></span><span class="n">INF</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">**</span> <span class="mi">10</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">maxProfit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prices</span><span class="p">):</span>
+        <span class="n">cur</span><span class="p">,</span> <span class="n">res</span> <span class="o">=</span> <span class="o">-</span><span class="n">INF</span><span class="p">,</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">price</span> <span class="ow">in</span> <span class="n">prices</span><span class="p">:</span>
+            <span class="n">cur</span><span class="p">,</span> <span class="n">res</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">cur</span><span class="p">,</span> <span class="o">-</span><span class="n">price</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">price</span> <span class="o">+</span> <span class="n">cur</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+
+<p>We omit the state 1 deliberately because it&#39;s always be 0. And variable <code>cur</code> is stand for state 2, variable <code>res</code> is stand for state 3. Because we can&#39;t buy any stock before the first day, we set state 2 to <code>-INF</code>, which means the state is meaningless. And if we don&#39;t make any transactions, we can make no profit rather loss money, so the state 3 is set to 0 in the beginning.</p>
+
+<p>For problem2, we have to hold 5 states:</p>
+
+<ol>
+<li>the max profit if we doesn&#39;t buy any stocks (always 0)</li>
+<li>the max profit if we&#39;ve bought one stock</li>
+<li>the max profit if we finished one transaction (buy then sell)</li>
+<li>the max profit if we&#39;ve bought another stock after one transaction</li>
+<li>the max profit if we finished two transactions (buy then sell)</li>
+</ol>
+
+<p>And the code is quite similar to problem 1:</p>
+<div class="highlight"><pre><span></span><span class="n">INF</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">**</span> <span class="mi">10</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">maxProfit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prices</span><span class="p">):</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="o">-</span><span class="n">INF</span><span class="p">,</span> <span class="o">-</span><span class="n">INF</span><span class="p">,</span> <span class="o">-</span><span class="n">INF</span><span class="p">,</span> <span class="o">-</span><span class="n">INF</span>
+
+        <span class="k">for</span> <span class="n">price</span> <span class="ow">in</span> <span class="n">prices</span><span class="p">:</span>
+            <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="o">-</span><span class="n">price</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">price</span> <span class="o">+</span> <span class="n">a</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">b</span> <span class="o">-</span> <span class="n">price</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">c</span> <span class="o">+</span> <span class="n">price</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+</pre></div>
+
+<p>For problem 3, it could be:</p>
+
+<ol>
+<li>the max profit if we have the stock in hand</li>
+<li>the max profit if we have no stock in hand (&ldquo;no buy&rdquo; or &ldquo;buy then sell&rdquo;)</li>
+</ol>
+<div class="highlight"><pre><span></span><span class="n">INF</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">**</span> <span class="mi">10</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">maxProfit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prices</span><span class="p">):</span>
+        <span class="n">p</span><span class="p">,</span> <span class="n">q</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">INF</span>
+        <span class="k">for</span> <span class="n">price</span> <span class="ow">in</span> <span class="n">prices</span><span class="p">:</span>
+            <span class="n">p</span><span class="p">,</span> <span class="n">q</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">price</span> <span class="o">+</span> <span class="n">q</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">p</span> <span class="o">-</span> <span class="n">price</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">p</span>
+</pre></div>
+
+<p>For problem 4,</p>
+
+<ol>
+<li>the max profit if we have the stock in hand</li>
+<li>the max profit if we have no stock in hand (&ldquo;no buy&rdquo; or &ldquo;buy then sell&rdquo;), and we are not in the &ldquo;cool down&rdquo; period</li>
+<li>the max profit if we have no stock in hand, and we are in the &ldquo;cool down&rdquo; period</li>
+</ol>
+<div class="highlight"><pre><span></span><span class="n">INF</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">**</span> <span class="mi">10</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">maxProfit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prices</span><span class="p">):</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">INF</span><span class="p">,</span> <span class="o">-</span><span class="n">INF</span>
+        <span class="k">for</span> <span class="n">price</span> <span class="ow">in</span> <span class="n">prices</span><span class="p">:</span>
+            <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">c</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">-</span> <span class="n">price</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">b</span> <span class="o">+</span> <span class="n">price</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+</pre></div>
+
+<p>For problem 5, it&#39;s similar to problem 3 but adding a transaction fee:</p>
+<div class="highlight"><pre><span></span><span class="n">INF</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">**</span> <span class="mi">10</span>
+
+<span class="k">class</span> <span class="nc">Solution</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">maxProfit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prices</span><span class="p">,</span> <span class="n">fee</span><span class="p">):</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">INF</span>
+        <span class="k">for</span> <span class="n">price</span> <span class="ow">in</span> <span class="n">prices</span><span class="p">:</span>
+            <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">+</span> <span class="n">price</span> <span class="o">-</span> <span class="n">fee</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">-</span> <span class="n">price</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+
+
+</div>
+
+
+<hr/>
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'intgraph';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+        </div>
+        <hr/>
+        <footer class="bs-footer" role="contentinfo">
+            <div class="container">
+                <p>Powered by IntGraph</p>
+                <p>This page is generated at 2018-03-17 18:38:13 CST.</p>
+                <p>Designed and built by <a href="http://wizmann.tk">Wizmann</a>. <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1253045810'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1253045810%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script></p>
+            </div>
+        </footer>
+
+         
+        
+<script>
+$(document).ready(function(){
+    $(".showbtn").click(function(){
+        var divname = $(this).attr("bind");
+        console.log(divname);
+        $("#" + divname).removeClass("hide");
+    });
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"]]}
+  });
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_SVG"></script>
+<script> $("div.container table").addClass("table table-bordered"); </script>
+
+
+        <style> div.container img { max-width: 100%; } </style>
+        
+    </body>
+</html>
